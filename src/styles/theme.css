@@ -1,0 +1,93 @@
+@layer utilities {
+    .transition-all-300-out {
+        transition: var(--transition-all-300-out);
+    }
+    .transition-all-600-out {
+        transition: var(--transition-all-600-out);
+    }
+    .transition-all-700-out {
+        transition: var(--transition-all-700-out);
+    }
+    .transition-all-1000-out {
+        transition: var(--transition-all-1000-out);
+    }
+}
+
+@theme {
+    /* 트랜지션 */
+    --transition-all-300-out: all 300ms cubic-bezier(0, 0, 0.3, 1);
+    --transition-all-600-out: all 600ms cubic-bezier(0, 0, 0.3, 1);
+    --transition-all-700-out: all 700ms cubic-bezier(0, 0, 0.3, 1);
+    --transition-all-1000-out: all 1000ms cubic-bezier(0, 0, 0.3, 1);
+
+    /* 색상 */
+    --color-gray-50: #F7F7F7;
+    --color-gray-100: #EAEAEA;
+    --color-gray-200: #CCCCCC;
+    --color-gray-300: #999999;
+    --color-gray-400: #707070;
+    --color-gray-500: #474747;
+    --color-gray-600: #252525;
+    --color-gray-700: #1C1C1C;
+    --color-gray-800: #1A1A1A;
+    --color-gray-900: #000000;
+
+    --color-point: #6C5CE7;
+
+    /* 타이포 */
+    --text-display-40-b: 40px;
+    --text-display-40-b--line-height: 1.15;
+    --text-display-40-b--font-weight: 700;
+
+    --text-display-32-b: 32px;
+    --text-display-32-b--line-height: 1.15;
+    --text-display-32-b--font-weight: 700;
+
+    --text-display-28-b: 28px;
+    --text-display-28-b--line-height: 1.15;
+    --text-display-28-b--font-weight: 700;
+
+    --text-display-24-b: 24px;
+    --text-display-24-b--line-height: 1.15;
+    --text-display-24-b--font-weight: 700;
+
+    --text-display-24-m: 24px;
+    --text-display-24-m--line-height: 1.15;
+    --text-display-24-m--font-weight: 500;
+
+    --text-headline-20-b: 20px;
+    --text-headline-20-b--line-height: 1.15;
+    --text-headline-20-b--font-weight: 700;
+    
+    --text-headline-20-m: 20px;
+    --text-headline-20-m--line-height: 1.15;
+    --text-headline-20-m--font-weight: 500;
+
+    --text-subhead-16-b: 16px;
+    --text-subhead-16-b--line-height: 1.15;
+    --text-subhead-16-b--font-weight: 700;
+
+    --text-subhead-14-b: 14px;
+    --text-subhead-14-b--line-height: 1.15;
+    --text-subhead-14-b--font-weight: 700;
+
+    --text-subhead-12-b: 12px;
+    --text-subhead-12-b--line-height: 1.15;
+    --text-subhead-12-b--font-weight: 700;
+
+    --text-body-16-r: 16px;
+    --text-body-16-r--line-height: 1.15;
+    --text-body-16-r--font-weight: 300;
+
+    --text-body-14-r: 14px;
+    --text-body-14-r--line-height: 1.15;
+    --text-body-14-r--font-weight: 300;
+
+    --text-body-12-r: 12px;
+    --text-body-12-r--line-height: 1.15;
+    --text-body-12-r--font-weight: 300;
+
+    --text-body-10-r: 10px;
+    --text-body-10-r--line-height: 1.15;
+    --text-body-10-r--font-weight: 300;
+}
