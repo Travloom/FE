@@ -12,6 +12,8 @@
   font-family: GmarketSansMedium, Arial, Helvetica, sans-serif, sans-serif;
   --background: #0a0a0a;
   --foreground: #ededed;
+  line-height: 1.15;
+  
 }
 
 @theme inline {
