@@ -1,0 +1,1 @@
+export { default as KakaoIcon } from "./kakao_icon.svg";
