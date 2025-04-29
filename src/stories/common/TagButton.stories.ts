@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import TagButton from '@/component/common/TagButton';
 
 const meta = {
-  title: 'Common/Button',
+  title: 'Common/TagButton',
   component: TagButton,
   tags: ['autodocs'],
   parameters: {
