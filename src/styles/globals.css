@@ -2,18 +2,18 @@
 @import "./theme.css";
 
 @font-face {
-  font-family: 'GmarketSansMedium';
-  src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff') format('woff');
+  font-family: 'GmarketSansLight';
+  src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansLight.woff') format('woff');
   font-weight: normal;
   font-style: normal;
 }
 
 :root {
-  font-family: GmarketSansMedium, Arial, Helvetica, sans-serif, sans-serif;
+  font-family: GmarketSansLight, Arial, Helvetica, sans-serif, sans-serif;
+  font-weight: bold;
   --background: #0a0a0a;
   --foreground: #ededed;
   line-height: 1.15;
-  
 }
 
 @theme inline {
