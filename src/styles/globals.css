@@ -1,5 +1,6 @@
 @import "tailwindcss";
 @import "./theme.css";
+@import "./react-grid-layout.css";
 
 @font-face {
   font-family: 'GmarketSansLight';
