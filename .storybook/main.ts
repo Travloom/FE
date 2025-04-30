@@ -18,7 +18,7 @@ const config: StorybookConfig = {
     }
   },
   "staticDirs": [
-    "..\\public"
+    "../public"
   ],
   webpackFinal: async config => {
     const imageRule = config.module?.rules?.find(rule => {
