@@ -81,9 +81,13 @@ const Planner = () => {
       <div className={`${PLANNER_WIDTH} flex`}>
         <div className={`sticky shrink-0 left-0 bg-white z-10`}>
           {/* Day List */}
-          <div className={`${PLANNER_HEIGHT} flex flex-col gap-[2.5%] py-[25%] bg-point border border-point w-[55px] items-center rounded-l-[8px] text-white`}>
+          <div 
+            className={`${PLANNER_HEIGHT} flex flex-col gap-[2.5%] py-[25%] bg-point border border-point w-[55px] items-center rounded-l-[8px] text-white`}
+            style={{ paddingTop: CONTAINER_PADDING_Y, paddingBottom: CONTAINER_PADDING_Y, gap: `${PLAN_MARGIN_Y}px` }}>
             {["Day1", "Day2", "Day3", "Day4"].map((day, index) => (
-              <p className={`grow text-center content-center text-[14px]`}>Day{index + 1}</p>
+              <p 
+                className={`text-center content-center text-[14px]`} 
+                style={{ height: PLAN_HEIGHT }}>Day{index + 1}</p>
             ))}
           </div>
         </div>
