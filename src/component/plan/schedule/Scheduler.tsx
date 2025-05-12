@@ -1,7 +1,7 @@
 import GridLayout, { Layout } from "react-grid-layout";
 import "react-grid-layout/css/styles.css";
 import "react-resizable/css/styles.css";
-import PlanBox from "./ScheduleBox";
+import ScheduleBox from "./ScheduleBox";
 import { useState } from "react";
 import { COLS, CONTAINER_PADDING_X, CONTAINER_PADDING_Y, DAY_LIST_WIDTH, GRID_HEIGHT, GRID_WIDTH, PLAN_HEIGHT, PLAN_MARGIN_X, PLAN_MARGIN_Y, PLANNER_HEIGHT, PLANNER_WIDTH, TIME_TABLE, TIME_WIDTH } from "@/constant/Plan";
 
@@ -10,7 +10,7 @@ interface CustomLayout extends Layout {
   content: string;
 }
 
-const Planner = () => {
+const Scheduler = () => {
 
   const [dayLen, setDaylen] = useState(4);
 
@@ -133,7 +133,7 @@ const Planner = () => {
             onLayoutChange={(newLayout) => handleChangeLayout(newLayout)}>
             {layout.map((item) => (
               <div key={item.i}>
-                <PlanBox title={item.title} content={item.content} />
+                <ScheduleBox title={item.title} content={item.content} />
               </div>
             ))}
           </GridLayout>
@@ -143,4 +143,4 @@ const Planner = () => {
   )
 }
 
-export default Planner;
+export default Scheduler;

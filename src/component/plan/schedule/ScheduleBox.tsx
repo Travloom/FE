@@ -6,7 +6,7 @@ interface PlanBoxProps {
   content: string;
 }
 
-const PlanBox:React.FC<PlanBoxProps> = ({
+const ScheduleBox:React.FC<PlanBoxProps> = ({
   title,
   content
 }) => {
@@ -30,4 +30,4 @@ const PlanBox:React.FC<PlanBoxProps> = ({
   )
 }
 
-export default PlanBox;
+export default ScheduleBox;
