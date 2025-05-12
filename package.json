@@ -16,6 +16,7 @@
     "framer-motion": "^12.9.2",
     "next": "15.3.1",
     "react": "^19.0.0",
+    "react-calendar": "^5.1.0",
     "react-dom": "^19.0.0",
     "react-grid-layout": "^1.5.1"
   },
