@@ -17,7 +17,7 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Share: Story = {
+export const Example: Story = {
   args: {
     title: "출발~",
     content: "간단하게 아점먹고 숙소로 출발~",
