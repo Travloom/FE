@@ -20,6 +20,10 @@ jobs:
   
       - name: Install dependencies
         run: pnpm install
+
+      - name: Create .env file
+        run: |
+          echo "NEXT_PUBLIC_MAP_CLIENT_KEY=${{ secrets.NEXT_PUBLIC_MAP_CLIENT_KEY }}" >> .env
   
       - name: Run Chromatic
         uses: chromaui/action@latest
