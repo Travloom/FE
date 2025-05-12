@@ -70,7 +70,7 @@ const Planner = () => {
     <div className={`flex flex-col overflow-auto select-none`}>
 
       {/* Time Header */}
-      <div className={`${PLANNER_WIDTH} flex flex-row sticky top-0 bg-white z-10`}>
+      <div className={`${PLANNER_WIDTH} flex flex-row sticky top-0 bg-white z-10 text-point`}>
         <div className={`w-[55px] shrink-0 sticky left-0 bg-white`}></div>
         {TIME_TABLE.map((time, index) => (
           <div key={index} className={`${TIME_WIDTH} shrink-0 text-[12px]`}>{time}</div>
