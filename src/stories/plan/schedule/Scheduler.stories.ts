@@ -1,16 +1,16 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import Planner from '@/component/plan/Planner';
+import Scheduler from '@/component/plan/schedule/Scheduler';
 
 const meta = {
-  title: 'Plan/Planner',
-  component: Planner,
+  title: 'Plan/Schedule/Scheduler',
+  component: Scheduler,
   tags: ['autodocs'],
   parameters: {
   },
   args: {
   },
-} satisfies Meta<typeof Planner>;
+} satisfies Meta<typeof Scheduler>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;

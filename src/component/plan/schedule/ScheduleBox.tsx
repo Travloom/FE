@@ -1,5 +1,5 @@
 import { AnimatePresence, motion } from "framer-motion";
-import { RightArrowIcon } from "../../../public/svgs";
+import { RightArrowIcon } from "../../../../public/svgs";
 
 interface PlanBoxProps {
   title: string;
