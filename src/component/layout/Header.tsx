@@ -1,4 +1,4 @@
-import { KakaoIcon } from "../../../public/svgs";
+import { KakaoIcon } from "../../assets/svgs";
 
 interface HeaderProps {
   title?: string

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { PlaneIcon } from "../../../public/svgs";
+import { PlaneIcon } from "../../assets/svgs";
 
 const PlanInput = () => {
 
