@@ -14,8 +14,8 @@
 :root {
   font-family: GmarketSansLight, Arial, Helvetica, sans-serif, sans-serif;
   font-weight: bold;
-  --background: #0a0a0a;
-  --foreground: #ededed;
+  --background: white;
+  --foreground: black;
   line-height: 1.15;
 }
 
