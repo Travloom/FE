@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import Place from '@/component/plan/map/Place';
+import Place from '@/components/plan/map/Place';
 
 const meta = {
   title: 'Plan/Map/Place',

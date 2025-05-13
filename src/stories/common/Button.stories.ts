@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import Button from '@/component/common/Button';
+import Button from '@/components/common/Button';
 
 const meta = {
   title: 'Common/Button',
@@ -18,5 +18,14 @@ type Story = StoryObj<typeof meta>;
 export const Share: Story = {
   args: {
     text: "공유",
+    isActive: true,
+  }
+};
+
+
+export const Place: Story = {
+  args: {
+    text: "부산",
+    isActive: false,
   }
 };

@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import Planner from '@/component/plan/Planner';
+import Planner from '@/components/plan/Planner';
 
 const meta = {
   title: 'Plan/Planner',

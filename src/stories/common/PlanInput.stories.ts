@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import PlanInput from '@/component/common/PlanInput';
+import PlanInput from '@/components/common/PlanInput';
 
 const meta = {
   title: 'Common/PlanInput',

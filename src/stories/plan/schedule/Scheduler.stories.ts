@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import Scheduler from '@/component/plan/schedule/Scheduler';
+import Scheduler from '@/components/plan/schedule/Scheduler';
 
 const meta = {
   title: 'Plan/Schedule/Scheduler',

@@ -1,3 +1,5 @@
+'use client'
+
 import { KeyboardEvent, useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 
@@ -60,6 +62,7 @@ const TagButton: React.FC<TagButtonProps> = ({
   return (
     <div
       className={`
+        h-fit
       bg-white text-gray-300 border-[1px] ${isSelected ? `border-point` : `border-gray-300`}
         text-[20px] rounded-[22px] flex flex-col px-4 py-2 w-fit h-fit cursor-pointer transition-all-300-out items-center select-none`}
       onMouseOver={() => setIsHover(true)}
@@ -73,7 +76,7 @@ const TagButton: React.FC<TagButtonProps> = ({
       >
         {currentTag}
       </motion.p>
-      <AnimatePresence mode="wait">
+      <AnimatePresence>
         {isHover && tagList && tagList.map((item, index) => {
           return (
             <motion.div
@@ -106,7 +109,7 @@ const TagButton: React.FC<TagButtonProps> = ({
               exit={{ opacity: 0, width: 0, height: 0, marginTop: 0 }}
               transition={{ duration: 0.3 }}
               className={`text-center w-fit`}
-              placeholder="지역"
+              placeholder={title}
               ref={regionRef}
               value={region}
               onChange={(e) => setRegion(e.target.value)}

@@ -3,7 +3,7 @@ import "react-grid-layout/css/styles.css";
 import "react-resizable/css/styles.css";
 import ScheduleBox from "./ScheduleBox";
 import { useState } from "react";
-import { COLS, CONTAINER_PADDING_X, CONTAINER_PADDING_Y, DAY_LIST_WIDTH, GRID_HEIGHT, GRID_WIDTH, PLAN_HEIGHT, PLAN_MARGIN_X, PLAN_MARGIN_Y, PLANNER_HEIGHT, PLANNER_WIDTH, TIME_TABLE, TIME_WIDTH } from "@/constant/Plan";
+import { COLS, CONTAINER_PADDING_X, CONTAINER_PADDING_Y, DAY_LIST_WIDTH, GRID_HEIGHT, GRID_WIDTH, PLAN_HEIGHT, PLAN_MARGIN_X, PLAN_MARGIN_Y, PLANNER_HEIGHT, PLANNER_WIDTH, TIME_TABLE, TIME_WIDTH } from "@/constants/Plan";
 
 interface CustomLayout extends Layout {
   title: string;

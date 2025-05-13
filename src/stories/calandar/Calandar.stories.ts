@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import Calandar from '@/component/calandar/Calandar';
+import Calandar from '@/components/calandar/Calandar';
 
 const meta = {
   title: 'Calandar/Calandar',
