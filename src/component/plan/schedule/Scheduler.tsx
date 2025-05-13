@@ -67,76 +67,78 @@ const Scheduler = () => {
   }
 
   return (
-    <div className={`flex flex-col overflow-auto select-none`}>
+    <div className={`p-2.5`}>
+      <div className={`flex flex-col overflow-auto select-none`}>
 
-      {/* Time Header */}
-      <div className={`${PLANNER_WIDTH} flex flex-row sticky top-0 bg-white z-10 text-point`}>
-        <div className={`w-[55px] shrink-0 sticky left-0 bg-white`}></div>
-        {TIME_TABLE.map((time, index) => (
-          <div key={index} className={`${TIME_WIDTH} shrink-0 text-[12px]`}>{time}</div>
-        ))}
-      </div>
-
-      {/* PlanList */}
-      <div className={`${PLANNER_WIDTH} flex`}>
-        <div className={`sticky shrink-0 left-0 bg-white z-10`}>
-          {/* Day List */}
-          <div 
-            className={`${PLANNER_HEIGHT} flex flex-col gap-[2.5%] py-[25%] bg-point border border-point w-[55px] items-center rounded-l-[8px] text-white`}
-            style={{ paddingTop: CONTAINER_PADDING_Y, paddingBottom: CONTAINER_PADDING_Y, gap: `${PLAN_MARGIN_Y}px` }}>
-            {["Day1", "Day2", "Day3", "Day4"].map((day, index) => (
-              <p 
-                className={`text-center content-center text-[14px]`} 
-                style={{ height: PLAN_HEIGHT }}>Day{index + 1}</p>
-            ))}
-          </div>
+        {/* Time Header */}
+        <div className={`${PLANNER_WIDTH} flex flex-row sticky top-0 bg-white z-10 text-point`}>
+          <div className={`w-[55px] shrink-0 sticky left-0 bg-white`}></div>
+          {TIME_TABLE.map((time, index) => (
+            <div key={index} className={`${TIME_WIDTH} shrink-0 text-[12px]`}>{time}</div>
+          ))}
         </div>
 
-        {/* Plan Contents */}
-        <div
-          className={`w-full cursor-pointer relative`}
-          onMouseDown={handleAddPlanBox}>
-
-          {/* 그리드 가로줄 디자인 */}
-          <div
-            className={`flex flex-col absolute z-[-10] w-full h-full`}
-            style={{ paddingTop: CONTAINER_PADDING_Y, paddingBottom: CONTAINER_PADDING_Y, gap: `${PLAN_MARGIN_Y}px` }}>
-            {Array.from({ length: dayLen }).map((_, index) => (
-              <div key={index} className={`w-full grow bg-[rgba(108,92,231,0.04)]`} />
-            ))}
+        {/* PlanList */}
+        <div className={`${PLANNER_WIDTH} flex`}>
+          <div className={`sticky shrink-0 left-0 bg-white z-10`}>
+            {/* Day List */}
+            <div
+              className={`${PLANNER_HEIGHT} flex flex-col gap-[2.5%] py-[25%] bg-point border border-point w-[55px] items-center rounded-l-[8px] text-white`}
+              style={{ paddingTop: CONTAINER_PADDING_Y, paddingBottom: CONTAINER_PADDING_Y, gap: `${PLAN_MARGIN_Y}px` }}>
+              {["Day1", "Day2", "Day3", "Day4"].map((day, index) => (
+                <p
+                  className={`text-center content-center text-[14px]`}
+                  style={{ height: PLAN_HEIGHT }}>Day{index + 1}</p>
+              ))}
+            </div>
           </div>
 
-          {/* 그리드 세로줄 디자인 */}
+          {/* Plan Contents */}
           <div
-            className={`flex flex-row absolute z-[-10] w-full h-full`}
-            style={{ paddingLeft: `${PLAN_MARGIN_X}px` }}>
-            {Array.from({ length: 24 }).map((_, index) => (
-              <div key={index} className={`w-full grow bg-[rgba(108,92,231,0.04)]`} style={{ marginRight: `${PLAN_MARGIN_X}px` }}/>
-            ))}
-          </div>
+            className={`w-full cursor-pointer relative`}
+            onMouseDown={handleAddPlanBox}>
 
-          <GridLayout
-            className={`layout min-h-full grow shrink-0 border-t border-b border-r border-point rounded-r-[8px]`}
-            layout={layout}
-            margin={[PLAN_MARGIN_X, PLAN_MARGIN_Y]}
-            containerPadding={[CONTAINER_PADDING_X, CONTAINER_PADDING_Y]}
-            cols={COLS}
-            maxRows={dayLen}
-            rowHeight={PLAN_HEIGHT}
-            verticalCompact={false}
-            width={GRID_WIDTH - DAY_LIST_WIDTH}
-            isDraggable={true}
-            isResizable={true}
-            compactType={null}
-            preventCollision={true}
-            resizeHandles={['e']}
-            onLayoutChange={(newLayout) => handleChangeLayout(newLayout)}>
-            {layout.map((item) => (
-              <div key={item.i}>
-                <ScheduleBox title={item.title} content={item.content} />
-              </div>
-            ))}
-          </GridLayout>
+            {/* 그리드 가로줄 디자인 */}
+            <div
+              className={`flex flex-col absolute z-[-10] w-full h-full`}
+              style={{ paddingTop: CONTAINER_PADDING_Y, paddingBottom: CONTAINER_PADDING_Y, gap: `${PLAN_MARGIN_Y}px` }}>
+              {Array.from({ length: dayLen }).map((_, index) => (
+                <div key={index} className={`w-full grow bg-[rgba(108,92,231,0.04)]`} />
+              ))}
+            </div>
+
+            {/* 그리드 세로줄 디자인 */}
+            <div
+              className={`flex flex-row absolute z-[-10] w-full h-full`}
+              style={{ paddingLeft: `${PLAN_MARGIN_X}px` }}>
+              {Array.from({ length: 24 }).map((_, index) => (
+                <div key={index} className={`w-full grow bg-[rgba(108,92,231,0.04)]`} style={{ marginRight: `${PLAN_MARGIN_X}px` }} />
+              ))}
+            </div>
+
+            <GridLayout
+              className={`layout min-h-full grow shrink-0 border-t border-b border-r border-point rounded-r-[8px]`}
+              layout={layout}
+              margin={[PLAN_MARGIN_X, PLAN_MARGIN_Y]}
+              containerPadding={[CONTAINER_PADDING_X, CONTAINER_PADDING_Y]}
+              cols={COLS}
+              maxRows={dayLen}
+              rowHeight={PLAN_HEIGHT}
+              verticalCompact={false}
+              width={GRID_WIDTH - DAY_LIST_WIDTH}
+              isDraggable={true}
+              isResizable={true}
+              compactType={null}
+              preventCollision={true}
+              resizeHandles={['e']}
+              onLayoutChange={(newLayout) => handleChangeLayout(newLayout)}>
+              {layout.map((item) => (
+                <div key={item.i}>
+                  <ScheduleBox title={item.title} content={item.content} />
+                </div>
+              ))}
+            </GridLayout>
+          </div>
         </div>
       </div>
     </div>
