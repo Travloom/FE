@@ -1,0 +1,52 @@
+'use client'
+
+import Toggle from "@/components/common/Toggle";
+import { PlaceProps } from "@/types/Plan/PlaceType";
+import { useState } from "react";
+import Place from "./Place";
+
+interface PlaceListProps {
+  restaurants: PlaceProps[];
+  hotels: PlaceProps[];
+  attractions: PlaceProps[];
+}
+
+const PlaceList: React.FC<PlaceListProps> = ({
+  restaurants,
+  hotels,
+  attractions,
+}) => {
+
+  const [selectedToggle, setSelectedToggle] = useState("식당");
+
+  return (
+    <div className={`h-full`}>
+    <div className={`w-[400px] h-full flex flex-col gap-4 p-2.5 rounded-bl-[8px] border-r border-gray-300`}>
+      <div className={`flex flex-row gap-2.5`}>
+        <Toggle text={"식당"} isActive={selectedToggle === "식당"} setSelectedToggle={setSelectedToggle} />
+        <Toggle text={"숙소"} isActive={selectedToggle === "숙소"} setSelectedToggle={setSelectedToggle} />
+        <Toggle text={"명소"} isActive={selectedToggle === "명소"} setSelectedToggle={setSelectedToggle} />
+      </div>
+      <div className={`flex flex-col gap-3`}>
+        {selectedToggle === "식당" ? (
+          restaurants?.map((place, index) => (
+            <Place key={index} name={place.name} rate={place.rate} detail={place.detail} imageUrl={place.imageUrl} />
+          ))
+        ) : (
+          selectedToggle === "숙소" ? (
+            hotels?.map((place, index) => (
+              <Place key={index} name={place.name} rate={place.rate} detail={place.detail} imageUrl={place.imageUrl} />
+            ))
+          ) : (
+            attractions?.map((place, index) => (
+              <Place key={index} name={place.name} rate={place.rate} detail={place.detail} imageUrl={place.imageUrl} />
+            ))
+          )
+        )}
+      </div>
+    </div>
+    </div>
+  )
+}
+
+export default PlaceList;
