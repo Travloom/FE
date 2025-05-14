@@ -2,8 +2,9 @@ import GridLayout, { Layout } from "react-grid-layout";
 import "react-grid-layout/css/styles.css";
 import "react-resizable/css/styles.css";
 import ScheduleBox from "./ScheduleBox";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { COLS, CONTAINER_PADDING_X, CONTAINER_PADDING_Y, DAY_LIST_WIDTH, GRID_HEIGHT, GRID_WIDTH, PLAN_HEIGHT, PLAN_MARGIN_X, PLAN_MARGIN_Y, PLANNER_HEIGHT, PLANNER_WIDTH, TIME_TABLE, TIME_WIDTH } from "@/constants/Plan";
+import { v4 as uuidv4 } from "uuid";
 
 interface CustomLayout extends Layout {
   title: string;
@@ -41,7 +42,7 @@ const Scheduler = () => {
 
     if (!isOccupied) {
       const newItem = {
-        i: `${layout.length}`,
+        i: uuidv4(),
         x,
         y,
         w: 2,
@@ -66,12 +67,16 @@ const Scheduler = () => {
     );
   }
 
+  useEffect(() => {
+    console.log(layout)
+  }, [layout])
+
   return (
     <div className={`p-2.5`}>
       <div className={`flex flex-col overflow-auto select-none`}>
 
         {/* Time Header */}
-        <div className={`${PLANNER_WIDTH} flex flex-row sticky top-0 bg-white z-10 text-point`}>
+        <div className={`${PLANNER_WIDTH} h-[12px] flex flex-row sticky top-0 bg-white z-10 text-point`}>
           <div className={`w-[55px] shrink-0 sticky left-0 bg-white`}></div>
           {TIME_TABLE.map((time, index) => (
             <div key={index} className={`${TIME_WIDTH} shrink-0 text-[12px]`}>{time}</div>
@@ -87,6 +92,7 @@ const Scheduler = () => {
               style={{ paddingTop: CONTAINER_PADDING_Y, paddingBottom: CONTAINER_PADDING_Y, gap: `${PLAN_MARGIN_Y}px` }}>
               {["Day1", "Day2", "Day3", "Day4"].map((day, index) => (
                 <p
+                  key={index}
                   className={`text-center content-center text-[14px]`}
                   style={{ height: PLAN_HEIGHT }}>Day{index + 1}</p>
               ))}
@@ -100,7 +106,7 @@ const Scheduler = () => {
 
             {/* 그리드 가로줄 디자인 */}
             <div
-              className={`flex flex-col absolute z-[-10] w-full h-full`}
+              className={`flex flex-col absolute w-full h-full`}
               style={{ paddingTop: CONTAINER_PADDING_Y, paddingBottom: CONTAINER_PADDING_Y, gap: `${PLAN_MARGIN_Y}px` }}>
               {Array.from({ length: dayLen }).map((_, index) => (
                 <div key={index} className={`w-full grow bg-[rgba(108,92,231,0.04)]`} />
@@ -109,7 +115,7 @@ const Scheduler = () => {
 
             {/* 그리드 세로줄 디자인 */}
             <div
-              className={`flex flex-row absolute z-[-10] w-full h-full`}
+              className={`flex flex-row absolute w-full h-full`}
               style={{ paddingLeft: `${PLAN_MARGIN_X}px` }}>
               {Array.from({ length: 24 }).map((_, index) => (
                 <div key={index} className={`w-full grow bg-[rgba(108,92,231,0.04)]`} style={{ marginRight: `${PLAN_MARGIN_X}px` }} />
