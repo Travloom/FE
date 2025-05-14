@@ -16,8 +16,19 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const LoggedOutHome: Story = {};
-export const LoggedOutMyPage: Story = {
+export const LoggedOut: Story = {
+  parameters: {
+    nextjs: {
+      appDirectory: true,
+    }
+  }
+};
+export const LoggedIn: Story = {
+  parameters: {
+    nextjs: {
+      appDirectory: true,
+    }
+  },
   args: {
     title: "마이페이지"
   }
