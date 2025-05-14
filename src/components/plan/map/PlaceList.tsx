@@ -20,6 +20,7 @@ const PlaceList: React.FC<PlaceListProps> = ({
   const [selectedToggle, setSelectedToggle] = useState("식당");
 
   return (
+    <div className={`h-full`}>
     <div className={`w-[400px] h-full flex flex-col gap-4 p-2.5 rounded-bl-[8px] border-r border-gray-300`}>
       <div className={`flex flex-row gap-2.5`}>
         <Toggle text={"식당"} isActive={selectedToggle === "식당"} setSelectedToggle={setSelectedToggle} />
@@ -43,6 +44,7 @@ const PlaceList: React.FC<PlaceListProps> = ({
           )
         )}
       </div>
+    </div>
     </div>
   )
 }

@@ -1,3 +1,5 @@
+'use client'
+
 import { PlaceProps } from "@/types/Plan/PlaceType";
 import Image from "next/image";
 
@@ -15,7 +17,8 @@ const Place: React.FC<PlaceProps> = ({
           className={`object-cover`}
           src={imageUrl}
           fill
-          alt={"이미지"} />
+          alt={"이미지"} 
+          unoptimized/>
       </div>
       <div className={`flex flex-col gap-2.5 px-2.5 py-1`}>
         <p className={`text-[20px]`}>{name}</p>

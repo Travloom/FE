@@ -1,11 +1,15 @@
 'use client'
 
+import useMapStore from "@/stores/useMapStore";
 import Script from "next/script";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 const MapContent = () => {
 
-  const [isReady, setIsReady] = useState(false);
+  const {
+    isReady,
+    setIsReady,
+  } = useMapStore();
 
   const initMap = (x: number, y: number) => {
     if (typeof window === 'undefined' || !window.naver) return;
@@ -61,7 +65,7 @@ const MapContent = () => {
         src={`https://oapi.map.naver.com/openapi/v3/maps.js?ncpKeyId=${process.env.NEXT_PUBLIC_MAP_CLIENT_KEY}&submodules=geocoder`}
         onLoad={() => setIsReady(true)} />
       {/* 준비가 되면 initMap 실행 */}
-      <div id={'map'} className={`w-full h-[500px]`}>
+      <div id={'map'} className={`w-full h-full`}>
       </div>
     </>
   );
