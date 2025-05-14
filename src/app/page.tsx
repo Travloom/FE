@@ -4,14 +4,11 @@ import PlanInput from "@/components/common/PlanInput";
 import TagButton from "@/components/common/TagButton";
 import { TAGLIST } from "@/constants/Tag";
 import { AnimatePresence, motion } from "framer-motion";
-import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import usePageStore from "../stores/usePageStore";
 import usePageAnimateRouter from "@/hooks/usePageAnimateRouter";
 
 export default function Home() {
-
-  const router = useRouter();
 
   const {
     isPagePending,

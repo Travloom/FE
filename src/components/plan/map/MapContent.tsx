@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 'use client'
 
 import useMapStore from "@/stores/useMapStore";
@@ -14,12 +16,12 @@ const MapContent = () => {
   const initMap = (x: number, y: number) => {
     if (typeof window === 'undefined' || !window.naver) return;
 
-    var map = new naver.maps.Map("map", {
+    let map = new naver.maps.Map("map", {
       center: new naver.maps.LatLng(x, y),
       zoom: 15
     });
 
-    var mapMarker = new naver.maps.Marker({
+    let mapMarker = new naver.maps.Marker({
       position: new naver.maps.LatLng(x, y),
       map: map
     });

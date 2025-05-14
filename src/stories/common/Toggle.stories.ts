@@ -21,6 +21,7 @@ export const Active: Story = {
   args: {
     text: "식당",
     isActive: true,
+    setSelectedToggle: () => {},
   }
 };
 
@@ -28,5 +29,6 @@ export const Inactive: Story = {
   args: {
     text: "식당",
     isActive: false,
+    setSelectedToggle: () => {},
   }
 };
