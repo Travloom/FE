@@ -7,8 +7,12 @@ import ScheduleBox from "./ScheduleBox";
 import { useEffect, useState } from "react";
 import { COLS, CONTAINER_PADDING_X, CONTAINER_PADDING_Y, DAY_LIST_WIDTH, GRID_HEIGHT, GRID_WIDTH, PLAN_HEIGHT, PLAN_MARGIN_X, PLAN_MARGIN_Y, PLANNER_HEIGHT, PLANNER_WIDTH, TIME_TABLE, TIME_WIDTH } from "@/constants/Plan";
 import { v4 as uuidv4 } from "uuid";
+import { doc, onSnapshot, setDoc } from "firebase/firestore";
+import { fireStore } from "@/firebase/firebaseClient";
+import { useParams } from "next/navigation";
 
-interface CustomLayout extends Layout {
+
+interface CustomLayout extends Omit<Layout, 'resizeHandles'> {
   title: string;
   content: string;
 }
@@ -18,6 +22,8 @@ const Scheduler = () => {
   const [dayLen, setDaylen] = useState(4);
 
   const [layout, setLayout] = useState<CustomLayout[]>([]);
+
+  const { planId } = useParams();
 
   const handleAddPlanBox = (e: React.MouseEvent<HTMLDivElement>) => {
 
@@ -34,7 +40,7 @@ const Scheduler = () => {
     const y = Math.floor(offsetY / rowHeight);
 
     // 이미 해당 위치에 있는지 확인
-    const isOccupied = layout.some(
+    const isOccupied = layout?.some(
       (item: CustomLayout) =>
         x < item.x + item.w &&
         x + 2 > item.x &&
@@ -44,6 +50,13 @@ const Scheduler = () => {
 
     if (!isOccupied) {
       const newItem = {
+        isBounded: false,
+        isDraggable: true,
+        isResizable: true,
+        maxH: 1,
+        maxW: 6,
+        minH: 1,
+        minW: 1,
         i: uuidv4(),
         x,
         y,
@@ -51,14 +64,24 @@ const Scheduler = () => {
         h: 1,
         title: "일정",
         content: "내용",
+        resizeHandles: ['e'],
       };
       setLayout([...layout, newItem]);
     }
   };
 
   const handleChangeLayout = (newLayout: Layout[]) => {
+    const updatedLayout: CustomLayout[] = newLayout.map((item) => {
+      const matched = layout.find((p) => p.i === item.i);
+      return {
+        ...item,
+        title: matched?.title || "",
+        content: matched?.content || "",
+      };
+    });
+
     setLayout((prev) =>
-      newLayout.map((item) => {
+      updatedLayout.map((item) => {
         const matched = prev.find((p) => p.i === item.i);
         return {
           ...item,
@@ -67,11 +90,46 @@ const Scheduler = () => {
         };
       })
     );
+    updatePlan(updatedLayout)
   }
 
   useEffect(() => {
-    console.log(layout)
-  }, [layout])
+    const targetDoc = doc(
+      fireStore,
+      'travloom',
+      'plan',
+      `${planId}`,
+      'schedules',
+    )
+
+    const unsubscribe = onSnapshot(targetDoc, (docSnapshot) => {
+      const data = docSnapshot.data();
+
+      if (data) {
+        setLayout(data.scheduleList);
+      }
+
+      console.log(data)
+    })
+
+    return () => unsubscribe();
+  }, [])
+
+
+  const updatePlan = async (updatedLayout: CustomLayout[]) => {
+
+    const targetDoc = doc(
+      fireStore,
+      'travloom',
+      'plan',
+      `${planId}`,
+      'schedules'
+    )
+
+    await setDoc(targetDoc, {
+      scheduleList: updatedLayout
+    })
+  }
 
   return (
     <div className={`p-2.5`}>
