@@ -1,79 +1,34 @@
-/* eslint-disable */
-
-import GridLayout, { Layout } from "react-grid-layout";
 import "react-grid-layout/css/styles.css";
 import "react-resizable/css/styles.css";
-import ScheduleBox from "./ScheduleBox";
-import { useEffect, useState } from "react";
-import { COLS, CONTAINER_PADDING_X, CONTAINER_PADDING_Y, DAY_LIST_WIDTH, GRID_HEIGHT, GRID_WIDTH, PLAN_HEIGHT, PLAN_MARGIN_X, PLAN_MARGIN_Y, PLANNER_HEIGHT, PLANNER_WIDTH, TIME_TABLE, TIME_WIDTH } from "@/constants/Plan";
-import { v4 as uuidv4 } from "uuid";
-
-interface CustomLayout extends Layout {
-  title: string;
-  content: string;
-}
+import { useParams } from "next/navigation";
+import GridRenderer from "./GridRenderer";
+import { useCallback, useState } from "react";
+import { useSchedule } from "@/hooks/schedule/useSchedule";
+import { useAddPlanBox } from "@/hooks/schedule/useAddPlanBox";
+import { CONTAINER_PADDING_Y, PLAN_HEIGHT, PLAN_MARGIN_X, PLAN_MARGIN_Y, PLANNER_HEIGHT, PLANNER_WIDTH, TIME_TABLE, TIME_WIDTH } from "@/constants/Plan";
+import { Layout } from "react-grid-layout";
 
 const Scheduler = () => {
+  const [dayLen] = useState(4);
+  const { planId } = useParams();
+  const { layout, setLayout, updateSchedule } = useSchedule(planId as string);
+  const handleAddPlanBox = useAddPlanBox(layout, setLayout);
 
-  const [dayLen, setDaylen] = useState(4);
-
-  const [layout, setLayout] = useState<CustomLayout[]>([]);
-
-  const handleAddPlanBox = (e: React.MouseEvent<HTMLDivElement>) => {
-
-    const gridWidth = (GRID_WIDTH - DAY_LIST_WIDTH);
-    const colWidth = gridWidth / COLS;
-    const rowHeight = GRID_HEIGHT / 4;
-
-    // 클릭 위치 가져오기
-    const rect = e.currentTarget.getBoundingClientRect();
-    const offsetX = e.clientX - rect.left;
-    const offsetY = e.clientY - rect.top;
-
-    const x = Math.floor(offsetX / colWidth);
-    const y = Math.floor(offsetY / rowHeight);
-
-    // 이미 해당 위치에 있는지 확인
-    const isOccupied = layout.some(
-      (item: CustomLayout) =>
-        x < item.x + item.w &&
-        x + 2 > item.x &&
-        y < item.y + item.h &&
-        y + 1 > item.y
-    );
-
-    if (!isOccupied) {
-      const newItem = {
-        i: uuidv4(),
-        x,
-        y,
-        w: 2,
-        h: 1,
-        title: "일정",
-        content: "내용",
+  const handleChangeLayout = useCallback((newLayout: Layout[]) => {
+    const updatedLayout = newLayout.map((item: Layout) => {
+      const matched = layout.find((p) => p.i === item.i);
+      return {
+        ...item,
+        title: matched?.title || "",
+        content: matched?.content || "",
       };
-      setLayout([...layout, newItem]);
-    }
-  };
-
-  const handleChangeLayout = (newLayout: Layout[]) => {
-    setLayout((prev) =>
-      newLayout.map((item) => {
-        const matched = prev.find((p) => p.i === item.i);
-        return {
-          ...item,
-          title: matched?.title || "",
-          content: matched?.content || "",
-        };
-      })
-    );
-  }
-
-  useEffect(() => {
-    console.log(layout)
-  }, [layout])
+    });
+    setLayout(updatedLayout);
+    updateSchedule(updatedLayout);
+  }, [layout]);
 
   return (
+
     <div className={`p-2.5`}>
       <div className={`flex flex-col overflow-auto select-none`}>
 
@@ -124,33 +79,12 @@ const Scheduler = () => {
               ))}
             </div>
 
-            <GridLayout
-              className={`layout min-h-full grow shrink-0 border-t border-b border-r border-point rounded-r-[8px]`}
-              layout={layout}
-              margin={[PLAN_MARGIN_X, PLAN_MARGIN_Y]}
-              containerPadding={[CONTAINER_PADDING_X, CONTAINER_PADDING_Y]}
-              cols={COLS}
-              maxRows={dayLen}
-              rowHeight={PLAN_HEIGHT}
-              verticalCompact={false}
-              width={GRID_WIDTH - DAY_LIST_WIDTH}
-              isDraggable={true}
-              isResizable={true}
-              compactType={null}
-              preventCollision={true}
-              resizeHandles={['e']}
-              onLayoutChange={(newLayout) => handleChangeLayout(newLayout)}>
-              {layout.map((item) => (
-                <div key={item.i}>
-                  <ScheduleBox title={item.title} content={item.content} />
-                </div>
-              ))}
-            </GridLayout>
+            <GridRenderer customLayout={layout} onLayoutChange={handleChangeLayout} dayLen={dayLen} />
           </div>
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
 export default Scheduler;
