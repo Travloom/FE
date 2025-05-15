@@ -1,6 +1,6 @@
 'use client'
 
-import { PlaceProps } from "@/types/Plan/PlaceType";
+import { PlaceProps } from "@/types/plan/type";
 import Image from "next/image";
 
 const Place: React.FC<PlaceProps> = ({

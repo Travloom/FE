@@ -1,7 +1,7 @@
 'use client'
 
 import Toggle from "@/components/common/Toggle";
-import { PlaceProps } from "@/types/Plan/PlaceType";
+import { PlaceProps } from "@/types/plan/type";
 import { useState } from "react";
 import Place from "./Place";
 

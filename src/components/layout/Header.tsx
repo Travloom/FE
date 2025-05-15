@@ -2,7 +2,7 @@
 
 import usePlanStore from "@/stores/usePlanStore";
 import { KakaoIcon } from "../../assets/svgs";
-import usePageAnimateRouter from "@/hooks/usePageAnimateRouter";
+import usePageAnimateRouter from "@/hooks/common/usePageAnimateRouter";
 import { useParams } from "next/navigation";
 import { AnimatePresence } from "framer-motion";
 import Motion from "../motion/Motion";

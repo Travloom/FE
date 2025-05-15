@@ -49,4 +49,6 @@ const MotionP: React.FC<MotionPProps> = ({
   )
 }
 
-export default { MotionDiv, MotionP };
+const Motion = { MotionDiv, MotionP };
+
+export default Motion;
