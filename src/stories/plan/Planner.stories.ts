@@ -7,6 +7,9 @@ const meta = {
   component: Planner,
   tags: ['autodocs'],
   parameters: {
+    nextjs: {
+      appDirectory: true,
+    }
   },
   args: {
   },
@@ -17,5 +20,15 @@ type Story = StoryObj<typeof meta>;
 
 export const Example: Story = {
   args: {
+  },
+  parameters: {
+    nextjs: {
+      navigation: {
+        pathname: '/Scheduler',
+        query: {
+          planId: '1',
+        }
+      }
+    }
   }
 };
