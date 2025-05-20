@@ -1,7 +1,8 @@
-import GridLayout, { Layout } from "react-grid-layout";
+import { Layout, Responsive, WidthProvider } from "react-grid-layout";
 import ScheduleBox from "./ScheduleBox";
-import { PLAN_HEIGHT, PLAN_MARGIN_X, PLAN_MARGIN_Y, CONTAINER_PADDING_X, CONTAINER_PADDING_Y, TIME_DIVIDE, GRID_WIDTH } from "@/constants/Plan";
+import { TIME_DIVIDE } from "@/constants/Plan";
 import { CustomLayout } from "@/types/schedule/types";
+import { useCallback } from "react";
 
 
 interface Props {
@@ -10,23 +11,25 @@ interface Props {
   dayLen: number;
 }
 
-const GridRenderer = ({ customLayout, onLayoutChange, dayLen }: Props) => {
+const ResponsiveGridLayout = WidthProvider(Responsive);
+
+const GridRendererMobile = ({ customLayout, onLayoutChange, dayLen }: Props) => {
 
   return (
-    <GridLayout
+    <ResponsiveGridLayout
       className={`layout min-h-full grow shrink-0`}
-      margin={[PLAN_MARGIN_X, PLAN_MARGIN_Y]}
-      containerPadding={[CONTAINER_PADDING_X, CONTAINER_PADDING_Y]}
-      cols={TIME_DIVIDE}
-      maxRows={dayLen}
-      rowHeight={PLAN_HEIGHT}
+      margin={[4, 4]}
+      containerPadding={[4, 4]}
+      maxRows={TIME_DIVIDE}
+      breakpoints={{ lg: 0 }}
+      cols={{ lg: 4 }}
+      rowHeight={46}
       verticalCompact={false}
-      width={GRID_WIDTH}
       isDraggable={true}
       isResizable={true}
       compactType={null}
       preventCollision={true}
-      resizeHandles={['e']}
+      resizeHandles={['s']}
       onLayoutChange={onLayoutChange}>
       {customLayout.map((item) => (
         <div key={item.i}
@@ -34,22 +37,23 @@ const GridRenderer = ({ customLayout, onLayoutChange, dayLen }: Props) => {
               isBounded: false,
               isDraggable: true,
               isResizable: true,
-              maxH: 1,
-              maxW: 48,
+              maxH: 48,
+              maxW: 1,
               minH: 1,
               minW: 1,
               moved: false,
               i:item.i,
-              x:item.x, 
-              y:item.y, 
-              w:item.w, 
-              h:item.h,
-              resizeHandles:['e']}}>
+              x:item.y, 
+              y:item.x, 
+              w:item.h, 
+              h:item.w,
+              resizeHandles:['s']}}>
+        
           <ScheduleBox title={item.title} content={item.content} />
         </div>
       ))}
-    </GridLayout>
+    </ResponsiveGridLayout>
   )
 };
 
-export default GridRenderer;
+export default GridRendererMobile;

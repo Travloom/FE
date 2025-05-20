@@ -19,7 +19,8 @@ const Toggle:React.FC<ToggleProps> = ({
     <div
       className={`
         ${isActive ? activeStyle : inactiveStyle} 
-        grow text-[20px] rounded-[8px] w-[120px] h-[44px] flex items-center justify-center cursor-pointer transition-all-300-out`}
+        lg:text-[20px]
+        text-[16px] py-2.5 grow rounded-[8px] w-full flex items-center justify-center cursor-pointer transition-all-300-out`}
       onClick={() => setSelectedToggle(text)}>
       <p className={`mt-0.5`}>{text}</p>
     </div>
