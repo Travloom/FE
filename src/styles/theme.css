@@ -28,6 +28,7 @@
 
     /* 브레이크 포인트 */
     --breakpoint-lg: 1080px;
+    --breakpoint-md: 768px;
 
     /* 색상 */
     --color-gray-50: #F7F7F7;
