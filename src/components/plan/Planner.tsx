@@ -5,6 +5,7 @@ import PlaceList from "./map/PlaceList";
 import { PlaceItems } from "@/mocks/places";
 import MapContent from "./map/MapContent";
 import SchedulerMobile from "./schedule/SchedulerMobile";
+import PlaceListMobile from "./map/PlaceListMobile";
 
 const Planner = () => {
 
@@ -27,8 +28,11 @@ const Planner = () => {
             </div>
           </>
         ) : (
-          <div className={`flex flex-row h-full`}>
+          <div 
+            className={`
+             relative h-full`}>
             <PlaceList restaurants={PlaceItems.restaurants} hotels={PlaceItems.hotels} attractions={PlaceItems.attractions} />
+            <PlaceListMobile restaurants={PlaceItems.restaurants} hotels={PlaceItems.hotels} attractions={PlaceItems.attractions} />
             <MapContent />
           </div>
         )}
