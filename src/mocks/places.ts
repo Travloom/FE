@@ -27,6 +27,36 @@ export const PlaceItems = {
         rate: 4.9,
         detail: "어쩌구 저쩌구",
         imageUrl: "https://lh3.googleusercontent.com/gps-cs-s/AC9h4npgp54JgYG3a_9BfG_p3JjsggLnPNpMk_2Hvc4U1E3ZFNHAPIPSyv3lTbouOlwGiq_nOZT_kuRqIxrs1Z9OrJaYOc3wHud4n69qnDQ5ED0CJ4vNLOzJHgonWIiaQlOSxpCD8cBb=w92-h92-n-k-no",
+      },
+      {
+        name: "해수욕장",
+        rate: 4.9,
+        detail: "어쩌구 저쩌구",
+        imageUrl: "https://lh3.googleusercontent.com/gps-cs-s/AC9h4npgp54JgYG3a_9BfG_p3JjsggLnPNpMk_2Hvc4U1E3ZFNHAPIPSyv3lTbouOlwGiq_nOZT_kuRqIxrs1Z9OrJaYOc3wHud4n69qnDQ5ED0CJ4vNLOzJHgonWIiaQlOSxpCD8cBb=w92-h92-n-k-no",
+      },
+      {
+        name: "해수욕장",
+        rate: 4.9,
+        detail: "어쩌구 저쩌구",
+        imageUrl: "https://lh3.googleusercontent.com/gps-cs-s/AC9h4npgp54JgYG3a_9BfG_p3JjsggLnPNpMk_2Hvc4U1E3ZFNHAPIPSyv3lTbouOlwGiq_nOZT_kuRqIxrs1Z9OrJaYOc3wHud4n69qnDQ5ED0CJ4vNLOzJHgonWIiaQlOSxpCD8cBb=w92-h92-n-k-no",
+      },
+      {
+        name: "해수욕장",
+        rate: 4.9,
+        detail: "어쩌구 저쩌구",
+        imageUrl: "https://lh3.googleusercontent.com/gps-cs-s/AC9h4npgp54JgYG3a_9BfG_p3JjsggLnPNpMk_2Hvc4U1E3ZFNHAPIPSyv3lTbouOlwGiq_nOZT_kuRqIxrs1Z9OrJaYOc3wHud4n69qnDQ5ED0CJ4vNLOzJHgonWIiaQlOSxpCD8cBb=w92-h92-n-k-no",
+      },
+      {
+        name: "해수욕장",
+        rate: 4.9,
+        detail: "어쩌구 저쩌구",
+        imageUrl: "https://lh3.googleusercontent.com/gps-cs-s/AC9h4npgp54JgYG3a_9BfG_p3JjsggLnPNpMk_2Hvc4U1E3ZFNHAPIPSyv3lTbouOlwGiq_nOZT_kuRqIxrs1Z9OrJaYOc3wHud4n69qnDQ5ED0CJ4vNLOzJHgonWIiaQlOSxpCD8cBb=w92-h92-n-k-no",
+      },
+      {
+        name: "해수욕장",
+        rate: 4.9,
+        detail: "어쩌구 저쩌구",
+        imageUrl: "https://lh3.googleusercontent.com/gps-cs-s/AC9h4npgp54JgYG3a_9BfG_p3JjsggLnPNpMk_2Hvc4U1E3ZFNHAPIPSyv3lTbouOlwGiq_nOZT_kuRqIxrs1Z9OrJaYOc3wHud4n69qnDQ5ED0CJ4vNLOzJHgonWIiaQlOSxpCD8cBb=w92-h92-n-k-no",
       }
     ],
 }
