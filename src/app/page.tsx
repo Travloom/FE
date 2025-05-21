@@ -48,8 +48,8 @@ export default function Home() {
                   <PlanInput />
                   <div 
                     className={`
-                      lg:max-h-[126px]
-                      max-h-[118px] w-full flex flex-col gap-10`}>
+                      lg:max-h-[119px]
+                      max-h-[108px] w-full flex flex-col gap-10`}>
                     <div className={`flex flex-row gap-2.5 w-full top-0`}>
                       {TAGLIST.map((tag, index) => (
                         <TagButton key={index} title={tag.title} tagList={tag.tagList} />

@@ -64,8 +64,8 @@ const TagButton: React.FC<TagButtonProps> = ({
       className={`
         h-fit w-fit
       bg-white text-gray-300 border-[1px] ${isSelected ? `border-point` : `border-gray-300`}
-        lg:text-[20px] lg:px-4 lg:py-2
-        text-[14px] px-3 py-1.5 rounded-[22px] flex flex-col w-fit h-fit cursor-pointer transition-all-300-out items-center select-none`}
+        lg:text-[18px] lg:px-3 lg:py-1.5 lg:rounded-[18px]
+        text-[14px] px-3 py-1.5 rounded-[16px] flex flex-col w-fit h-fit cursor-pointer transition-all-300-out items-center select-none`}
       onMouseOver={() => setIsHover(true)}
       onMouseLeave={handleMouseLeave}>
       <motion.p
