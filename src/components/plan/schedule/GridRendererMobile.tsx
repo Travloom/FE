@@ -2,18 +2,17 @@ import { Layout, Responsive, WidthProvider } from "react-grid-layout";
 import ScheduleBox from "./ScheduleBox";
 import { TIME_DIVIDE } from "@/constants/Plan";
 import { CustomLayout } from "@/types/schedule/types";
-import { useCallback } from "react";
 
 
 interface Props {
   customLayout: CustomLayout[];
   onLayoutChange: (newLayout: Layout[]) => void;
-  dayLen: number;
+  _dayLen: number;
 }
 
 const ResponsiveGridLayout = WidthProvider(Responsive);
 
-const GridRendererMobile = ({ customLayout, onLayoutChange, dayLen }: Props) => {
+const GridRendererMobile = ({ customLayout, onLayoutChange, _dayLen }: Props) => {
 
   return (
     <ResponsiveGridLayout

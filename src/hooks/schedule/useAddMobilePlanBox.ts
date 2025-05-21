@@ -1,6 +1,6 @@
 import { MouseEvent } from "react";
 import { v4 as uuidv4 } from "uuid";
-import { TIME_DIVIDE, GRID_WIDTH, GRID_HEIGHT } from "@/constants/Plan";
+import { TIME_DIVIDE } from "@/constants/Plan";
 import { CustomLayout } from "@/types/schedule/types";
 
 export const useAddMobilePlanBox = (layout: CustomLayout[], setLayout: (val: CustomLayout[]) => void) => {

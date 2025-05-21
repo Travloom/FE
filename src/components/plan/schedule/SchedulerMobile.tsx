@@ -80,7 +80,7 @@ const SchedulerMobile = () => {
               <div
                 className={`cursor-pointer w-full h-full`}
                 onMouseDown={handleAddPlanBoxMobile}>
-                <GridRendererMobile customLayout={layout} onLayoutChange={handleChangeLayoutMobile} dayLen={4} />
+                <GridRendererMobile customLayout={layout} onLayoutChange={handleChangeLayoutMobile} _dayLen={4} />
               </div>
 
             </div>

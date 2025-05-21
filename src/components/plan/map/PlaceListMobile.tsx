@@ -4,7 +4,7 @@ import Toggle from "@/components/common/Toggle";
 import { PlaceProps } from "@/types/plan/type";
 import { useEffect, useRef, useState } from "react";
 import Place from "./Place";
-import { AnimatePresence, motion, useAnimation, useMotionValue } from "framer-motion";
+import { AnimatePresence, motion, PanInfo, useAnimation, useMotionValue } from "framer-motion";
 
 interface PlaceListProps {
   restaurants: PlaceProps[];
@@ -30,7 +30,7 @@ const PlaceListMobile: React.FC<PlaceListProps> = ({
 
   const controls = useAnimation();
 
-  const handleDragEnd = (_: any, info: any) => {
+  const handleDragEnd = (_: PointerEvent | MouseEvent | TouchEvent, info: PanInfo) => {
     const dragOffset = info.offset.y;
 
     console.log(dragOffset)
