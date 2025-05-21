@@ -16,12 +16,27 @@ const ScheduleBox:React.FC<PlanBoxProps> = ({
     <AnimatePresence>
       <Motion.MotionDiv
         onClick={(e) => {e.stopPropagation()}}
-        className={`flex items-center justify-between gap-1 bg-white rounded-[8px] border border-gray-300 px-1.5 py-1.5 w-full h-full cursor-pointer`}>
-        <div className={`flex flex-col gap-1 h-full`}>
-          <p className={`text-black text-[12px]`}>{title}</p>
-          <p className={`text-gray-300 text-[10px]`}>{content}</p>
+        className={`
+          md:flex-row md:p-1.5 md:gap-1
+          flex-col p-1
+          flex items-center justify-between bg-white rounded-[8px] border border-gray-300 w-full h-full cursor-pointer`}>
+        <div className={`md:gap-1 flex flex-col w-full h-full grow overflow-hidden`}>
+          <p 
+            className={`
+              md:text-[12px]
+              max-md:text-center
+            text-black text-[10px]`}>{title}</p>
+          <p 
+            className={`
+              max-md:text-center md:text-[10px]
+              text-gray-300 text-[8px] w-full grow break-all`}>
+            {content}
+            </p>
         </div>
-        <RightArrowIcon className={`h-3.5 text-gray-300`}/>
+        <RightArrowIcon 
+          className={`
+            md:h-3.5 md:rotate-0
+            h-2.5 rotate-90 text-gray-300`}/>
       </Motion.MotionDiv>
     </AnimatePresence>
   )

@@ -11,7 +11,10 @@ const Place: React.FC<PlaceProps> = ({
 }) => {
 
   return (
-    <div className={`flex flex-row gap-2.5 w-full h-[140px] rounded-[8px] border border-gray-200 p-2.5 bg-white`}>
+    <div 
+      className={`
+        lg:gap-2.5 lg:h-[140px]
+        flex flex-row w-full h-[120px] min-h-[120px] rounded-[8px] border border-gray-200 p-2.5 bg-white`}>
       <div className={`overflow-hidden rounded-[4px] border border-gray-200 h-full aspect-square relative`}>
         <Image
           className={`object-cover`}
@@ -20,9 +23,9 @@ const Place: React.FC<PlaceProps> = ({
           alt={"이미지"} 
           unoptimized/>
       </div>
-      <div className={`flex flex-col gap-2.5 px-2.5 py-1`}>
-        <p className={`text-[20px]`}>{name}</p>
-        <div className={`flex flex-col gap-1 text-[16px] text-gray-400`}>
+      <div className={`lg:gap-2.5 gap-1.5 flex flex-col px-2.5 py-1`}>
+        <p className={`lg:text-[20px] md:text-[16px] text-[14px]`}>{name}</p>
+        <div className={`lg:text-[16px] md:text-[14px] text-[12px] flex flex-col gap-1 text-gray-400`}>
           <p>평점 : {rate}</p>
           <p>{detail}</p>
         </div>

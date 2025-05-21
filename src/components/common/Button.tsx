@@ -14,7 +14,8 @@ const Button:React.FC<ButtonProps> = ({
     <div 
       className={`
         ${isActive ? `bg-point text-white` : `bg-white text-point`}
-        border border-point text-[20px] rounded-[22px] px-4 py-2 w-fit h-fit cursor-pointer select-none ${className}`}>
+        lg:text-[18px] lg:px-3 lg:py-1.5
+        text-[14px] px-3 py-1.5 border border-point rounded-[22px] w-fit h-fit cursor-pointer select-none ${className}`}>
         <p className={`mt-0.5`}>{text}</p>
     </div>
   )

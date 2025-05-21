@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 'use client'
 
 import Button from "@/components/common/Button";
@@ -55,7 +57,6 @@ const PlanPage = () => {
       setTitle(data?.title)
       setIsPending(false);
 
-      console.log(planData);
     })
 
     return () => unsubscribe();
@@ -66,9 +67,11 @@ const PlanPage = () => {
       <AnimatePresence>
         {!isPagePending && !isPending &&
           <Motion.MotionDiv
-            className={`flex flex-col gap-2.5 p-[60px] pt-[140px]`}>
-            <div className={`flex flex-row justify-between`}>
-              <div className={`flex flex-row gap-2.5`}>
+            className={`
+              lg:p-[60px] lg:pt-[140px]
+              pt-[70px] gap-2.5 flex flex-col h-full transition-all-300-out`}>
+            <div className={`lg:p-0 px-2.5 flex flex-row justify-between`}>
+              <div className={`flex flex-row gap-2.5 transition-all-300-out`}>
                 {tags?.where && <Button text={tags?.where} isActive={false} />}
                 {tags?.who && <Button text={tags?.who} isActive={false} />}
                 {tags?.theme && <Button text={tags?.theme} isActive={false} />}

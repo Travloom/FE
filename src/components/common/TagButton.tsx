@@ -62,9 +62,10 @@ const TagButton: React.FC<TagButtonProps> = ({
   return (
     <div
       className={`
-        h-fit
+        h-fit w-fit
       bg-white text-gray-300 border-[1px] ${isSelected ? `border-point` : `border-gray-300`}
-        text-[20px] rounded-[22px] flex flex-col px-4 py-2 w-fit h-fit cursor-pointer transition-all-300-out items-center select-none`}
+        lg:text-[18px] lg:px-3 lg:py-1.5 lg:rounded-[18px]
+        text-[14px] px-3 py-1.5 rounded-[16px] flex flex-col w-fit h-fit cursor-pointer transition-all-300-out items-center select-none`}
       onMouseOver={() => setIsHover(true)}
       onMouseLeave={handleMouseLeave}>
       <motion.p
@@ -105,10 +106,10 @@ const TagButton: React.FC<TagButtonProps> = ({
           ) : (
             <motion.input
               initial={{ opacity: 0, width: 0, height: "auto", marginTop: 10 }}
-              animate={{ opacity: 1, width: "auto", height: "auto", marginTop: 10 }}
+              animate={{ opacity: 1, width: 100, height: "auto", marginTop: 10 }}
               exit={{ opacity: 0, width: 0, height: 0, marginTop: 0 }}
               transition={{ duration: 0.3 }}
-              className={`text-center w-fit`}
+              className={`text-center`}
               placeholder={title}
               ref={regionRef}
               value={region}

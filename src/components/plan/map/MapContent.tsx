@@ -4,14 +4,17 @@
 
 import useMapStore from "@/stores/useMapStore";
 import Script from "next/script";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 
 const MapContent = () => {
 
   const {
     isReady,
     setIsReady,
+    isOpen,
   } = useMapStore();
+
+  const mapRef = useRef<naver.maps.Map | null>(null);
 
   const initMap = (x: number, y: number) => {
     if (typeof window === 'undefined' || !window.naver) return;
@@ -25,6 +28,8 @@ const MapContent = () => {
       position: new naver.maps.LatLng(x, y),
       map: map
     });
+
+    mapRef.current = map;
   };
 
   useEffect(() => {
@@ -60,6 +65,23 @@ const MapContent = () => {
 
   }, [isReady]);
 
+  useEffect(() => {
+  const mapEl = document.getElementById('map');
+  if (!mapEl || !mapRef.current) return;
+
+  const observer = new ResizeObserver(() => {
+    if (mapRef.current) {
+      window.naver.maps.Event.trigger(mapRef.current, 'resize');
+    }
+  });
+
+  observer.observe(mapEl);
+
+  return () => {
+    observer.disconnect();
+  };
+}, [isReady, mapRef.current]);
+
   return (
     <>
       <Script
@@ -67,7 +89,11 @@ const MapContent = () => {
         src={`https://oapi.map.naver.com/openapi/v3/maps.js?ncpKeyId=${process.env.NEXT_PUBLIC_MAP_CLIENT_KEY}&submodules=geocoder`}
         onLoad={() => setIsReady(true)} />
       {/* 준비가 되면 initMap 실행 */}
-      <div id={'map'} className={`w-full h-full`}>
+      <div
+        id={'map'}
+        className={`
+          ${isOpen ? `lg:w-[calc(100%-420px)] md:w-[calc(100%-320px)]` : `w-full `}
+          w-full h-full grow !absolute right-0 transition-all-300-out`}>
       </div>
     </>
   );
