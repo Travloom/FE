@@ -1,30 +1,17 @@
 'use client'
 
-import Toggle from "@/components/common/Toggle";
-import { PlaceProps } from "@/types/plan/type";
 import { useEffect, useRef, useState } from "react";
-import Place from "./Place";
 import { AnimatePresence, motion, PanInfo, useAnimation, useMotionValue } from "framer-motion";
+import PlaceList from "./PlaceList";
 
-interface BottombarProps {
-  restaurants: PlaceProps[];
-  hotels: PlaceProps[];
-  attractions: PlaceProps[];
-}
-
-const Bottombar: React.FC<BottombarProps> = ({
-  restaurants,
-  hotels,
-  attractions,
-}) => {
+const Bottombar = () => {
 
   const SNAP_TOP = 2;
-  const [snapBottom, setSnapBottom] = useState(420);
+  const [snapBottom, setSnapBottom] = useState(Math.max(window.innerHeight - 435, 100));
   const THRESHOLD = 50;
 
   const yMotion = useMotionValue(snapBottom);
 
-  const [selectedToggle, setSelectedToggle] = useState("식당");
 
   const divRef = useRef(null);
 
@@ -32,9 +19,6 @@ const Bottombar: React.FC<BottombarProps> = ({
 
   const handleDragEnd = (_: PointerEvent | MouseEvent | TouchEvent, info: PanInfo) => {
     const dragOffset = info.offset.y;
-
-    console.log(dragOffset)
-    console.log(yMotion.get())
 
     if (dragOffset < - THRESHOLD) {
       controls.start({ y: SNAP_TOP, transition: { type: 'spring', stiffness: 300, damping: 30 } });
@@ -50,7 +34,7 @@ const Bottombar: React.FC<BottombarProps> = ({
 
   useEffect(() => {
     function updateSnapBottom() {
-      const newSnap = Math.max(window.innerHeight - 370, 100);
+      const newSnap = Math.max(window.innerHeight - 435, 100);
       setSnapBottom(newSnap);
       yMotion.set(newSnap);
       controls.start({ y: newSnap });
@@ -67,10 +51,6 @@ const Bottombar: React.FC<BottombarProps> = ({
     };
 
   }, []);
-
-  const stopDragPropagation = (e: React.PointerEvent) => {
-    e.stopPropagation();
-  };
 
   return (
     <AnimatePresence>
@@ -91,33 +71,8 @@ const Bottombar: React.FC<BottombarProps> = ({
               <div className={`self-center w-[40%] h-1 rounded-full bg-gray-200`} />
             </div>
           <div
-            className={`h-full w-full flex flex-col gap-2.5 px-2.5 pt-6 pb-4 rounded-bl-[8px] transition-all-300-out`}>
-            <div
-              className={`flex flex-col gap-2.5 overflow-auto`}
-              onPointerMove={stopDragPropagation}>
-              <div className={`flex flex-row gap-2.5`}>
-                <Toggle text={"식당"} isActive={selectedToggle === "식당"} setSelectedToggle={setSelectedToggle} />
-                <Toggle text={"숙소"} isActive={selectedToggle === "숙소"} setSelectedToggle={setSelectedToggle} />
-                <Toggle text={"명소"} isActive={selectedToggle === "명소"} setSelectedToggle={setSelectedToggle} />
-              </div>
-              <div className={`flex flex-col gap-3 overflow-auto`}>
-                {selectedToggle === "식당" ? (
-                  restaurants?.map((place, index) => (
-                    <Place key={index} name={place.name} rate={place.rate} detail={place.detail} imageUrl={place.imageUrl} />
-                  ))
-                ) : (
-                  selectedToggle === "숙소" ? (
-                    hotels?.map((place, index) => (
-                      <Place key={index} name={place.name} rate={place.rate} detail={place.detail} imageUrl={place.imageUrl} />
-                    ))
-                  ) : (
-                    attractions?.map((place, index) => (
-                      <Place key={index} name={place.name} rate={place.rate} detail={place.detail} imageUrl={place.imageUrl} />
-                    ))
-                  )
-                )}
-              </div>
-            </div>
+            className={`h-full w-full px-2.5 pt-3 pb-4 rounded-bl-[8px]`}>
+            <PlaceList/>
           </div>
         </div>
       </motion.div>
