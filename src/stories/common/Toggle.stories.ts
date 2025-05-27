@@ -9,7 +9,7 @@ const meta = {
   parameters: {
   },
   args: {
-    text: "식당",
+    text: "맛집",
     isActive: true,
   },
 } satisfies Meta<typeof Toggle>;
@@ -19,7 +19,7 @@ type Story = StoryObj<typeof meta>;
 
 export const Active: Story = {
   args: {
-    text: "식당",
+    text: "맛집",
     isActive: true,
     setSelectedToggle: () => {},
   }
@@ -27,7 +27,7 @@ export const Active: Story = {
 
 export const Inactive: Story = {
   args: {
-    text: "식당",
+    text: "맛집",
     isActive: false,
     setSelectedToggle: () => {},
   }

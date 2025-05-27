@@ -1,17 +1,17 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import PlaceList from '@/components/plan/map/PlaceList';
+import Sidebar from '@/components/plan/map/Sidebar';
 import { PlaceItems } from '@/mocks/places';
 
 const meta = {
   title: 'Plan/Map/PlaceList',
-  component: PlaceList,
+  component: Sidebar,
   tags: ['autodocs'],
   parameters: {
   },
   args: {
   },
-} satisfies Meta<typeof PlaceList>;
+} satisfies Meta<typeof Sidebar>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
