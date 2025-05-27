@@ -118,14 +118,15 @@ const PlaceList = ({
                   </div>
                 )
               ) : (
-                places.searchList ? (
-                  isPending ? (
-                    <div className={`w-full h-full pb-[20%] content-center justify-items-center`}>
-                      <HashLoader
-                        size={30}
-                        color={`#6c5ce7`} />
-                    </div>
-                  ) : (
+                isPending ? (
+                  <div className={`w-full h-full pb-[20%] content-center justify-items-center`}>
+                    <HashLoader
+                      size={30}
+                      color={`#6c5ce7`} />
+                  </div>
+                ) : (
+                  places.searchList ? (
+
                     places.searchList.length !== 0 ? (
                       places.searchList?.map((place) => (
                         <Place
@@ -146,12 +147,12 @@ const PlaceList = ({
                         <p>검색 결과가 없습니다.</p>
                         <p>검색어를 확인해주세요.</p>
                       </div>
-                    ))
-                ) : (
-                  <div className={`lg:text-[16px] text-[14px] h-full text-center content-center text-gray-300 pb-[15%]`}>
-                    원하는 장소를 검색해보세요
-                  </div>
-                ))))}
+                    )
+                  ) : (
+                    <div className={`lg:text-[16px] text-[14px] h-full text-center content-center text-gray-300 pb-[15%]`}>
+                      원하는 장소를 검색해보세요
+                    </div>
+                  )))))}
         </div>
       </div>
     </div>
