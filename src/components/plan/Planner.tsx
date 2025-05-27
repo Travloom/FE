@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Toggle from "../common/Toggle";
 import Scheduler from "./schedule/Scheduler";
 import Sidebar from "./map/Sidebar";
@@ -10,6 +10,21 @@ const Planner = () => {
 
   const [selectedToggle, setSelectedToggle] = useState("일정");
 
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+
+    handleResize();
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    }
+  }, [])
+
   return (
     <div className={`lg:rounded-[8px] flex flex-col border border-gray-300 bg-white h-full overflow-hidden`}>
       <div className={`flex flex-row gap-2.5 p-2.5 w-full border-b border-gray-300 shrink-0`}>
@@ -19,16 +34,17 @@ const Planner = () => {
       <div className={`h-full overflow-hidden`}>
 
         {selectedToggle === '일정' &&
-          <div className={`h-full`}>
-            <div className={`md:block hidden h-full`}>
-              <Scheduler />
-            </div>
-            <div className={`md:hidden block h-full`}>
-              <SchedulerMobile />
+          <div
+            className={`h-full`}>
+            <div className={`h-full`}>
+              {isMobile ? (
+                <SchedulerMobile />
+              ) : (
+                <Scheduler />
+              )}
             </div>
           </div>
         }
-
 
         <div
           className={`
