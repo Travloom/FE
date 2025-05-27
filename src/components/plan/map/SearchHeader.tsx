@@ -1,5 +1,6 @@
 import useMapStore from "@/stores/useMapStore";
 import usePlaceStore from "@/stores/usePlaceStore";
+import { convertToPlaceType } from "@/utils/place/convertPlace";
 import { useState } from "react";
 
 const SearchHeader = () => {
@@ -37,8 +38,13 @@ const SearchHeader = () => {
           status: google.maps.places.PlacesServiceStatus
         ) => {
           if (status === google.maps.places.PlacesServiceStatus.OK && results) {
-            console.log(results)
-            setPlaces('searchList', results)
+
+            const convertedPlaces = results.map(place => convertToPlaceType(place)).filter(Boolean);
+
+            
+            console.log(convertedPlaces)
+            
+            setPlaces('searchList', convertedPlaces)
             map.panTo(results[0].geometry!.location!);
             setIsPending(false);
             
