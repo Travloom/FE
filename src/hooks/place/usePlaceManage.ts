@@ -1,11 +1,8 @@
 import { fireStore } from "@/firebase/firebaseClient";
 import usePlaceStore from "@/stores/usePlaceStore";
 import { PlaceType } from "@/types/place/type";
-import { convertToPlaceType as convertToPlaceType } from "@/utils/place/convertPlace";
 import { doc, getDoc, onSnapshot, setDoc } from "firebase/firestore";
 import { useEffect } from "react"
-
-
 
 export const usePlaceManage = (planId: string) => {
 
@@ -46,7 +43,7 @@ export const usePlaceManage = (planId: string) => {
     }
   }, [planId]);
 
-  const updatePlace = async (newPlace: google.maps.places.PlaceResult | PlaceType) => {
+  const updatePlace = async (newPlace: PlaceType) => {
     const targetDoc = doc(fireStore, 'travloom', 'plan', `${planId}`, 'places');
 
     const docSnap = await getDoc(targetDoc);
@@ -61,15 +58,9 @@ export const usePlaceManage = (planId: string) => {
 
     const currentList: PlaceType[] = data[listKey] || [];
 
-    const convertedPlace = (newPlace as any).placeId
-      ? newPlace as PlaceType // 이미 PlaceType이라고 가정
-      : convertToPlaceType(newPlace);
-
-    if (!convertedPlace) return;
-
     const updatedList = isAlreadyExisted(newPlace)
-      ? currentList.filter(p => p.placeId !== convertedPlace.placeId)
-      : [...currentList, convertedPlace];
+      ? currentList.filter(p => p.placeId !== newPlace.placeId)
+      : [...currentList, newPlace];
 
     await setDoc(targetDoc, {
       ...data,
@@ -77,15 +68,12 @@ export const usePlaceManage = (planId: string) => {
     })
   }
 
-  const isAlreadyExisted = (newPlace: google.maps.places.PlaceResult | PlaceType) => {
+  const isAlreadyExisted = (newPlace: PlaceType) => {
     const listKey =
       newPlace.types?.includes('restaurant') ? 'restaurantList' :
         newPlace.types?.includes('lodging') ? 'hotelList' : 'attractionList'
 
-    const placeId =
-      'placeId' in newPlace ? newPlace.placeId :
-        'place_id' in newPlace ? newPlace.place_id :
-          undefined;
+    const placeId = newPlace.placeId;
 
     return places[listKey]?.some(p => p.placeId === placeId) ?? false;
   }
