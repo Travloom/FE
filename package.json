@@ -12,15 +12,19 @@
     "chromatic": "npx chromatic --project-token=chpt_f2897a40bf07024"
   },
   "dependencies": {
+    "@googlemaps/react-wrapper": "^1.2.0",
     "@svgr/webpack": "^8.1.0",
+    "@types/google.maps": "^3.58.1",
     "firebase": "^11.7.1",
     "framer-motion": "^12.9.2",
+    "lodash": "^4.17.21",
     "next": "15.3.1",
     "react": "^19.0.0",
     "react-calendar": "^5.1.0",
     "react-dom": "^19.0.0",
     "react-grid-layout": "^1.5.1",
     "react-resizable": "^3.0.5",
+    "react-spinners": "^0.17.0",
     "uuid": "^11.1.0",
     "zustand": "^5.0.4"
   },
@@ -36,6 +40,7 @@
     "@storybook/react": "8.6.12",
     "@storybook/test": "8.6.12",
     "@tailwindcss/postcss": "^4",
+    "@types/lodash": "^4.17.17",
     "@types/navermaps": "^3.7.9",
     "@types/node": "^20",
     "@types/react": "^19",
