@@ -10,7 +10,6 @@ const SearchHeader = () => {
   } = useMapStore();
 
   const {
-    isPending,
     setIsPending,
     setPlaces,
   } = usePlaceStore();

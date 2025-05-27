@@ -3,7 +3,6 @@
 import { RightArrowIcon } from "@/assets/svgs";
 import useMapStore from "@/stores/useMapStore";
 import PlaceList from "./PlaceList";
-import usePlaceStore from "@/stores/usePlaceStore";
 
 const Sidebar = () => {
 

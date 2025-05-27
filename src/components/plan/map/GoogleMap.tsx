@@ -1,8 +1,6 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import Marker from "./Marker";
-import SearchHeader from "./SearchHeader";
 import useMapStore from "@/stores/useMapStore";
-import usePlaceStore from "@/stores/usePlaceStore";
 
 const GoogleMap = () => {
   const mapRef = useRef<HTMLDivElement>(null);
@@ -11,10 +9,6 @@ const GoogleMap = () => {
     isOpen,
     setMap,
   } = useMapStore();
-
-  const {
-    places,
-  } = usePlaceStore();
 
   useEffect(() => {
     if (mapRef.current) {
