@@ -12,9 +12,11 @@ type PlacesType = {
 
 interface PlaceState {
   places: PlacesType;
+  selectedPlace: string | null;
   selectedToggle: string;
 
   setPlaces: (category: Category, newPlaces: PlaceType[]) => void;
+  setSelectedPlace: (value: string) => void;
   setSelectedToggle: (value: string) => void;
 
   
@@ -30,6 +32,7 @@ const usePlaceStore = create<PlaceState>((set) => ({
     attractionList: [],
     searchList: null,
   },
+  selectedPlace: null,
   selectedToggle: "맛집",
 
   isPending: false,
@@ -41,6 +44,7 @@ const usePlaceStore = create<PlaceState>((set) => ({
         [category]: newPlaces,
       },
     })),
+  setSelectedPlace: (value: string) => set({selectedPlace: value}),
   setSelectedToggle: (value: string) => set({selectedToggle: value}),
 
   setIsPending: (value: boolean) => set({isPending: value}),

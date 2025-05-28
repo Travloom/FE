@@ -15,10 +15,6 @@ const PlaceList = ({
     setSelectedToggle,
   } = usePlaceStore();
 
-  const stopDragPropagation = (e: React.PointerEvent) => {
-    e.stopPropagation();
-  };
-
   const {
     isPending,
   } = usePlaceStore();
@@ -34,21 +30,20 @@ const PlaceList = ({
       <div
         className={`
           lg:w-[420px] md:w-[320px]
-          h-full w-full flex flex-col gap-2.5 p-2.5 rounded-bl-[8px] transition-all-300-out overflow-auto`}>
+          h-full w-full flex flex-col gap-2.5 py-2.5 rounded-bl-[8px] transition-all-300-out overflow-auto`}>
         <div
-          className={`flex flex-row gap-2.5`}
-          onPointerMove={stopDragPropagation}>
+          className={`flex flex-row gap-2.5 px-2.5`}>
           <Toggle text={"맛집"} isActive={selectedToggle === "맛집"} setSelectedToggle={setSelectedToggle} />
           <Toggle text={"호텔"} isActive={selectedToggle === "호텔"} setSelectedToggle={setSelectedToggle} />
           <Toggle text={"명소"} isActive={selectedToggle === "명소"} setSelectedToggle={setSelectedToggle} />
           <Toggle text={"검색"} isSearch={true} isActive={selectedToggle === "검색"} setSelectedToggle={setSelectedToggle} />
         </div>
         {selectedToggle === "검색" &&
-          <div className={`w-full`}>
+          <div className={`w-full px-2.5`}>
             <SearchHeader />
           </div>
         }
-        <div className={`flex flex-col gap-3 overflow-auto h-full`}>
+        <div className={`flex flex-col gap-3 overflow-auto h-full pl-2.5 pr-[3px] mr-[7px]`}>
           {selectedToggle === "맛집" ? (
             places.restaurantList?.length !== 0 ? (
               places.restaurantList?.map((place) => (
@@ -62,7 +57,7 @@ const PlaceList = ({
                   lat={place.lat}
                   lng={place.lng}
                   types={place.types}
-                  onClick={() => { placeManage.updatePlace(place) }}
+                  addPlace={() => { placeManage.updatePlace(place) }}
                   isOn={placeManage.isAlreadyExisted(place)} />
               ))
             ) : (
@@ -85,7 +80,7 @@ const PlaceList = ({
                     lat={place.lat}
                     lng={place.lng}
                     types={place.types}
-                    onClick={() => { placeManage.updatePlace(place) }}
+                    addPlace={() => { placeManage.updatePlace(place) }}
                     isOn={placeManage.isAlreadyExisted(place)} />
                 ))
               ) : (
@@ -108,7 +103,7 @@ const PlaceList = ({
                       lat={place.lat}
                       lng={place.lng}
                       types={place.types}
-                      onClick={() => { placeManage.updatePlace(place) }}
+                      addPlace={() => { placeManage.updatePlace(place) }}
                       isOn={placeManage.isAlreadyExisted(place)} />
                   ))
                 ) : (
@@ -139,7 +134,7 @@ const PlaceList = ({
                           lat={place.lat}
                           lng={place.lng}
                           types={place.types || []}
-                          onClick={() => { placeManage.updatePlace(place) }}
+                          addPlace={() => { placeManage.updatePlace(place) }}
                           isOn={placeManage.isAlreadyExisted(place)} />
                       ))
                     ) : (

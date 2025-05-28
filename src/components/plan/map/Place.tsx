@@ -2,12 +2,14 @@
 
 import { GoogleMapIcon, MyAttractionOffIcon, MyAttractionOnIcon, MyHotelOffIcon, MyHotelOnIcon, MyRestaurantOffIcon, MyRestaurantOnIcon } from "@/assets/svgs";
 import Motion from "@/components/motion/Motion";
+import useMapStore from "@/stores/useMapStore";
+import usePlaceStore from "@/stores/usePlaceStore";
 import { PlaceType } from "@/types/place/type";
 import { AnimatePresence } from "framer-motion";
 import Image from "next/image";
 
 interface PlaceProps extends PlaceType {
-  onClick?: () => void;
+  addPlace: () => void;
   isOn: boolean;
 }
 
@@ -18,10 +20,20 @@ const Place: React.FC<PlaceProps> = ({
   imageUrl="/",
   placeId,
   types,
+  lat,
+  lng,
 
-  onClick,
+  addPlace,
   isOn,
 }) => {
+
+  const {
+    map,
+  } = useMapStore();
+
+  const {
+    setSelectedPlace,
+  } = usePlaceStore();
 
   const altImage = '/images/alt_image.png'
 
@@ -29,18 +41,28 @@ const Place: React.FC<PlaceProps> = ({
     e.currentTarget.src = altImage;
   }
 
-
   const stopDragPropagation = (e: React.PointerEvent) => {
     e.stopPropagation();
-  };
+  }
+
+  const handleAddPlace = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    addPlace();
+  }
+
+  const handleClick = (e: React.MouseEvent) => {
+    setSelectedPlace(placeId);
+    map?.panTo(new google.maps.LatLng(lat, lng));
+  }
 
   return (
     <AnimatePresence>
       <Motion.MotionDiv
         className={`
         lg:gap-2.5 lg:h-[140px]
-        shrink-0 flex flex-row w-full h-[120px] min-h-[120px] rounded-[8px] border border-gray-200 p-2.5 bg-white`}
-        onPointerMove={stopDragPropagation}>
+        shrink-0 flex flex-row w-full h-[120px] min-h-[120px] rounded-[8px] border border-gray-200 p-2.5 bg-white hover:bg-gray-50 cursor-pointer transition-all-300-out`}
+        onPointerMove={stopDragPropagation}
+        onClick={handleClick}>
         <div className={`overflow-hidden rounded-[4px] border border-gray-200 h-full aspect-square shrink-0 relative`}>
           <Image
             className={`object-cover`}
@@ -49,7 +71,7 @@ const Place: React.FC<PlaceProps> = ({
             alt={"이미지"}
             onError={handleImage}
             unoptimized />
-          <div className={`lg:w-6 w-5`} onClick={onClick}>
+          <div className={`lg:w-6 w-5`} onClick={handleAddPlace}>
             <AnimatePresence>
               {types?.includes('restaurant') ? (
                 isOn ? (

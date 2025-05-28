@@ -1,3 +1,4 @@
+import Motion from "@/components/motion/Motion";
 import useMapStore from "@/stores/useMapStore";
 import usePlaceStore from "@/stores/usePlaceStore";
 import { AnimatePresence, motion } from "framer-motion";
@@ -13,6 +14,7 @@ const Marker = () => {
 
   const {
     places,
+    selectedPlace,
     selectedToggle,
   } = usePlaceStore();
 
@@ -42,18 +44,17 @@ const Marker = () => {
 
     const newMarkers: google.maps.marker.AdvancedMarkerElement[] = [];
 
-
     // 새 마커 생성
     markPlaces?.forEach((place) => {
       const marker = new google.maps.marker.AdvancedMarkerElement({
         map,
         position: new google.maps.LatLng(place.lat, place.lng),
-        content: renderToDOMElement(Pin),
+        content: renderToDOMElement(<Pin placeId={place.placeId}/>),
+        zIndex: selectedPlace === place.placeId ? 101 : 100,
       });
 
       marker.addListener("click", () => {
         map.panTo(new google.maps.LatLng(place.lat, place.lng));
-        // 필요시 map.setZoom(16); 등 추가
       });
 
       newMarkers.push(marker);
@@ -61,7 +62,16 @@ const Marker = () => {
 
     // 새 마커 배열 저장
     setMarkers(newMarkers);
+
   }, [markPlaces, selectedToggle, map]);
+
+  // 마커 배열이 변경 될 때마다 첫번째 장소로 panTo 실행
+  useEffect(() => {
+    if (markPlaces && markPlaces.length > 0 && map) {
+      console.log(markPlaces)
+      map.panTo(new google.maps.LatLng(markPlaces[0].lat, markPlaces[0].lng));
+    }
+  }, [markPlaces])
 
   return null;
 };
@@ -69,21 +79,32 @@ const Marker = () => {
 export default Marker;
 
 
-const Pin = () => {
+const Pin = ({placeId}: {placeId: string}) => {
+
+  const {
+    selectedPlace,
+    setSelectedPlace,
+  } = usePlaceStore();
+
+  const handleIsActive = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setSelectedPlace(placeId)
+  }
+
   return (
     <AnimatePresence>
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
-        className={`outline-0 w-10 aspect-3/4 bg-[url('/svgs/restaurant_marker.svg')] hover:bg-[url('/svgs/restaurant_marker_hover.svg')] transition-all duration-300`} />
+      <Motion.MotionDiv
+        className={`
+          ${placeId === selectedPlace ? `bg-[url('/svgs/restaurant_marker_hover.svg')]` : `bg-[url('/svgs/restaurant_marker.svg')]`}
+          outline-0 w-10 aspect-3/4 hover:bg-[url('/svgs/restaurant_marker_hover.svg')] transition-all duration-300`} 
+        onClick={handleIsActive}/>
     </AnimatePresence>
   )
 }
 
-const renderToDOMElement = (Component: React.FC) => {
+const renderToDOMElement = (Component: React.ReactNode) => {
   const container = document.createElement('div');
   const root = createRoot(container);
-  root.render(<Component />);
+  root.render(Component);
   return container;
 };
