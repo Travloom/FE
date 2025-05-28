@@ -2,12 +2,12 @@ import { motion } from "framer-motion";
 import { ComponentProps, ReactNode } from "react";
 
 type MotionDivProps = {
-  children: ReactNode;
+  children?: ReactNode;
   className?: string;
 } & ComponentProps<typeof motion.div>;
 
 type MotionPProps = {
-  children: ReactNode;
+  children?: ReactNode;
   className?: string;
 } & ComponentProps<typeof motion.p>;
 
