@@ -5,8 +5,14 @@ import usePlaceStore from "@/stores/usePlaceStore";
 import { usePlaceManage } from "@/hooks/place/usePlaceManage";
 import { useParams } from "next/navigation";
 import { HashLoader } from "react-spinners";
+import { RefObject } from "react";
 
-const PlaceList = ({
+interface PlaceListProp {
+  scrollRef?: RefObject<HTMLDivElement | null>
+}
+
+const PlaceList:React.FC<PlaceListProp> = ({
+  scrollRef
 }) => {
 
   const {
@@ -21,16 +27,18 @@ const PlaceList = ({
 
   const { planId } = useParams();
 
+
   const planIdStr = typeof planId === "string" ? planId : Array.isArray(planId) ? planId[0] : "";
 
   const placeManage = usePlaceManage(planIdStr);
 
   return (
-    <div className={`overflow-hidden w-full h-full`}>
+    <div 
+      className={`overflow-hidden w-full h-full`}>
       <div
         className={`
           lg:w-[420px] md:w-[320px]
-          h-full w-full flex flex-col gap-2.5 py-2.5 rounded-bl-[8px] transition-all-300-out overflow-auto`}>
+          h-full w-full flex flex-col gap-2.5 py-2.5 rounded-bl-[8px] transition-all-300-out overflow-hidden`}>
         <div
           className={`flex flex-row gap-2.5 px-2.5`}>
           <Toggle text={"맛집"} isActive={selectedToggle === "맛집"} setSelectedToggle={setSelectedToggle} />
@@ -43,7 +51,9 @@ const PlaceList = ({
             <SearchHeader />
           </div>
         }
-        <div className={`flex flex-col gap-3 overflow-auto h-full pl-2.5 pr-[3px] mr-[7px]`}>
+        <div 
+          className={`flex flex-col gap-3 overflow-auto h-full pl-2.5 pr-[3px] mr-[7px]`}
+          ref={scrollRef}>
           {selectedToggle === "맛집" ? (
             places.restaurantList?.length !== 0 ? (
               places.restaurantList?.map((place) => (

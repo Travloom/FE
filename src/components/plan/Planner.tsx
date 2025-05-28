@@ -3,7 +3,7 @@ import Toggle from "../common/Toggle";
 import Scheduler from "./schedule/Scheduler";
 import Sidebar from "./map/Sidebar";
 import SchedulerMobile from "./schedule/SchedulerMobile";
-import Bottombar from "./map/Bottombar";
+import BottomSheet from "./map/BottomSheet";
 import GoogleMapWrapper from "./map/GoogleMapWrapper";
 
 const Planner = () => {
@@ -51,7 +51,7 @@ const Planner = () => {
               ${selectedToggle === '지도' ? `` : `hidden`}
               relative h-full`}>
           <Sidebar />
-          <Bottombar />
+          <BottomSheet />
           <GoogleMapWrapper />
         </div>
 

@@ -1,7 +1,7 @@
 import Motion from "@/components/motion/Motion";
 import useMapStore from "@/stores/useMapStore";
 import usePlaceStore from "@/stores/usePlaceStore";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence } from "framer-motion";
 import { useEffect, useState } from "react";
 import { createRoot } from "react-dom/client";
 
@@ -14,15 +14,15 @@ const Marker = () => {
 
   const {
     places,
-    selectedPlace,
     selectedToggle,
+    setSelectedPlace
   } = usePlaceStore();
 
   const [markPlaces, setMarkPlaces] = useState(
     selectedToggle === '맛집' ? places.restaurantList :
       selectedToggle === '호텔' ? places.hotelList :
         selectedToggle === '명소' ? places.attractionList :
-          places.searchList
+          places.searchList ?? []
   );
 
   useEffect(() => {
@@ -30,7 +30,7 @@ const Marker = () => {
       selectedToggle === '맛집' ? places.restaurantList :
         selectedToggle === '호텔' ? places.hotelList :
           selectedToggle === '명소' ? places.attractionList :
-            places.searchList
+            places.searchList ?? []
     )
   }, [selectedToggle, places])
 
@@ -50,7 +50,6 @@ const Marker = () => {
         map,
         position: new google.maps.LatLng(place.lat, place.lng),
         content: renderToDOMElement(<Pin placeId={place.placeId}/>),
-        zIndex: selectedPlace === place.placeId ? 101 : 100,
       });
 
       marker.addListener("click", () => {
@@ -67,8 +66,8 @@ const Marker = () => {
 
   // 마커 배열이 변경 될 때마다 첫번째 장소로 panTo 실행
   useEffect(() => {
+    setSelectedPlace(markPlaces[0]?.placeId ?? "")
     if (markPlaces && markPlaces.length > 0 && map) {
-      console.log(markPlaces)
       map.panTo(new google.maps.LatLng(markPlaces[0].lat, markPlaces[0].lng));
     }
   }, [markPlaces])
@@ -87,7 +86,6 @@ const Pin = ({placeId}: {placeId: string}) => {
   } = usePlaceStore();
 
   const handleIsActive = (e: React.MouseEvent) => {
-    e.stopPropagation();
     setSelectedPlace(placeId)
   }
 
