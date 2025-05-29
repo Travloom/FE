@@ -11,6 +11,7 @@ import Image from "next/image";
 interface PlaceProps extends PlaceType {
   addPlace: () => void;
   isOn: boolean;
+  ref: React.Ref<HTMLDivElement>;
 }
 
 const Place: React.FC<PlaceProps> = ({
@@ -22,6 +23,7 @@ const Place: React.FC<PlaceProps> = ({
   types,
   lat,
   lng,
+  ref,
 
   addPlace,
   isOn,
@@ -32,7 +34,8 @@ const Place: React.FC<PlaceProps> = ({
   } = useMapStore();
 
   const {
-    setSelectedPlace,
+    selectedPlaceId,
+    setSelectedPlaceId,
   } = usePlaceStore();
 
   const altImage = '/images/alt_image.png'
@@ -47,16 +50,18 @@ const Place: React.FC<PlaceProps> = ({
   }
 
   const handleClick = () => {
-    setSelectedPlace(placeId);
+    setSelectedPlaceId(placeId);
     map?.panTo(new google.maps.LatLng(lat, lng));
   }
 
   return (
     <AnimatePresence>
       <Motion.MotionDiv
+        ref={ref}
         className={`
         lg:gap-2.5 lg:h-[140px]
-        shrink-0 flex flex-row w-full h-[120px] min-h-[120px] rounded-[8px] border border-gray-200 p-2.5 bg-white md:hover:bg-gray-50 cursor-pointer transition-all-300-out`}
+        ${selectedPlaceId === placeId ? `border-point shadow-point` : `border-gray-200`}
+        shrink-0 flex flex-row w-full h-[120px] min-h-[120px] rounded-[8px] p-2.5 border bg-white lg:hover:bg-[rgba(108,92,231,0.05)] cursor-pointer transition-all-300-out`}
         onClick={handleClick}>
         <div className={`overflow-hidden rounded-[4px] border border-gray-200 h-full aspect-square shrink-0 relative`}>
           <Image

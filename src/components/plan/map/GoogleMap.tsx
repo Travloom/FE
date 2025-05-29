@@ -3,6 +3,7 @@ import Marker from "./Marker";
 import useMapStore from "@/stores/useMapStore";
 import useBottomSheetStore from "@/stores/useBottomSheetStore";
 import useMobile from "@/hooks/common/useMobile";
+import { MID_HEIGHT } from "@/constants/Map";
 
 const GoogleMap = () => {
   const mapRef = useRef<HTMLDivElement>(null);
@@ -38,7 +39,7 @@ const GoogleMap = () => {
       className={`
         ${isOpen ? `lg:w-[calc(100%-420px)] md:w-[calc(100%-320px)]` : `w-full `} md:h-full
         w-full  grow !absolute right-0 transition-all-300-out`}
-      style={ isMobile ? { height: `calc(100% - ${currentHeight}px)` } : {}}>
+      style={ isMobile ? { height: `calc(100% - ${Math.min(currentHeight, MID_HEIGHT)}px)` } : {}}>
       <div id={"map"} ref={mapRef} className={`w-full h-full`}>
         <Marker />
       </div>

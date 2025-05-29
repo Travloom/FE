@@ -1,7 +1,6 @@
 import PlaceList from "./PlaceList";
 import useBottomSheet from "@/hooks/map/useBottomSheet";
 import useBottomSheetStore from "@/stores/useBottomSheetStore";
-import { useEffect, useState } from "react";
 
 const BottomSheet = () => {
 
@@ -9,30 +8,14 @@ const BottomSheet = () => {
     currentHeight
   } = useBottomSheetStore();
 
-  const [sheetHeight, setSheetHeight] = useState(currentHeight);
-
   const { sheet, content } = useBottomSheet();
-
-  useEffect(() => {
-    const updateSheetHeight = () => {
-      setSheetHeight(currentHeight);
-    };
-
-    updateSheetHeight(); // 초기 실행
-
-    window.addEventListener('resize', updateSheetHeight);
-
-    return () => {
-      window.removeEventListener('resize', updateSheetHeight);
-    };
-  }, []);
 
   return (
     <div
       className={`
         md:hidden
         overflow-hidden bottom-0 rounded-t-[16px] w-full absolute z-[101] bg-white border-t border-gray-300 flex flex-row shrink-0 transition-all-300-out`}
-      style={{ height: sheetHeight }}
+      style={{ height: currentHeight }}
       ref={sheet}>
       <div
         className={`overflow-hidden w-full`}>
@@ -40,7 +23,7 @@ const BottomSheet = () => {
           <div className={`self-center w-[40%] h-1 rounded-full bg-gray-200`} />
         </div>
         <div
-          className={`h-full w-full px-2.5 pt-3 pb-4 rounded-bl-[8px]`}>
+          className={`absolute bottom-0 h-full w-full px-2.5 pt-3 rounded-bl-[8px]`}>
           <PlaceList scrollRef={content} />
         </div>
       </div>

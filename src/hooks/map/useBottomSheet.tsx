@@ -18,9 +18,7 @@ interface BottomSheetMetrics {
 
 export default function useBottomSheet() {
 
-  const maxHeight = window.innerHeight - 100 - MIN_HEIGHT;
-
-  const [sheetHeight, _] = useState(maxHeight);
+  const [maxHeight, setMaxHeight] = useState(window.innerHeight - 100 - MIN_HEIGHT);
 
   const sheet = useRef<HTMLDivElement>(null);
   const content = useRef<HTMLDivElement>(null);
@@ -64,8 +62,7 @@ export default function useBottomSheet() {
       else if (isScrollingUp) return false;
     }
     else if (isAtBottom) {
-      if (isScrollingDown) return false;
-      else if (isScrollingUp) return true;
+      return false;
     }
     return false;
   };
@@ -101,7 +98,7 @@ export default function useBottomSheet() {
         metrics.current.touchMove.touchOffset = touchOffset;
         let nextHeight = touchStart.sheetHeight - touchMove.touchOffset;
 
-        nextHeight = Math.max(MIN_HEIGHT, Math.min(sheetHeight, nextHeight));
+        nextHeight = Math.max(MIN_HEIGHT, Math.min(maxHeight, nextHeight));
         sheet.current!.style.height = `${nextHeight}px`;
       } else {
         document.body.style.overflowY = 'hidden';
@@ -114,7 +111,7 @@ export default function useBottomSheet() {
 
       sheet.current!.style.transition = 'height 0.3s ease';
 
-      let nextHeight = MIN_HEIGHT;
+      let nextHeight = parseInt(sheet.current!.style.height);
 
       if (canUserResizeBottomSheet()) {
 
@@ -145,15 +142,12 @@ export default function useBottomSheet() {
             }
           }
 
-          console.log(prevHeight)
-          console.log(nextHeight)
-
           sheet.current!.style.height = `${nextHeight}px`;
           if (nextHeight === MIN_HEIGHT) setCurrentHeight(MIN_HEIGHT)
           else if (nextHeight === MID_HEIGHT) setCurrentHeight(MID_HEIGHT)
+          else if (nextHeight === maxHeight) setCurrentHeight(maxHeight)
         }
       }
-
 
       // Reset
       metrics.current = {
@@ -173,7 +167,7 @@ export default function useBottomSheet() {
 
     const sheetEl = sheet.current!;
     sheetEl.addEventListener('touchstart', handleTouchStart);
-    sheetEl.addEventListener('touchmove', handleTouchMove, { passive: false });
+    sheetEl.addEventListener('touchmove', handleTouchMove);
     sheetEl.addEventListener('touchend', handleTouchEnd);
 
     return () => {
@@ -181,7 +175,7 @@ export default function useBottomSheet() {
       sheetEl.removeEventListener('touchmove', handleTouchMove);
       sheetEl.removeEventListener('touchend', handleTouchEnd);
     };
-  }, [sheetHeight]);
+  }, [maxHeight]);
 
   useEffect(() => {
     const handleTouchStart = () => {
@@ -197,16 +191,27 @@ export default function useBottomSheet() {
   }, []);
 
   useEffect(() => {
-    const updateSheetHeight = (height: number) => {
-      metrics.current.prevHeight = maxHeight;
-      sheet.current!.style.height = `${height}px`;
+    const initialUpdateSheetHeight = () => {
+      metrics.current.prevHeight = MIN_HEIGHT;
+      sheet.current!.style.height = `${MIN_HEIGHT}px`;
+    }
+
+    const updateSheetHeight = () => {
+      const newMaxHeight = window.innerHeight - 100 - MIN_HEIGHT
+      setMaxHeight(newMaxHeight);
+      metrics.current.prevHeight = newMaxHeight;
+      sheet.current!.style.height = `${newMaxHeight}px`;
     };
     
-    updateSheetHeight(MIN_HEIGHT);
+    initialUpdateSheetHeight();
 
-    window.addEventListener('resize', () => updateSheetHeight(window.innerHeight - 100 - MIN_HEIGHT));
-    return () => window.removeEventListener('resize', () => updateSheetHeight(window.innerHeight - 100 - MIN_HEIGHT));
+    window.addEventListener('resize', updateSheetHeight);
+    return () => window.removeEventListener('resize', updateSheetHeight);
   }, []);
+
+  useEffect(() => {
+    metrics.current.prevHeight = currentHeight;
+  }, [currentHeight])
 
   return { sheet, content };
 }
