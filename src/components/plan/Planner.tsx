@@ -1,29 +1,17 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Toggle from "../common/Toggle";
 import Scheduler from "./schedule/Scheduler";
 import Sidebar from "./map/Sidebar";
 import SchedulerMobile from "./schedule/SchedulerMobile";
 import BottomSheet from "./map/BottomSheet";
 import GoogleMapWrapper from "./map/GoogleMapWrapper";
+import useMobile from "@/hooks/common/useMobile";
 
 const Planner = () => {
 
   const [selectedToggle, setSelectedToggle] = useState("일정");
 
-  const [isMobile, setIsMobile] = useState(false);
-
-  useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth < 768);
-    };
-
-    handleResize();
-    window.addEventListener('resize', handleResize);
-
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    }
-  }, [])
+  const { isMobile } = useMobile();
 
   return (
     <div className={`lg:rounded-[8px] flex flex-col border border-gray-300 bg-white h-full overflow-hidden`}>

@@ -1,14 +1,14 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import Marker from "./Marker";
 import useMapStore from "@/stores/useMapStore";
 import useBottomSheetStore from "@/stores/useBottomSheetStore";
+import useMobile from "@/hooks/common/useMobile";
 
 const GoogleMap = () => {
   const mapRef = useRef<HTMLDivElement>(null);
 
   const {
     isOpen,
-    map,
     setMap,
   } = useMapStore();
 
@@ -16,15 +16,7 @@ const GoogleMap = () => {
     currentHeight,
   } = useBottomSheetStore();
   
-  const [isMobile, setIsMobile] = useState(false);
-
-  useEffect(() => {
-    const checkWidth = () => setIsMobile(window.innerWidth >= 768); // md: 768px
-
-    checkWidth();
-    window.addEventListener('resize', checkWidth);
-    return () => window.removeEventListener('resize', checkWidth);
-  }, []);
+  const { isMobile } = useMobile();
 
   useEffect(() => {
     if (mapRef.current) {
@@ -46,7 +38,7 @@ const GoogleMap = () => {
       className={`
         ${isOpen ? `lg:w-[calc(100%-420px)] md:w-[calc(100%-320px)]` : `w-full `} md:h-full
         w-full  grow !absolute right-0 transition-all-300-out`}
-      style={ isMobile ? {} : { height: `calc(100% - ${currentHeight}px)` }}>
+      style={ isMobile ? { height: `calc(100% - ${currentHeight}px)` } : {}}>
       <div id={"map"} ref={mapRef} className={`w-full h-full`}>
         <Marker />
       </div>
