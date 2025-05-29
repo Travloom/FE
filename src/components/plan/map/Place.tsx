@@ -56,7 +56,7 @@ const Place: React.FC<PlaceProps> = ({
       <Motion.MotionDiv
         className={`
         lg:gap-2.5 lg:h-[140px]
-        shrink-0 flex flex-row w-full h-[120px] min-h-[120px] rounded-[8px] border border-gray-200 p-2.5 bg-white hover:bg-gray-50 cursor-pointer transition-all-300-out`}
+        shrink-0 flex flex-row w-full h-[120px] min-h-[120px] rounded-[8px] border border-gray-200 p-2.5 bg-white md:hover:bg-gray-50 cursor-pointer transition-all-300-out`}
         onClick={handleClick}>
         <div className={`overflow-hidden rounded-[4px] border border-gray-200 h-full aspect-square shrink-0 relative`}>
           <Image
