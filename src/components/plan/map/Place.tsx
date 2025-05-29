@@ -46,7 +46,7 @@ const Place: React.FC<PlaceProps> = ({
     addPlace();
   }
 
-  const handleClick = (e: React.MouseEvent) => {
+  const handleClick = () => {
     setSelectedPlace(placeId);
     map?.panTo(new google.maps.LatLng(lat, lng));
   }

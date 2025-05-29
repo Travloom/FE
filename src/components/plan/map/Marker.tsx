@@ -85,7 +85,7 @@ const Pin = ({placeId}: {placeId: string}) => {
     setSelectedPlace,
   } = usePlaceStore();
 
-  const handleIsActive = (e: React.MouseEvent) => {
+  const handleIsActive = () => {
     setSelectedPlace(placeId)
   }
 
