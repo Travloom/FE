@@ -1,16 +1,21 @@
 import PlaceList from "./PlaceList";
 import useBottomSheet from "@/hooks/map/useBottomSheet";
+import useBottomSheetStore from "@/stores/useBottomSheetStore";
 import { useEffect, useState } from "react";
 
 const BottomSheet = () => {
 
-  const [sheetHeight, setSheetHeight] = useState(window.innerHeight - 100);
+  const {
+    currentHeight
+  } = useBottomSheetStore();
+
+  const [sheetHeight, setSheetHeight] = useState(currentHeight);
 
   const { sheet, content } = useBottomSheet();
 
 useEffect(() => {
   const updateSheetHeight = () => {
-    setSheetHeight(window.innerHeight - 100);
+    setSheetHeight(currentHeight);
   };
 
   updateSheetHeight(); // 초기 실행

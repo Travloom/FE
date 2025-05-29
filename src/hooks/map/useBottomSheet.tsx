@@ -1,3 +1,5 @@
+import { MID_HEIGHT, MIN_HEIGHT, THRESHOLD } from '@/constants/Map';
+import useBottomSheetStore from '@/stores/useBottomSheetStore';
 import { useRef, useEffect, useState } from 'react';
 
 interface BottomSheetMetrics {
@@ -6,17 +8,19 @@ interface BottomSheetMetrics {
     touchY: number;
   };
   touchMove: {
-    prevTouchY?: number;
+    prevTouchY: number;
+    touchOffset: number;
     movingDirection: 'none' | 'down' | 'up';
   };
+  prevHeight: number;
   isContentAreaTouched: boolean;
 }
 
 export default function useBottomSheet() {
-  const MIN_HEIGHT = 75;
-  const MAX_HEIGHT = window.innerHeight - 100;
+  const MAX_HEIGHT = window.innerHeight - 100 - MIN_HEIGHT;
+  
   const [sheetHeight, setSheetHeight] = useState(MAX_HEIGHT);
-
+  
   const sheet = useRef<HTMLDivElement>(null);
   const content = useRef<HTMLDivElement>(null);
 
@@ -27,10 +31,16 @@ export default function useBottomSheet() {
     },
     touchMove: {
       prevTouchY: 0,
+      touchOffset: 0,
       movingDirection: 'none',
     },
+    prevHeight: MIN_HEIGHT | MID_HEIGHT | MAX_HEIGHT,
     isContentAreaTouched: false,
   });
+
+  const {
+    setCurrentHeight,
+  } = useBottomSheetStore();
 
   const canUserResizeBottomSheet = () => {
     const { touchMove, isContentAreaTouched } = metrics.current;
@@ -57,6 +67,7 @@ export default function useBottomSheet() {
     }
     return false;
   };
+
 
   useEffect(() => {
     const handleTouchStart = (e: TouchEvent) => {
@@ -85,7 +96,8 @@ export default function useBottomSheet() {
         e.preventDefault();
 
         const touchOffset = currentTouch.clientY - touchStart.touchY;
-        let nextHeight = touchStart.sheetHeight - touchOffset;
+        metrics.current.touchMove.touchOffset = touchOffset;
+        let nextHeight = touchStart.sheetHeight - touchMove.touchOffset;
 
         nextHeight = Math.max(MIN_HEIGHT, Math.min(sheetHeight, nextHeight));
         sheet.current!.style.height = `${nextHeight}px`;
@@ -96,21 +108,48 @@ export default function useBottomSheet() {
 
     const handleTouchEnd = () => {
       document.body.style.overflowY = 'auto';
-      const { touchMove } = metrics.current;
-      const currentHeight = sheet.current!.getBoundingClientRect().height;
+      const { touchMove, prevHeight } = metrics.current;
 
       sheet.current!.style.transition = 'height 0.3s ease';
 
+      let nextHeight = MIN_HEIGHT;
 
       if (canUserResizeBottomSheet()) {
-        if (currentHeight !== MIN_HEIGHT) {
-          if (touchMove.movingDirection === 'down') {
-            sheet.current!.style.height = `${MIN_HEIGHT}px`;
-          } else if (touchMove.movingDirection === 'up') {
-            sheet.current!.style.height = `${sheetHeight - MIN_HEIGHT}px`;
+
+        if (touchMove.movingDirection !== 'none') {
+
+          console.log(touchMove.touchOffset)
+          if (prevHeight === MIN_HEIGHT) {
+            if (Math.abs(touchMove.touchOffset) > THRESHOLD) {
+              nextHeight = MAX_HEIGHT;
+            }
+            else {
+              nextHeight = MID_HEIGHT;
+            }
           }
+          else if (prevHeight === MID_HEIGHT) {
+            if (touchMove.movingDirection === 'down') {
+              nextHeight = MIN_HEIGHT;
+            }
+            else if (touchMove.movingDirection === 'up') {
+              nextHeight = MAX_HEIGHT;
+            }
+          }
+          else {
+            if (Math.abs(touchMove.touchOffset) > THRESHOLD) {
+              nextHeight = MIN_HEIGHT;
+            }
+            else {
+              nextHeight = MID_HEIGHT;
+            }
+          }
+
+          sheet.current!.style.height = `${nextHeight}px`;
         }
       }
+
+      if (nextHeight === MIN_HEIGHT) setCurrentHeight(MIN_HEIGHT)
+      else setCurrentHeight(MID_HEIGHT)
 
       // Reset
       metrics.current = {
@@ -120,8 +159,10 @@ export default function useBottomSheet() {
         },
         touchMove: {
           prevTouchY: 0,
+          touchOffset: 0,
           movingDirection: 'none',
         },
+        prevHeight: nextHeight,
         isContentAreaTouched: false,
       };
     };
