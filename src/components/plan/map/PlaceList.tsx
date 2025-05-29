@@ -1,77 +1,192 @@
-'use client'
-
 import Toggle from "@/components/common/Toggle";
-import { PlaceProps } from "@/types/plan/type";
-import { useState } from "react";
 import Place from "./Place";
-import { RightArrowIcon } from "@/assets/svgs";
-import useMapStore from "@/stores/useMapStore";
+import SearchHeader from "./SearchHeader";
+import usePlaceStore from "@/stores/usePlaceStore";
+import { usePlaceManage } from "@/hooks/place/usePlaceManage";
+import { useParams } from "next/navigation";
+import { HashLoader } from "react-spinners";
+import { RefObject, useEffect, useRef } from "react";
+import useBottomSheetStore from "@/stores/useBottomSheetStore";
+import { MID_HEIGHT } from "@/constants/Map";
 
-interface PlaceListProps {
-  restaurants: PlaceProps[];
-  hotels: PlaceProps[];
-  attractions: PlaceProps[];
+interface PlaceListProp {
+  scrollRef?: RefObject<HTMLDivElement | null>
 }
 
-const PlaceList: React.FC<PlaceListProps> = ({
-  restaurants,
-  hotels,
-  attractions,
+const PlaceList: React.FC<PlaceListProp> = ({
+  scrollRef
 }) => {
 
-  const [selectedToggle, setSelectedToggle] = useState("식당");
+  const {
+    places,
+    selectedPlaceId,
+    selectedToggle,
+    setSelectedToggle,
+  } = usePlaceStore();
 
   const {
-    isOpen,
-    setIsOpen,
-  } = useMapStore();
+    currentHeight,
+    setCurrentHeight,
+  } = useBottomSheetStore();
+
+  const {
+    isPending,
+  } = usePlaceStore();
+
+  const { planId } = useParams();
+
+  const placeRefs = useRef<{ [key: string]: HTMLDivElement | null }>({});
+
+  const planIdStr = typeof planId === "string" ? planId : Array.isArray(planId) ? planId[0] : "";
+
+  const placeManage = usePlaceManage(planIdStr);
+
+  useEffect(() => {
+    if (currentHeight !== MID_HEIGHT) {
+      setCurrentHeight(MID_HEIGHT)
+    }
+
+    setTimeout(() => {
+      if (selectedPlaceId && placeRefs.current[selectedPlaceId]) {
+        placeRefs.current[selectedPlaceId]?.scrollIntoView({
+          behavior: "smooth",
+          block: "start",
+        });
+      }
+    }, 300);
+  }, [selectedPlaceId]);
 
   return (
     <div
-      className={`
-        md:block hidden
-        ${isOpen ? `` : `translate-x-[-100%]`}
-        lg:w-[420px] 
-        md:w-[320px] md:border-r md:border-t-0 md:left-0 md:translate-y-0
-        max-md:bottom-0 max-md:rounded-t-[16px]
-        w-full translate-y-[50%] absolute z-[101] bg-white h-full border-t border-gray-300 flex flex-row shrink-0 transition-all-300-out`}>
-      <div className={`overflow-hidden w-full`}>
-        <div
-          className={`
+      className={`w-full h-full`}>
+      <div
+        className={`
           lg:w-[420px] md:w-[320px]
-          h-full w-full flex flex-col gap-2.5 p-2.5 rounded-bl-[8px] transition-all-300-out`}>
-          <div 
-            className={`
-              md:hidden
-              self-center w-[40%] h-1 rounded-full bg-gray-200`}/>
-          <div className={`flex flex-row gap-2.5`}>
-            <Toggle text={"식당"} isActive={selectedToggle === "식당"} setSelectedToggle={setSelectedToggle} />
-            <Toggle text={"숙소"} isActive={selectedToggle === "숙소"} setSelectedToggle={setSelectedToggle} />
-            <Toggle text={"명소"} isActive={selectedToggle === "명소"} setSelectedToggle={setSelectedToggle} />
+          h-full w-full flex flex-col gap-2.5 py-2.5 rounded-bl-[8px] transition-all-300-out`}>
+        <div
+          className={`flex flex-row gap-2.5 px-2.5`}>
+          <Toggle text={"맛집"} isActive={selectedToggle === "맛집"} setSelectedToggle={setSelectedToggle} />
+          <Toggle text={"호텔"} isActive={selectedToggle === "호텔"} setSelectedToggle={setSelectedToggle} />
+          <Toggle text={"명소"} isActive={selectedToggle === "명소"} setSelectedToggle={setSelectedToggle} />
+          <Toggle text={"검색"} isSearch={true} isActive={selectedToggle === "검색"} setSelectedToggle={setSelectedToggle} />
+        </div>
+        {selectedToggle === "검색" &&
+          <div className={`w-full px-2.5`}>
+            <SearchHeader />
           </div>
-          <div className={`flex flex-col gap-3 overflow-auto`}>
-            {selectedToggle === "식당" ? (
-              restaurants?.map((place, index) => (
-                <Place key={index} name={place.name} rate={place.rate} detail={place.detail} imageUrl={place.imageUrl} />
+        }
+        <div
+          className={`flex flex-col gap-3 overflow-auto h-full pl-2.5 pr-[3px] mr-[7px]`}
+          ref={scrollRef}>
+          {selectedToggle === "맛집" ? (
+            places.restaurantList?.length !== 0 ? (
+              places.restaurantList?.map((place) => (
+                <Place
+                  ref={(el) => { placeRefs.current[place.placeId] = el }}
+                  key={place.placeId}
+                  name={place.name}
+                  rate={place.rate}
+                  address={place.address}
+                  imageUrl={place.imageUrl}
+                  placeId={place.placeId}
+                  lat={place.lat}
+                  lng={place.lng}
+                  types={place.types}
+                  addPlace={() => { placeManage.updatePlace(place) }}
+                  isOn={placeManage.isAlreadyExisted(place)} />
               ))
             ) : (
-              selectedToggle === "숙소" ? (
-                hotels?.map((place, index) => (
-                  <Place key={index} name={place.name} rate={place.rate} detail={place.detail} imageUrl={place.imageUrl} />
+              <div className={`lg:text-[16px] text-[14px] h-full text-center justify-center items.center text-gray-300 pb-[15%] flex flex-col gap-1`}>
+                <p>추가된 장소가 없습니다.</p>
+                <p>원하는 장소를 추가해보세요!</p>
+              </div>
+            )
+          ) : (
+            selectedToggle === "호텔" ? (
+              places.hotelList?.length !== 0 ? (
+                places.hotelList?.map((place) => (
+                  <Place
+                    ref={(el) => { placeRefs.current[place.placeId] = el }}
+                    key={place.placeId}
+                    name={place.name}
+                    rate={place.rate}
+                    address={place.address}
+                    imageUrl={place.imageUrl}
+                    placeId={place.placeId}
+                    lat={place.lat}
+                    lng={place.lng}
+                    types={place.types}
+                    addPlace={() => { placeManage.updatePlace(place) }}
+                    isOn={placeManage.isAlreadyExisted(place)} />
                 ))
               ) : (
-                attractions?.map((place, index) => (
-                  <Place key={index} name={place.name} rate={place.rate} detail={place.detail} imageUrl={place.imageUrl} />
-                ))
+                <div className={`lg:text-[16px] text-[14px] h-full text-center justify-center items.center text-gray-300 pb-[15%] flex flex-col gap-1`}>
+                  <p>추가된 장소가 없습니다.</p>
+                  <p>원하는 장소를 추가해보세요!</p>
+                </div>
               )
-            )}
-          </div>
+            ) : (
+              selectedToggle === "명소" ? (
+                places.attractionList?.length !== 0 ? (
+                  places.attractionList?.map((place) => (
+                    <Place
+                      ref={(el) => { placeRefs.current[place.placeId] = el }}
+                      key={place.placeId}
+                      name={place.name}
+                      rate={place.rate}
+                      address={place.address}
+                      imageUrl={place.imageUrl}
+                      placeId={place.placeId}
+                      lat={place.lat}
+                      lng={place.lng}
+                      types={place.types}
+                      addPlace={() => { placeManage.updatePlace(place) }}
+                      isOn={placeManage.isAlreadyExisted(place)} />
+                  ))
+                ) : (
+                  <div className={`lg:text-[16px] text-[14px] h-full text-center justify-center items.center text-gray-300 flex flex-col gap-1`}>
+                    <p>추가된 장소가 없습니다.</p>
+                    <p>원하는 장소를 추가해보세요!</p>
+                  </div>
+                )
+              ) : (
+                isPending ? (
+                  <div className={`flex justify-center items-center w-full h-full`}>
+                    <HashLoader
+                      size={30}
+                      color={`#6c5ce7`} />
+                  </div>
+                ) : (
+                  places.searchList ? (
+
+                    places.searchList.length !== 0 ? (
+                      places.searchList?.map((place) => (
+                        <Place
+                          ref={(el) => { placeRefs.current[place.placeId] = el }}
+                          key={place.placeId}
+                          name={place.name}
+                          rate={place.rate}
+                          address={place.address}
+                          imageUrl={place.imageUrl}
+                          placeId={place.placeId}
+                          lat={place.lat}
+                          lng={place.lng}
+                          types={place.types || []}
+                          addPlace={() => { placeManage.updatePlace(place) }}
+                          isOn={placeManage.isAlreadyExisted(place)} />
+                      ))
+                    ) : (
+                      <div className={`lg:text-[16px] text-[14px] h-full text-center justify-center items.center text-gray-300 pb-[15%] flex flex-col gap-1`}>
+                        <p>검색 결과가 없습니다.</p>
+                        <p>검색어를 확인해주세요.</p>
+                      </div>
+                    )
+                  ) : (
+                    <div className={`lg:text-[16px] text-[14px] h-full text-center content-center text-gray-300 pb-[15%]`}>
+                      원하는 장소를 검색해보세요
+                    </div>
+                  )))))}
         </div>
-      </div>
-      <div
-        className={`w-4 h-8 content-center text-gray-300 absolute left-[100%] top-[calc(50%-13px)] z-10 px-0.5 py-1 rounded-r-[8px] bg-white border border-gray-300 border-l-0 cursor-pointer`}
-        onClick={() => setIsOpen(!isOpen)}>
-        <RightArrowIcon className={`${isOpen ? `rotate-180` : ``} w-2.5 transition-all-300-out`} />
       </div>
     </div>
   )

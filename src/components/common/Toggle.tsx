@@ -1,12 +1,14 @@
-import { Dispatch, SetStateAction } from "react";
+import { SearchIcon } from "@/assets/svgs";
 
 interface ToggleProps{
+  isSearch?: boolean;
   text: string;
   isActive: boolean;
-  setSelectedToggle: Dispatch<SetStateAction<string>>;
+  setSelectedToggle: (value: string) => void;
 }
 
 const Toggle:React.FC<ToggleProps> = ({
+  isSearch,
   text,
   isActive,
   setSelectedToggle,
@@ -18,11 +20,16 @@ const Toggle:React.FC<ToggleProps> = ({
   return (
     <div
       className={`
+        ${isSearch ? `aspect-square h-full` : `w-full`}
         ${isActive ? activeStyle : inactiveStyle} 
         lg:text-[18px] lg:py-2.5
-        text-[14px] py-2 grow rounded-[8px] w-full flex items-center justify-center cursor-pointer transition-all-300-out`}
+        text-[14px] py-2 grow rounded-[8px] flex items-center justify-center cursor-pointer transition-all-300-out`}
       onClick={() => setSelectedToggle(text)}>
-      <p className={`mt-0.5`}>{text}</p>
+      {isSearch ? (
+        <SearchIcon className={`h-full`}/>
+      ) : (
+        <p className={`mt-0.5`}>{text}</p>
+      )}
     </div>
   )
 }

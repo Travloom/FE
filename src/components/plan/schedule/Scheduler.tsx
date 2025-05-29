@@ -21,7 +21,6 @@ const Scheduler = () => {
         content: matched?.content || "",
       };
     });
-    // setLayout(updatedLayout);
     updateSchedule(updatedLayout);
   }, [layout]);
 

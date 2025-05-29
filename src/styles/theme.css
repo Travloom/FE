@@ -14,6 +14,9 @@
     .border-in-point {
         box-shadow: var(--inset-point);
     }
+    .shadow-point {
+        box-shadow: var(--shadow-point);
+    }
 }
 
 @theme {
@@ -25,6 +28,8 @@
 
     /* 그림자(내부 border) */
     --inset-point: inset 0 0 0 1px #6C5CE7;
+
+    --shadow-point: 0 0 10px rgba(108, 92, 231, 0.2);
 
     /* 브레이크 포인트 */
     --breakpoint-lg: 1080px;

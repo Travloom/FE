@@ -56,5 +56,5 @@ button {
 ::-webkit-scrollbar-thumb {
   background-color: var(--color-point);
   border-radius: 10px;
-  border: 2px solid #f0f0f0;
+  border: 2px solid white;
 }

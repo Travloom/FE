@@ -1,15 +1,17 @@
 import { useState } from "react";
 import Toggle from "../common/Toggle";
 import Scheduler from "./schedule/Scheduler";
-import PlaceList from "./map/PlaceList";
-import { PlaceItems } from "@/mocks/places";
-import MapContent from "./map/MapContent";
+import Sidebar from "./map/Sidebar";
 import SchedulerMobile from "./schedule/SchedulerMobile";
-import PlaceListMobile from "./map/PlaceListMobile";
+import BottomSheet from "./map/BottomSheet";
+import GoogleMapWrapper from "./map/GoogleMapWrapper";
+import useMobile from "@/hooks/common/useMobile";
 
 const Planner = () => {
 
   const [selectedToggle, setSelectedToggle] = useState("일정");
+
+  const { isMobile } = useMobile();
 
   return (
     <div className={`lg:rounded-[8px] flex flex-col border border-gray-300 bg-white h-full overflow-hidden`}>
@@ -18,24 +20,29 @@ const Planner = () => {
         <Toggle text={"지도"} isActive={selectedToggle === "지도"} setSelectedToggle={setSelectedToggle} />
       </div>
       <div className={`h-full overflow-hidden`}>
-        {selectedToggle === "일정" ? (
-          <>
-            <div className={`md:block hidden h-full`}>
-              <Scheduler />
+
+        {selectedToggle === '일정' &&
+          <div
+            className={`h-full`}>
+            <div className={`h-full`}>
+              {isMobile ? (
+                <SchedulerMobile />
+              ) : (
+                <Scheduler />
+              )}
             </div>
-            <div className={`md:hidden block h-full`}>
-              <SchedulerMobile />
-            </div>
-          </>
-        ) : (
-          <div 
-            className={`
-             relative h-full`}>
-            <PlaceList restaurants={PlaceItems.restaurants} hotels={PlaceItems.hotels} attractions={PlaceItems.attractions} />
-            <PlaceListMobile restaurants={PlaceItems.restaurants} hotels={PlaceItems.hotels} attractions={PlaceItems.attractions} />
-            <MapContent />
           </div>
-        )}
+        }
+
+        <div
+          className={`
+              ${selectedToggle === '지도' ? `` : `hidden`}
+              relative h-full`}>
+          <Sidebar />
+          <BottomSheet />
+          <GoogleMapWrapper />
+        </div>
+
       </div>
     </div>
   )
