@@ -17,10 +17,11 @@ interface BottomSheetMetrics {
 }
 
 export default function useBottomSheet() {
-  const MAX_HEIGHT = window.innerHeight - 100 - MIN_HEIGHT;
-  
-  const [sheetHeight, setSheetHeight] = useState(MAX_HEIGHT);
-  
+
+  const maxHeight = window.innerHeight - 100 - MIN_HEIGHT;
+
+  const [sheetHeight, _] = useState(maxHeight);
+
   const sheet = useRef<HTMLDivElement>(null);
   const content = useRef<HTMLDivElement>(null);
 
@@ -34,11 +35,12 @@ export default function useBottomSheet() {
       touchOffset: 0,
       movingDirection: 'none',
     },
-    prevHeight: MIN_HEIGHT | MID_HEIGHT | MAX_HEIGHT,
+    prevHeight: MIN_HEIGHT,
     isContentAreaTouched: false,
   });
 
   const {
+    currentHeight,
     setCurrentHeight,
   } = useBottomSheetStore();
 
@@ -51,19 +53,19 @@ export default function useBottomSheet() {
 
     const isScrollingUp = touchMove.movingDirection === 'up';
     const isScrollingDown = touchMove.movingDirection === 'down';
-    const isAtTop = contentEl.scrollTop <= 0;
+    const isAtTop = contentEl.scrollTop <= 1;
     const isAtBottom = contentEl.scrollTop + contentEl.clientHeight >= contentEl.scrollHeight - 1;
-
 
 
     if (!isContentAreaTouched) return true;
 
     if (isAtTop) {
       if (isScrollingDown) return true;
+      else if (isScrollingUp) return false;
     }
     else if (isAtBottom) {
       if (isScrollingDown) return false;
-      else if (isScrollingUp) return false;
+      else if (isScrollingUp) return true;
     }
     return false;
   };
@@ -118,10 +120,9 @@ export default function useBottomSheet() {
 
         if (touchMove.movingDirection !== 'none') {
 
-          console.log(touchMove.touchOffset)
           if (prevHeight === MIN_HEIGHT) {
             if (Math.abs(touchMove.touchOffset) > THRESHOLD) {
-              nextHeight = MAX_HEIGHT;
+              nextHeight = maxHeight;
             }
             else {
               nextHeight = MID_HEIGHT;
@@ -132,7 +133,7 @@ export default function useBottomSheet() {
               nextHeight = MIN_HEIGHT;
             }
             else if (touchMove.movingDirection === 'up') {
-              nextHeight = MAX_HEIGHT;
+              nextHeight = maxHeight;
             }
           }
           else {
@@ -144,12 +145,15 @@ export default function useBottomSheet() {
             }
           }
 
+          console.log(prevHeight)
+          console.log(nextHeight)
+
           sheet.current!.style.height = `${nextHeight}px`;
+          if (nextHeight === MIN_HEIGHT) setCurrentHeight(MIN_HEIGHT)
+          else if (nextHeight === MID_HEIGHT) setCurrentHeight(MID_HEIGHT)
         }
       }
 
-      if (nextHeight === MIN_HEIGHT) setCurrentHeight(MIN_HEIGHT)
-      else setCurrentHeight(MID_HEIGHT)
 
       // Reset
       metrics.current = {
@@ -193,14 +197,15 @@ export default function useBottomSheet() {
   }, []);
 
   useEffect(() => {
-    const updateSheetHeight = () => {
-      setSheetHeight(window.innerHeight - 100);
-      sheet.current!.style.height = `${MIN_HEIGHT}px`;
+    const updateSheetHeight = (height: number) => {
+      metrics.current.prevHeight = maxHeight;
+      sheet.current!.style.height = `${height}px`;
     };
-    updateSheetHeight();
+    
+    updateSheetHeight(MIN_HEIGHT);
 
-    window.addEventListener('resize', updateSheetHeight);
-    return () => window.removeEventListener('resize', updateSheetHeight);
+    window.addEventListener('resize', () => updateSheetHeight(window.innerHeight - 100 - MIN_HEIGHT));
+    return () => window.removeEventListener('resize', () => updateSheetHeight(window.innerHeight - 100 - MIN_HEIGHT));
   }, []);
 
   return { sheet, content };

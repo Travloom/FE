@@ -117,14 +117,14 @@ const PlaceList:React.FC<PlaceListProp> = ({
                       isOn={placeManage.isAlreadyExisted(place)} />
                   ))
                 ) : (
-                  <div className={`lg:text-[16px] text-[14px] h-full text-center justify-center items.center text-gray-300 pb-[15%] flex flex-col gap-1`}>
+                  <div className={`lg:text-[16px] text-[14px] h-full text-center justify-center items.center text-gray-300 flex flex-col gap-1`}>
                     <p>추가된 장소가 없습니다.</p>
                     <p>원하는 장소를 추가해보세요!</p>
                   </div>
                 )
               ) : (
                 isPending ? (
-                  <div className={`w-full h-full pb-[20%] content-center justify-items-center`}>
+                  <div className={`flex justify-center items-center w-full h-full`}>
                     <HashLoader
                       size={30}
                       color={`#6c5ce7`} />

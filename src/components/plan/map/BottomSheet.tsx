@@ -13,19 +13,19 @@ const BottomSheet = () => {
 
   const { sheet, content } = useBottomSheet();
 
-useEffect(() => {
-  const updateSheetHeight = () => {
-    setSheetHeight(currentHeight);
-  };
+  useEffect(() => {
+    const updateSheetHeight = () => {
+      setSheetHeight(currentHeight);
+    };
 
-  updateSheetHeight(); // 초기 실행
+    updateSheetHeight(); // 초기 실행
 
-  window.addEventListener('resize', updateSheetHeight);
+    window.addEventListener('resize', updateSheetHeight);
 
-  return () => {
-    window.removeEventListener('resize', updateSheetHeight);
-  };
-}, []);
+    return () => {
+      window.removeEventListener('resize', updateSheetHeight);
+    };
+  }, []);
 
   return (
     <div
@@ -41,7 +41,7 @@ useEffect(() => {
         </div>
         <div
           className={`h-full w-full px-2.5 pt-3 pb-4 rounded-bl-[8px]`}>
-          <PlaceList scrollRef={content}/>
+          <PlaceList scrollRef={content} />
         </div>
       </div>
     </div>
