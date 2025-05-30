@@ -3,7 +3,6 @@ import { Dispatch, SetStateAction, useCallback, useState } from "react";
 import { useAddPlanBox } from "@/hooks/schedule/useAddPlanBox";
 import { CONTAINER_PADDING_Y, PLAN_HEIGHT, PLAN_MARGIN_X, PLAN_MARGIN_Y, PLANNER_HEIGHT, PLANNER_WIDTH, TIME_TABLE, TIME_WIDTH } from "@/constants/Plan";
 import { Layout } from "react-grid-layout";
-import ScheduleModal from "@/components/modal/ScheduleModal";
 import { CustomLayout } from "@/types/schedule/types";
 
 
@@ -91,8 +90,6 @@ const Scheduler: React.FC<SchedulerProps> = ({
           </div>
         </div>
       </div>
-
-      <ScheduleModal layout={layout} setLayout={setLayout} updateSchedule={updateSchedule} />
     </div>
   );
 };

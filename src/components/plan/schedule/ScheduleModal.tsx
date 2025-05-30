@@ -1,11 +1,11 @@
 'use client'
 
 import useScheduleModalStore from "@/stores/useScheduleModalStore";
-import Portal from "../portal/Portal";
+import Portal from "../../portal/Portal";
 import { AnimatePresence } from "framer-motion";
-import Motion from "../motion/Motion";
+import Motion from "../../motion/Motion";
 import { CustomLayout } from "@/types/schedule/types";
-import { ChangeEvent, Dispatch, SetStateAction, useCallback, useEffect } from "react";
+import { ChangeEvent, Dispatch, SetStateAction, useCallback, useEffect, useRef } from "react";
 import { debounce } from "lodash";
 
 
@@ -15,7 +15,6 @@ interface ScheduleModalProps {
   updateSchedule: (updatedLayout: CustomLayout[]) => void;
 }
 const ScheduleModal: React.FC<ScheduleModalProps> = ({
-  layout,
   setLayout,
   updateSchedule,
 }) => {
@@ -29,11 +28,22 @@ const ScheduleModal: React.FC<ScheduleModalProps> = ({
 
   const preventEvent = (e: React.MouseEvent) => e.stopPropagation();
 
+  const textareaRef = useRef<HTMLTextAreaElement | null>(null);
 
   const debouncedUpdateSchedule = debounce((updated: CustomLayout[]) => {
     updateSchedule(updated)
   }, 500);
 
+  useEffect(() => {
+    if (textareaRef.current) {
+
+      const lineCount = schedule.content?.split('\n').length;
+
+      console.log(schedule.content?.toString())
+
+      textareaRef.current.style.height = `${8 + 14 * 1.15 * (lineCount || 1) + 2}px`;
+    }
+  }, [schedule.content, isScheduleModalOpen])
 
   useEffect(() => {
     if (!schedule.scheduleId) return;
@@ -73,21 +83,28 @@ const ScheduleModal: React.FC<ScheduleModalProps> = ({
             onClick={() => setIsScheduleModalOpen(false)}
           >
             <div
-              className="flex flex-col justify-start gap-2.5 items-center p-4 bg-white w-1/2 h-1/2 rounded-[8px] border border-gray-300"
+              className="
+                md:w-1/2 md:h-1/2
+                w-2/3 h-2/5 min-h-[300px]
+                flex flex-col justify-start gap-1 items-center p-4 bg-white rounded-[8px] border border-gray-300"
               onClick={preventEvent}
             >
               <input
                 className={`
-                  hover:bg-gray-100 focus:hover:bg-white focus:cursor-text
-                  text-[20px] cursor-pointer w-full text-center truncate rounded-[4px] py-1.5 px-2`}
+                  md:py-1.5 md:px-2 md:text-start
+                  hover:bg-gray-100 focus:cursor-text focus:bg-gray-50
+                  py-1 px-1.5 text-center text-[20px] cursor-pointer w-full truncate rounded-[4px] transition-all-300-out`}
                 value={schedule.title || ""}
                 onChange={(e) => onScheduleChange(e, setScheduleTitle)}
               />
               <textarea
+                ref={textareaRef}
                 className={`
-                  hover:bg-gray-100 focus:hover:bg-white focus:cursor-text
-                  text-[14px] cursor-pointer text-gray-500 w-full h-full text-center resize-none outline-0 rounded-[4px] px-1.5 py-2`}
+                  md:py-1.5 md:px-2 md:text-start
+                  hover:bg-gray-100 focus:cursor-text focus:bg-gray-50 content-start overflow-clip
+                  py-1 px-1.5 text-center text-[14px] cursor-pointer text-gray-500 w-full resize-none outline-0 rounded-[4px] transition-all-300-out`}
                 value={schedule.content || ""}
+                
                 onChange={(e) => onScheduleChange(e, setScheduleContent)}
               />
             </div>

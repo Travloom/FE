@@ -3,6 +3,7 @@ import SchedulerMobile from "./SchedulerMobile";
 import Scheduler from "./Scheduler";
 import { useParams } from "next/navigation";
 import { useSchedule } from "@/hooks/schedule/useSchedule";
+import ScheduleModal from "@/components/plan/schedule/ScheduleModal";
 
 const ScheduleWrapper = () => {
 
@@ -21,6 +22,7 @@ const ScheduleWrapper = () => {
           <Scheduler layout={layout} setLayout={setLayout} updateSchedule={updateSchedule}/>
         )}
       </div>
+      <ScheduleModal layout={layout} setLayout={setLayout} updateSchedule={updateSchedule} />
     </div>
   )
 }

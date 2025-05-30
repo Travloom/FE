@@ -30,7 +30,7 @@ const ScheduleBox: React.FC<PlanBoxProps> = ({
   const bind = useLongPress(() => {
     handleOpenPlanModal()
   }, {
-    threshold: 600,
+    threshold: 500,
   })
 
   return (
@@ -51,8 +51,9 @@ const ScheduleBox: React.FC<PlanBoxProps> = ({
             text-black text-[10px] truncate shrink-0`}>{title}</p>
           <p
             className={`
+              md:line-clamp-6
               max-md:text-center md:text-[10px]
-              text-gray-300 text-[8px] w-full grow break-all`}>
+              text-gray-300 text-[8px] w-full grow break-all whitespace-pre-line`}>
             {content}
           </p>
         </div>
