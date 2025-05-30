@@ -48,7 +48,7 @@ const GridRendererMobile = ({ customLayout, onLayoutChange, _dayLen }: Props) =>
               h:item.w,
               resizeHandles:['s']}}>
         
-          <ScheduleBox title={item.title} content={item.content} />
+          <ScheduleBox scheduleId={item.i} title={item.title} content={item.content} />
         </div>
       ))}
     </ResponsiveGridLayout>

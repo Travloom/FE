@@ -30,7 +30,6 @@ export const usePlaceManage = (planId: string) => {
 
     const unsubscribe = onSnapshot(targetDoc, (docSnapshot) => {
       const data = docSnapshot.data();
-      console.log(data)
       if (data) {
         setPlaces('restaurantList', data.restaurantList)
         setPlaces('hotelList', data.hotelList)

@@ -1,17 +1,13 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Toggle from "../common/Toggle";
-import Scheduler from "./schedule/Scheduler";
 import Sidebar from "./map/Sidebar";
-import SchedulerMobile from "./schedule/SchedulerMobile";
 import BottomSheet from "./map/BottomSheet";
 import GoogleMapWrapper from "./map/GoogleMapWrapper";
-import useMobile from "@/hooks/common/useMobile";
+import ScheduleWrapper from "./schedule/ScheduleWrapper";
 
 const Planner = () => {
 
   const [selectedToggle, setSelectedToggle] = useState("일정");
-
-  const { isMobile } = useMobile();
 
   return (
     <div className={`lg:rounded-[8px] flex flex-col border border-gray-300 bg-white h-full overflow-hidden`}>
@@ -22,16 +18,7 @@ const Planner = () => {
       <div className={`h-full overflow-hidden`}>
 
         {selectedToggle === '일정' &&
-          <div
-            className={`h-full`}>
-            <div className={`h-full`}>
-              {isMobile ? (
-                <SchedulerMobile />
-              ) : (
-                <Scheduler />
-              )}
-            </div>
-          </div>
+          <ScheduleWrapper />
         }
 
         <div
