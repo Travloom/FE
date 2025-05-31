@@ -19,7 +19,7 @@ const Header = () => {
     <div 
       className={`
         lg:px-[60px] lg:h-[80px]
-        px-5 h-[60px] top-0 left-0 absolute w-full flex items-center justify-between bg-[rgba(108,92,231,0.15)] text-[32px] border-b border-b-gray-300 shadow-[0_4px_10px_0_rgba(0,0,0,0.1)] transition-all-300-out`}>
+        px-5 h-[60px] top-0 left-0 absolute w-full flex items-center justify-between bg-[rgba(108,92,231,0.15)] text-[32px] select-none border-b border-b-gray-300 shadow-[0_4px_10px_0_rgba(0,0,0,0.1)] transition-all-300-out`}>
       <p
         className={`lg:block hidden mt-[0.5%] text-point cursor-pointer`}
         onClick={() => pageAnimateRouter.push('/')}>떠나,봄</p>
