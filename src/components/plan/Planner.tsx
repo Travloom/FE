@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Toggle from "../common/Toggle";
 import Sidebar from "./map/Sidebar";
 import BottomSheet from "./map/BottomSheet";
