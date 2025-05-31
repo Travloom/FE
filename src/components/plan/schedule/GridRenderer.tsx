@@ -14,7 +14,8 @@ const GridRenderer = ({ customLayout, onLayoutChange, dayLen }: Props) => {
 
   return (
     <GridLayout
-      className={`layout min-h-full grow shrink-0`}
+      className={`layout !min-h-full grow shrink-0`}
+      style={{ height: '100%' }}
       margin={[PLAN_MARGIN_X, PLAN_MARGIN_Y]}
       containerPadding={[CONTAINER_PADDING_X, CONTAINER_PADDING_Y]}
       cols={TIME_DIVIDE}
@@ -45,7 +46,7 @@ const GridRenderer = ({ customLayout, onLayoutChange, dayLen }: Props) => {
               w:item.w, 
               h:item.h,
               resizeHandles:['e']}}>
-          <ScheduleBox title={item.title} content={item.content} />
+          <ScheduleBox scheduleId={item.i} title={item.title} content={item.content} />
         </div>
       ))}
     </GridLayout>

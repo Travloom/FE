@@ -1,15 +1,24 @@
-import { useParams } from "next/navigation";
 import GridRenderer from "./GridRenderer";
-import { useCallback, useState } from "react";
-import { useSchedule } from "@/hooks/schedule/useSchedule";
+import { Dispatch, SetStateAction, useCallback, useState } from "react";
 import { useAddPlanBox } from "@/hooks/schedule/useAddPlanBox";
 import { CONTAINER_PADDING_Y, PLAN_HEIGHT, PLAN_MARGIN_X, PLAN_MARGIN_Y, PLANNER_HEIGHT, PLANNER_WIDTH, TIME_TABLE, TIME_WIDTH } from "@/constants/Plan";
 import { Layout } from "react-grid-layout";
+import { CustomLayout } from "@/types/schedule/types";
 
-const Scheduler = () => {
+
+interface SchedulerProps {
+  layout: CustomLayout[];
+  setLayout: Dispatch<SetStateAction<CustomLayout[]>>;
+  updateSchedule: (updatedLayout: CustomLayout[]) => void;
+}
+
+
+const Scheduler: React.FC<SchedulerProps> = ({
+  layout,
+  setLayout,
+  updateSchedule,
+}) => {
   const [dayLen] = useState(4);
-  const { planId } = useParams();
-  const { layout, setLayout, updateSchedule } = useSchedule(planId as string);
   const handleAddPlanBox = useAddPlanBox(layout, setLayout);
 
   const handleChangeLayout = useCallback((newLayout: Layout[]) => {

@@ -1,15 +1,23 @@
 import { MOBILE_TIME_HEIGHT, TIME_TABLE } from "@/constants/Plan";
 import GridRendererMobile from "./GridRendererMobile";
-import { useSchedule } from "@/hooks/schedule/useSchedule";
-import { useParams } from "next/navigation";
-import { useCallback } from "react";
+import { Dispatch, SetStateAction, useCallback } from "react";
 import { Layout } from "react-grid-layout";
 import { useAddMobilePlanBox } from "@/hooks/schedule/useAddMobilePlanBox";
+import { CustomLayout } from "@/types/schedule/types";
 
-const SchedulerMobile = () => {
 
-  const { planId } = useParams();
-  const { layout, setLayout, updateSchedule } = useSchedule(planId as string);
+interface SchedulerProps {
+  layout: CustomLayout[];
+  setLayout: Dispatch<SetStateAction<CustomLayout[]>>;
+  updateSchedule: (updatedLayout: CustomLayout[]) => void;
+}
+
+const SchedulerMobile: React.FC<SchedulerProps> = ({
+  layout,
+  setLayout,
+  updateSchedule,
+}) => {
+
   const handleAddPlanBoxMobile = useAddMobilePlanBox(layout, setLayout);
 
   const handleChangeLayoutMobile = useCallback((newLayout: Layout[]) => {

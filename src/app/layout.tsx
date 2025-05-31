@@ -12,6 +12,8 @@ export default function RootLayout({
         <Header/>
         {children}
         <div className={`bg-[url('/images/background.png')] w-screen h-screen fixed top-0 bg-cover bg-center z-[-9999]`}/>
+        
+        <div className={`z-9999`} id="portal-root" />
       </body>
     </html>
   );

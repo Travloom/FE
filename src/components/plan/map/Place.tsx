@@ -110,7 +110,7 @@ const Place: React.FC<PlaceProps> = ({
           </div>
         </div>
         <div className={`lg:gap-2.5 gap-1.5 flex flex-col px-2.5 py-1 overflow-hidden grow`}>
-          <p className={`lg:text-[20px] md:text-[16px] text-[14px] truncate`}>{name}</p>
+          <p className={`lg:text-[18px] md:text-[16px] text-[14px] truncate`}>{name}</p>
           <div className={`lg:text-[16px] md:text-[14px] text-[12px] flex flex-col gap-1 text-gray-400`}>
             <p>평점 : {rate}</p>
             <p className={`truncate`}>{address}</p>

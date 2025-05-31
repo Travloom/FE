@@ -42,18 +42,22 @@ const PlaceList: React.FC<PlaceListProp> = ({
   const placeManage = usePlaceManage(planIdStr);
 
   useEffect(() => {
-    if (currentHeight !== MID_HEIGHT) {
-      setCurrentHeight(MID_HEIGHT)
+    const focusPlace = async () => {
+      if (currentHeight !== MID_HEIGHT) {
+        setCurrentHeight(MID_HEIGHT)
+      }
+
+      setTimeout(() => {
+        if (selectedPlaceId && placeRefs.current[selectedPlaceId]) {
+          placeRefs.current[selectedPlaceId]?.scrollIntoView({
+            behavior: "smooth",
+            block: "start",
+          });
+        }
+      }, 300);
     }
 
-    setTimeout(() => {
-      if (selectedPlaceId && placeRefs.current[selectedPlaceId]) {
-        placeRefs.current[selectedPlaceId]?.scrollIntoView({
-          behavior: "smooth",
-          block: "start",
-        });
-      }
-    }, 300);
+    focusPlace();
   }, [selectedPlaceId]);
 
   return (
