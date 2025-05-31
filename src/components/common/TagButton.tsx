@@ -52,6 +52,7 @@ const TagButton: React.FC<TagButtonProps> = ({
       setIsSelected(true);
       setIsEditing(false);
       setRegion("");
+      setIsHover(false);
     }
   }
 

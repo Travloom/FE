@@ -4,24 +4,21 @@ import PlanInput from "@/components/common/PlanInput";
 import TagButton from "@/components/common/TagButton";
 import { TAGLIST } from "@/constants/Tag";
 import { AnimatePresence } from "framer-motion";
-import { useEffect } from "react";
 import usePageStore from "../stores/usePageStore";
 import usePageAnimateRouter from "@/hooks/common/usePageAnimateRouter";
 import Motion from "@/components/motion/Motion";
+import useInitPage from "@/hooks/common/useInitPage";
 
 export default function Home() {
 
   const {
     isPagePending,
-    setIsPagePending,
   } = usePageStore();
 
   const pageAnimateRouter = usePageAnimateRouter();
 
-  useEffect(() => {
-    setIsPagePending(false);
-  }, [])
-
+  useInitPage(null)
+  
   return (
     <>
       <AnimatePresence>

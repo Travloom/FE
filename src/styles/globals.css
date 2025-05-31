@@ -42,6 +42,7 @@ button {
   cursor: pointer;
   align-content: center;
   text-align: center;
+  user-select: none;
 }
 
 ::-webkit-scrollbar {
