@@ -7,6 +7,7 @@ import Motion from "../../motion/Motion";
 import { CustomLayout } from "@/types/schedule/types";
 import { ChangeEvent, Dispatch, SetStateAction, useCallback, useEffect, useRef } from "react";
 import { debounce } from "lodash";
+import { DeleteIcon } from "@/assets/svgs";
 
 
 interface ScheduleModalProps {
@@ -22,6 +23,7 @@ const ScheduleModal: React.FC<ScheduleModalProps> = ({
     isScheduleModalOpen,
     schedule,
     setIsScheduleModalOpen,
+    setSchedule,
     setScheduleTitle,
     setScheduleContent,
   } = useScheduleModalStore();
@@ -34,12 +36,24 @@ const ScheduleModal: React.FC<ScheduleModalProps> = ({
     updateSchedule(updated)
   }, 500);
 
+  const deleteSchedule = () => {
+    if (!schedule.scheduleId) return;
+
+    setSchedule({scheduleId: null, title: null, content: null})
+    setIsScheduleModalOpen(false);
+
+    setLayout((prevLayout) => {
+      const updated = prevLayout.filter(item => item.i !== schedule.scheduleId);
+      updateSchedule(updated);
+
+      return updated;
+    })
+  }
+
   useEffect(() => {
     if (textareaRef.current) {
 
       const lineCount = schedule.content?.split('\n').length;
-
-      console.log(schedule.content?.toString())
 
       textareaRef.current.style.height = `${8 + 14 * 1.15 * (lineCount || 1) + 2}px`;
     }
@@ -86,7 +100,7 @@ const ScheduleModal: React.FC<ScheduleModalProps> = ({
               className="
                 md:w-1/2 md:h-1/2
                 w-2/3 h-2/5 min-h-[300px]
-                flex flex-col justify-start gap-1 items-center p-4 bg-white rounded-[8px] border border-gray-300"
+                relative flex flex-col justify-start gap-1 items-center p-4 bg-white rounded-[8px] border border-gray-300"
               onClick={preventEvent}
             >
               <input
@@ -107,6 +121,11 @@ const ScheduleModal: React.FC<ScheduleModalProps> = ({
                 
                 onChange={(e) => onScheduleChange(e, setScheduleContent)}
               />
+              <DeleteIcon 
+                className={`
+                  md:w-8 md:-right-10
+                  w-6 -right-7.5 top-2 absolute text-[#ff3333] cursor-pointer`}
+                onClick={deleteSchedule}/>
             </div>
           </Motion.MotionDiv>
         )}
