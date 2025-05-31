@@ -10,7 +10,6 @@ import Planner from "@/components/plan/Planner";
 import { doc, DocumentData, onSnapshot } from "firebase/firestore";
 import { fireStore } from "@/firebase/firebaseClient";
 import { useParams } from "next/navigation";
-import usePlanStore from "@/stores/usePlanStore";
 import Motion from "@/components/motion/Motion";
 
 interface tagProps {
@@ -28,7 +27,7 @@ const PlanPage = () => {
 
   const {
     setTitle,
-  } = usePlanStore();
+  } = usePageStore();
 
   useEffect(() => {
     setIsPagePending(false);
