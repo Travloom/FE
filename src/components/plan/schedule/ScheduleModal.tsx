@@ -124,7 +124,7 @@ const ScheduleModal: React.FC<ScheduleModalProps> = ({
               <DeleteIcon 
                 className={`
                   md:w-8 md:-right-10
-                  w-6 -right-7.5 top-2 absolute text-[#ff3333] cursor-pointer`}
+                  text-[#ff4d4d] w-6 -right-7.5 top-2 absolute cursor-pointer transition-all-300-out`}
                 onClick={deleteSchedule}/>
             </div>
           </Motion.MotionDiv>
