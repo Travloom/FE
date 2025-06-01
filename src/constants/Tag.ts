@@ -9,6 +9,24 @@ export const TAGLIST = [
     ]
   },
   {
+    title: "일정",
+    tagList: [
+      "1박 2일",
+      "2박 3일",
+      "3박 4일",
+      "4박 5일",
+    ]
+  },
+  {
+    title: "인원",
+    tagList: [
+      "1명",
+      "2명",
+      "3명",
+      "4명",
+    ]
+  },
+  {
     title: "누구",
     tagList: [
       "가족",
