@@ -18,7 +18,7 @@ export default function Home() {
   const pageAnimateRouter = usePageAnimateRouter();
 
   useInitPage(null)
-  
+
   return (
     <>
       <AnimatePresence>
@@ -28,7 +28,7 @@ export default function Home() {
               md:px-[200px] 
               w-full h-full px-[28px] pb-[60px] pt-[100px] transition-all-300-out`}>
             <div className={`flex flex-col gap-[40px] pb-[20px] h-full justify-center`}>
-              <div 
+              <div
                 className={`
                   lg:gap-5
                   gap-2.5 flex flex-col w-full justify-center items-center`}>
@@ -38,12 +38,12 @@ export default function Home() {
                     text-point text-[28px] transition-all-300-out`}>
                   어디로 떠나볼까요?
                 </p>
-                <div 
+                <div
                   className={`
                     lg:gap-5 lg:max-w-[750px]
                     gap-2.5 w-full  flex flex-col transition-all-300-out`}>
                   <PlanInput />
-                  <div 
+                  <div
                     className={`
                       lg:max-h-[119px]
                       max-h-[108px] w-full flex flex-col gap-10`}>
