@@ -17,7 +17,7 @@ const TagButton: React.FC<TagButtonProps> = ({
   const [currentTag, setCurrentTag] = useState(title);
   const [isHover, setIsHover] = useState(false);
 
-  const [region, setRegion] = useState("");
+  const [tagInput, setTagInput] = useState("");
   const [isEditing, setIsEditing] = useState(false);
   const regionRef = useRef<HTMLInputElement>(null);
 
@@ -47,11 +47,11 @@ const TagButton: React.FC<TagButtonProps> = ({
 
   const handleAddRegionInput = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
-      tagList.push(region);
-      handleTagButton(region)
+      tagList.push(tagInput);
+      handleTagButton(tagInput)
       setIsSelected(true);
       setIsEditing(false);
-      setRegion("");
+      setTagInput("");
       setIsHover(false);
     }
   }
@@ -113,8 +113,8 @@ const TagButton: React.FC<TagButtonProps> = ({
               className={`text-center`}
               placeholder={title}
               ref={regionRef}
-              value={region}
-              onChange={(e) => setRegion(e.target.value)}
+              value={tagInput}
+              onChange={(e) => setTagInput(e.target.value)}
               onKeyDown={handleAddRegionInput}>
             </motion.input>
           ))
