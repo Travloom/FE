@@ -1,15 +1,29 @@
 'use client'
 
+import { logOutRequest } from "@/apis/user";
 import Motion from "@/components/motion/Motion";
 import useInitPage from "@/hooks/common/useInitPage";
 import usePageStore from "@/stores/usePageStore";
+import useUserStore from "@/stores/useUserStore";
 import { AnimatePresence } from "framer-motion";
+import { useRouter } from "next/navigation";
 
 export default function Mypage() {
+
+  const router = useRouter();
+
+  const {
+    user,
+  } = useUserStore();
 
   const {
     isPagePending,
   } = usePageStore()
+
+  const logOut = async () => {
+    const logoutUrl = await logOutRequest();
+    router.push(logoutUrl)
+  }
 
   useInitPage('마이페이지')
 
@@ -33,14 +47,15 @@ export default function Mypage() {
                   px-4 py-3 flex justify-between items-center w-full rounded-[8px] border border-gray-300 transition-all-300-out`}>
                 <div
                   className={`flex flex-col gap-1`}>
-                  <p>이준희 님</p>
-                  <p className={`text-gray-500`}>example@naver.com</p>
+                  <p>{user?.name} 님</p>
+                  <p className={`text-gray-500`}>{user?.email}</p>
                 </div>
                 <button
                   className={`
                     lg:text-[18px] 
                     md:text-[16px]
-                    text-[14px] text-white bg-[#F37E7E] px-5 py-2.5 rounded-[8px] h-fit w-fit transition-all-300-out`}>로그아웃</button>
+                    text-[14px] text-white bg-[#F37E7E] px-5 py-2.5 rounded-[8px] h-fit w-fit transition-all-300-out`}
+                  onClick={logOut}>로그아웃</button>
               </div>
 
               {/* 지난 여행 */}
