@@ -30,12 +30,12 @@ const nextConfig: NextConfig = {
   async rewrites() {
     return [
       {
-        source: "/api/:path*",
+        source: "/proxy/:path*",
         destination: "http://localhost:8080/:path*",  // 실제 api url 경로 (최종적으로 요청 보낼 url)
       },
     ];
   },
-  trailingSlash: true,
+  trailingSlash: false,
 };
 
 export default nextConfig;
