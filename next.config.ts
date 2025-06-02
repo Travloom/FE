@@ -17,6 +17,7 @@ const nextConfig: NextConfig = {
   },
 
   experimental: {
+    proxyTimeout: 1000000,
     turbo: {
       rules: {
         "*.svg": {
