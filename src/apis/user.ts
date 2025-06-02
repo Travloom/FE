@@ -2,7 +2,7 @@ import axiosInstance from "./axiosInstance"
 
 export const getUserRequest = async () => {
   try {
-    const response = await axiosInstance.get(`${process.env.NEXT_PUBLIC_DOMAIN}/api/auth/profile`)
+    const response = await axiosInstance.get(`/api/api/auth/profile`)
 
     const user = {
       name: response.data.name,
@@ -21,7 +21,7 @@ export const getUserRequest = async () => {
 
 export const logOutRequest = async () => {
   try {
-    const response = await axiosInstance.get(`${process.env.NEXT_PUBLIC_DOMAIN}/api/auth/logout-url`)
+    const response = await axiosInstance.get(`/api/api/auth/logout-url`)
     return response.data.logoutUrl
   } catch (e) {
     console.log(e)

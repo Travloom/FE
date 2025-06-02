@@ -11,7 +11,7 @@ interface TagType {
 
 export const planRecommendRequest = async (tags: TagType) => {
   try {
-    const response = await axiosInstance.post(`${process.env.NEXT_PUBLIC_DOMAIN}/api/places`, {
+    const response = await axiosInstance.post(`/api/api/places`, {
       title: tags.title,
       region: tags.region,
       itinerary: tags.itinerary,
