@@ -53,21 +53,7 @@ export const usePlaceManage = (planId: string) => {
 
     const data = docSnap.data();
 
-    // const getPhotoRef = async () => {
-    try {
-      const response = await axios.get('/google-map/api/place/details/json', {
-        params: {
-          place_id: newPlace.placeId,
-          key: process.env.NEXT_PUBLIC_GOOGLE_REST_KEY,
-        }
-      });
-
-      newPlace.photoReference = response?.data?.result?.photos?.[0].photo_reference;
-    } catch (e) {
-      console.log(e)
-    }
-    // }
-
+    const isAlreadyExist = isAlreadyExisted(type, newPlace)
 
     const listKey =
       type === 'restaurant' ? 'restaurantList' :
@@ -76,7 +62,7 @@ export const usePlaceManage = (planId: string) => {
 
     const currentList: PlaceType[] = data[listKey] || [];
 
-    const updatedList = isAlreadyExisted(type, newPlace)
+    const updatedList = isAlreadyExist
       ? currentList.filter(p => p.placeId !== newPlace.placeId)
       : [...currentList, newPlace];
 

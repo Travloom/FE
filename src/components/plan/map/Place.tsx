@@ -19,14 +19,14 @@ interface PlaceProps extends PlaceType {
   isAttractionOn: boolean,
   ref: React.Ref<HTMLDivElement>;
 
-  imageUrl: string;
+  photoReference: string;
 }
 
 const Place: React.FC<PlaceProps> = ({
   name,
   rate,
   address,
-  imageUrl = "/",
+  photoReference = "/",
   placeId,
   types,
   lat,
@@ -53,10 +53,6 @@ const Place: React.FC<PlaceProps> = ({
   } = usePlaceStore();
 
   const altImage = '/images/alt_image.png'
-
-  const handleImage = (e: React.SyntheticEvent<HTMLImageElement>) => {
-    e.currentTarget.src = altImage;
-  }
 
   const handlePlace = (e: React.MouseEvent, type: 'restaurant' | 'cafe' | 'hotel' | 'attraction') => {
     e.stopPropagation();
@@ -93,10 +89,9 @@ const Place: React.FC<PlaceProps> = ({
         <div className={`overflow-hidden rounded-[4px] border border-gray-200 h-full aspect-square shrink-0 relative`}>
           <Image
             className={`object-cover`}
-            src={imageUrl}
+            src={`${photoReference ? `/api/image-proxy?photo_reference=${photoReference}` : altImage}`}
             fill
             alt={"이미지"}
-            onError={handleImage}
             unoptimized />
           <div className={`lg:w-6 w-5`}>
             <AnimatePresence>

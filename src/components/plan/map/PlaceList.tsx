@@ -92,7 +92,7 @@ const PlaceList: React.FC<PlaceListProp> = ({
                   name={place.name}
                   rate={place.rate}
                   address={place.address}
-                  imageUrl={`https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=${place.photoReference}&key=${process.env.NEXT_PUBLIC_GOOGLE_REST_KEY}`}
+                  photoReference={place.photoReference || ""}
                   placeId={place.placeId}
                   lat={place.lat}
                   lng={place.lng}
@@ -122,7 +122,7 @@ const PlaceList: React.FC<PlaceListProp> = ({
                     name={place.name}
                     rate={place.rate}
                     address={place.address}
-                    imageUrl={`https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=${place.photoReference}&key=${process.env.NEXT_PUBLIC_GOOGLE_REST_KEY}`}
+                    photoReference={place.photoReference || ""}
                     placeId={place.placeId}
                     lat={place.lat}
                     lng={place.lng}
@@ -152,7 +152,7 @@ const PlaceList: React.FC<PlaceListProp> = ({
                       name={place.name}
                       rate={place.rate}
                       address={place.address}
-                      imageUrl={`https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=${place.photoReference}&key=${process.env.NEXT_PUBLIC_GOOGLE_REST_KEY}`}
+                      photoReference={place.photoReference || ""}
                       placeId={place.placeId}
                       lat={place.lat}
                       lng={place.lng}
@@ -182,7 +182,7 @@ const PlaceList: React.FC<PlaceListProp> = ({
                         name={place.name}
                         rate={place.rate}
                         address={place.address}
-                        imageUrl={`https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=${place.photoReference}&key=${process.env.NEXT_PUBLIC_GOOGLE_REST_KEY}`}
+                        photoReference={place.photoReference || ""}
                         placeId={place.placeId}
                         lat={place.lat}
                         lng={place.lng}
@@ -220,7 +220,7 @@ const PlaceList: React.FC<PlaceListProp> = ({
                             name={place.name}
                             rate={place.rate}
                             address={place.address}
-                            imageUrl={`https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=${place.photoReference}&key=${process.env.NEXT_PUBLIC_GOOGLE_REST_KEY}`}
+                            photoReference={place.photoReference ?? ''}
                             placeId={place.placeId}
                             lat={place.lat}
                             lng={place.lng}

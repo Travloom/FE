@@ -2,7 +2,7 @@ export interface PlaceType {
   name: string;
   rate: number | string;
   address: string;
-  photoReference?: string;
+  photoReference: string;
   placeId: string;
   lat: number;
   lng: number;

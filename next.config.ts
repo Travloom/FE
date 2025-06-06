@@ -34,10 +34,6 @@ const nextConfig: NextConfig = {
         source: "/proxy/:path*",
         destination: "http://localhost:8080/:path*",  // 실제 api url 경로 (최종적으로 요청 보낼 url)
       },
-      {
-        source: "/google-map/:path*",
-        destination: "https://maps.googleapis.com/maps/:path*",
-      }
     ];
   },
   trailingSlash: false,
