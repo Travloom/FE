@@ -6,20 +6,22 @@ import { AnimatePresence, motion } from "framer-motion";
 interface TagButtonProps {
   title: string;
   tagList: string[];
+  currentTag: string;
+  setCurrentTag: (value: string) => void;
 }
 
 const TagButton: React.FC<TagButtonProps> = ({
   title,
   tagList,
+  currentTag,
+  setCurrentTag,
 }) => {
 
-  const [isSelected, setIsSelected] = useState(false);
-  const [currentTag, setCurrentTag] = useState(title);
   const [isHover, setIsHover] = useState(false);
 
   const [tagInput, setTagInput] = useState("");
   const [isEditing, setIsEditing] = useState(false);
-  const tagInputRef = useRef<HTMLInputElement>(null);
+  const regionRef = useRef<HTMLInputElement>(null);
 
   const [tempTag, setTempTag] = useState<string | null>(null);
   const [isFadingOut, setIsFadingOut] = useState(false);
@@ -28,7 +30,6 @@ const TagButton: React.FC<TagButtonProps> = ({
     if (!isFadingOut) {
       setIsFadingOut(true);
       setTempTag(item);
-      setIsSelected(true);
     };
   }
 
@@ -49,7 +50,6 @@ const TagButton: React.FC<TagButtonProps> = ({
     if (e.key === "Enter") {
       tagList.push(tagInput);
       handleTagButton(tagInput)
-      setIsSelected(true);
       setIsEditing(false);
       setTagInput("");
       setIsHover(false);
@@ -57,20 +57,20 @@ const TagButton: React.FC<TagButtonProps> = ({
   }
 
   useEffect(() => {
-    tagInputRef.current?.focus();
+    regionRef.current?.focus();
   }, [isEditing])
 
   return (
     <div
       className={`
         h-fit w-fit
-      bg-white text-gray-300 border-[1px] ${isSelected ? `border-point` : `border-gray-300`}
+      bg-white text-gray-300 border-[1px] ${currentTag !== title ? `border-point` : `border-gray-300`}
         lg:text-[18px] lg:px-3 lg:py-1.5 lg:rounded-[18px]
         text-[14px] px-3 py-1.5 rounded-[16px] flex flex-col w-fit h-fit cursor-pointer transition-all-300-out items-center select-none`}
       onMouseOver={() => setIsHover(true)}
       onMouseLeave={handleMouseLeave}>
       <motion.p
-        className={`${isSelected ? `text-point` : ``} mt-0.5 transition-all-300-out`}
+        className={`${currentTag !== title ? `text-point` : ``} mt-0.5 transition-all-300-out`}
         initial={{ opacity: 1 }}
         animate={{ opacity: isFadingOut ? 0 : 1 }}
         transition={{ duration: 0.3 }}
@@ -112,7 +112,7 @@ const TagButton: React.FC<TagButtonProps> = ({
               transition={{ duration: 0.3 }}
               className={`text-center`}
               placeholder={title}
-              ref={tagInputRef}
+              ref={regionRef}
               value={tagInput}
               onChange={(e) => setTagInput(e.target.value)}
               onKeyDown={handleAddTagInput}>

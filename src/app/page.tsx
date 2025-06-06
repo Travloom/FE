@@ -8,12 +8,21 @@ import usePageStore from "../stores/usePageStore";
 import usePageAnimateRouter from "@/hooks/common/usePageAnimateRouter";
 import Motion from "@/components/motion/Motion";
 import useInitPage from "@/hooks/common/useInitPage";
+import { useEffect, useState } from "react";
+import CustomDatePicker from "@/components/calandar/CustomDatePicker";
+import useHomeStore from "@/stores/useHomeStore";
+import { TagsType } from "@/types/place/type";
 
 export default function Home() {
 
   const {
     isPagePending,
   } = usePageStore();
+
+  const {
+    tags,
+    setTag
+  } = useHomeStore();
 
   const pageAnimateRouter = usePageAnimateRouter();
 
@@ -42,14 +51,21 @@ export default function Home() {
                   className={`
                     lg:gap-5 lg:max-w-[750px]
                     gap-2.5 w-full  flex flex-col transition-all-300-out`}>
-                  <PlanInput />
+                  <PlanInput/>
                   <div
                     className={`
                       lg:max-h-[119px]
                       max-h-[108px] w-full flex flex-col gap-10`}>
                     <div className={`flex flex-row gap-2.5 w-full top-0`}>
-                      {TAGLIST.map((tag, index) => (
-                        <TagButton key={index} title={tag.title} tagList={tag.tagList} />
+                      <CustomDatePicker/>
+                      {Object.entries(TAGLIST).map(([key, tag]) => (
+                        <TagButton
+                          key={key}
+                          title={tag.title}
+                          tagList={tag.tagList}
+                          currentTag={tags[key as keyof TagsType] || tag.title}
+                          setCurrentTag={(value: string) => setTag(key as keyof TagsType, value)}
+                        />
                       ))}
                     </div>
                     <p

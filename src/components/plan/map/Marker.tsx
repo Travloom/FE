@@ -14,25 +14,27 @@ const Marker = () => {
 
   const {
     places,
-    selectedToggle,
+    selectedCategory,
     setSelectedPlaceId
   } = usePlaceStore();
 
   const [markPlaces, setMarkPlaces] = useState(
-    selectedToggle === '맛집' ? places.restaurantList :
-      selectedToggle === '호텔' ? places.hotelList :
-        selectedToggle === '명소' ? places.attractionList :
-          places.searchList ?? []
+    selectedCategory === '맛집' ? places.restaurantList :
+      selectedCategory === '카페' ? places.cafeList :
+        selectedCategory === '호텔' ? places.hotelList :
+          selectedCategory === '명소' ? places.attractionList :
+            places.searchList ?? []
   );
 
   useEffect(() => {
     setMarkPlaces(
-      selectedToggle === '맛집' ? places.restaurantList :
-        selectedToggle === '호텔' ? places.hotelList :
-          selectedToggle === '명소' ? places.attractionList :
-            places.searchList ?? []
+      selectedCategory === '맛집' ? places.restaurantList :
+        selectedCategory === '카페' ? places.cafeList :
+          selectedCategory === '호텔' ? places.hotelList :
+            selectedCategory === '명소' ? places.attractionList :
+              places.searchList ?? []
     )
-  }, [selectedToggle, places])
+  }, [selectedCategory, places])
 
   useEffect(() => {
     if (!map) return;
@@ -49,7 +51,7 @@ const Marker = () => {
       const marker = new google.maps.marker.AdvancedMarkerElement({
         map,
         position: new google.maps.LatLng(place.lat, place.lng),
-        content: renderToDOMElement(<Pin placeId={place.placeId}/>),
+        content: renderToDOMElement(<Pin placeId={place.placeId} types={place.types} />),
       });
 
       marker.addListener("click", () => {
@@ -62,7 +64,7 @@ const Marker = () => {
     // 새 마커 배열 저장
     setMarkers(newMarkers);
 
-  }, [markPlaces, selectedToggle, map]);
+  }, [markPlaces, selectedCategory, map]);
 
   // 마커 배열이 변경 될 때마다 첫번째 장소로 panTo 실행
   useEffect(() => {
@@ -78,24 +80,34 @@ const Marker = () => {
 export default Marker;
 
 
-const Pin = ({placeId}: {placeId: string}) => {
+const Pin = ({ placeId, types }: { placeId: string, types: string[] }) => {
 
   const {
-    selectedPlaceId: selectedPlace,
-    setSelectedPlaceId: setSelectedPlace,
+    selectedPlaceId,
+    setSelectedPlaceId,
+    selectedCategory,
   } = usePlaceStore();
 
   const handleIsActive = () => {
-    setSelectedPlace(placeId)
+    setSelectedPlaceId(placeId)
   }
+
 
   return (
     <AnimatePresence>
       <Motion.MotionDiv
         className={`
-          ${placeId === selectedPlace ? `bg-[url('/svgs/restaurant_marker_hover.svg')]` : `bg-[url('/svgs/restaurant_marker.svg')]`}
-          outline-0 w-10 aspect-3/4 hover:bg-[url('/svgs/restaurant_marker_hover.svg')] transition-all duration-300`} 
-        onClick={handleIsActive}/>
+          ${selectedCategory === '맛집' ? `${placeId === selectedPlaceId ? `bg-[url('/svgs/restaurant_marker_hover.svg')]` : `bg-[url('/svgs/restaurant_marker.svg')]`} hover:bg-[url('/svgs/restaurant_marker_hover.svg')]` : (
+            selectedCategory === '카페' ? `${placeId === selectedPlaceId ? `bg-[url('/svgs/cafe_marker_hover.svg')]` : `bg-[url('/svgs/cafe_marker.svg')]`} hover:bg-[url('/svgs/cafe_marker_hover.svg')]` : (
+              selectedCategory === '호텔' ? `${placeId === selectedPlaceId ? `bg-[url('/svgs/hotel_marker_hover.svg')]` : `bg-[url('/svgs/hotel_marker.svg')]`} hover:bg-[url('/svgs/hotel_marker_hover.svg')]` : (
+                selectedCategory === '명소' ? `${placeId === selectedPlaceId ? `bg-[url('/svgs/attraction_marker_hover.svg')]` : `bg-[url('/svgs/attraction_marker.svg')]`} hover:bg-[url('/svgs/attraction_marker_hover.svg')]` : (
+                  `${placeId === selectedPlaceId ? `bg-[url('/svgs/search_marker_hover.svg')]` : `bg-[url('/svgs/search_marker.svg')]`} hover:bg-[url('/svgs/search_marker_hover.svg')]`
+                )
+              )
+            )
+          )}
+          outline-0 w-10 aspect-3/4 transition-all duration-300`}
+        onClick={handleIsActive} />
     </AnimatePresence>
   )
 }

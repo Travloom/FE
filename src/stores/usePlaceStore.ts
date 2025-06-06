@@ -1,23 +1,15 @@
-import { PlaceType as PlaceType } from "@/types/place/type";
+import { ListCategory, PlacesType, PlaceType as PlaceType } from "@/types/place/type";
 import { create } from "zustand";
 
-type Category = 'restaurantList' | 'hotelList' | 'attractionList' | 'searchList'
-
-type PlacesType = {
-  restaurantList: PlaceType[];
-  hotelList: PlaceType[];
-  attractionList: PlaceType[];
-  searchList: PlaceType[] | null;
-}
 
 interface PlaceState {
   places: PlacesType;
   selectedPlaceId: string | null;
-  selectedToggle: string;
+  selectedCategory: string;
 
-  setPlaces: (category: Category, newPlaces: PlaceType[]) => void;
+  setPlaces: (category: ListCategory, newPlaces: PlaceType[]) => void;
   setSelectedPlaceId: (value: string) => void;
-  setSelectedToggle: (value: string) => void;
+  setSelectedCategory: (value: string) => void;
 
   
   isPending: boolean;
@@ -28,16 +20,17 @@ interface PlaceState {
 const usePlaceStore = create<PlaceState>((set) => ({
   places: {
     restaurantList: [],
+    cafeList: [],
     hotelList: [],
     attractionList: [],
     searchList: null,
   },
   selectedPlaceId: null,
-  selectedToggle: "맛집",
+  selectedCategory: "맛집",
 
   isPending: false,
 
-  setPlaces: (category: Category, newPlaces: PlaceType[] | google.maps.places.PlaceResult[] | null) =>
+  setPlaces: (category: ListCategory, newPlaces: PlaceType[] | google.maps.places.PlaceResult[] | null) =>
     set((state) => ({
       places: {
         ...state.places,
@@ -45,7 +38,7 @@ const usePlaceStore = create<PlaceState>((set) => ({
       },
     })),
   setSelectedPlaceId: (value: string) => set({selectedPlaceId: value}),
-  setSelectedToggle: (value: string) => set({selectedToggle: value}),
+  setSelectedCategory: (value: string) => set({selectedCategory: value}),
 
   setIsPending: (value: boolean) => set({isPending: value}),
 }));

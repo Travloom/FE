@@ -18,7 +18,7 @@ const SearchHeader = () => {
 
   const handleSearch = async (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter' && map && searchText.trim() !== "") {
-      
+
       setIsPending(true);
 
       const request = {
@@ -37,16 +37,12 @@ const SearchHeader = () => {
           status: google.maps.places.PlacesServiceStatus
         ) => {
           if (status === google.maps.places.PlacesServiceStatus.OK && results) {
-
             const convertedPlaces = results.map(place => convertToPlaceType(place)).filter(Boolean);
 
-            
-            console.log(convertedPlaces)
-            
             setPlaces('searchList', convertedPlaces)
             map.panTo(results[0].geometry!.location!);
             setIsPending(false);
-            
+
           }
           else {
             setPlaces('searchList', [])
@@ -58,16 +54,16 @@ const SearchHeader = () => {
   }
 
   return (
-      <div className={`py-2 w-full flex flex-row gap-2 items-center justify-center`}>
-        <input
-          className={`
+    <div className={`py-2 w-full flex flex-row gap-2 items-center justify-center`}>
+      <input
+        className={`
             lg:text-[16px] lg:py-3 
             text-[14px] px-4 py-2 w-full outline-0 rounded-full border border-gray-200 text-gray-300 placeholder:text-gray-200`}
-          placeholder='검색어를 입력하세요'
-          value={searchText}
-          onKeyDown={handleSearch}
-          onChange={(e) => setSearchText(e.target.value)} />
-      </div>
+        placeholder='검색어를 입력하세요'
+        value={searchText}
+        onKeyDown={handleSearch}
+        onChange={(e) => setSearchText(e.target.value)} />
+    </div>
   )
 }
 

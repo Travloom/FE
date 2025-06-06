@@ -1,6 +1,6 @@
 'use client'
 
-import { GoogleMapIcon, MyAttractionOffIcon, MyAttractionOnIcon, MyHotelOffIcon, MyHotelOnIcon, MyRestaurantOffIcon, MyRestaurantOnIcon } from "@/assets/svgs";
+import { GoogleMapIcon, MyAttractionOffIcon, MyAttractionOnIcon, MyCafeOffIcon, MyCafeOnIcon, MyHotelOffIcon, MyHotelOnIcon, MyRestaurantOffIcon, MyRestaurantOnIcon } from "@/assets/svgs";
 import Motion from "@/components/motion/Motion";
 import useMapStore from "@/stores/useMapStore";
 import usePlaceStore from "@/stores/usePlaceStore";
@@ -9,24 +9,38 @@ import { AnimatePresence } from "framer-motion";
 import Image from "next/image";
 
 interface PlaceProps extends PlaceType {
-  addPlace: () => void;
-  isOn: boolean;
+  handleRestaurant: () => Promise<void>;
+  handleCafe: () => Promise<void>;
+  handleHotel: () => Promise<void>;
+  handleAttraction: () => Promise<void>;
+  isRestaurantOn: boolean,
+  isCafeOn: boolean,
+  isHotelOn: boolean,
+  isAttractionOn: boolean,
   ref: React.Ref<HTMLDivElement>;
+
+  imageUrl: string;
 }
 
 const Place: React.FC<PlaceProps> = ({
   name,
   rate,
   address,
-  imageUrl="/",
+  imageUrl = "/",
   placeId,
   types,
   lat,
   lng,
   ref,
 
-  addPlace,
-  isOn,
+  handleRestaurant,
+  handleCafe,
+  handleHotel,
+  handleAttraction,
+  isRestaurantOn,
+  isCafeOn,
+  isHotelOn,
+  isAttractionOn,
 }) => {
 
   const {
@@ -44,9 +58,22 @@ const Place: React.FC<PlaceProps> = ({
     e.currentTarget.src = altImage;
   }
 
-  const handleAddPlace = (e: React.MouseEvent) => {
+  const handlePlace = (e: React.MouseEvent, type: 'restaurant' | 'cafe' | 'hotel' | 'attraction') => {
     e.stopPropagation();
-    addPlace();
+    switch (type) {
+      case 'restaurant':
+        handleRestaurant();
+        break;
+      case 'cafe':
+        handleCafe();
+        break;
+      case 'hotel':
+        handleHotel();
+        break;
+      case 'attraction':
+        handleAttraction();
+        break;
+    }
   }
 
   const handleClick = () => {
@@ -71,41 +98,64 @@ const Place: React.FC<PlaceProps> = ({
             alt={"이미지"}
             onError={handleImage}
             unoptimized />
-          <div className={`lg:w-6 w-5`} onClick={handleAddPlace}>
+          <div className={`lg:w-6 w-5`}>
             <AnimatePresence>
-              {types?.includes('restaurant') ? (
-                isOn ? (
-                  <Motion.MotionDiv key={'on'}>
-                    <MyRestaurantOnIcon className={`lg:w-6 w-5 absolute right-[6px] bottom-[6px] cursor-pointer`} />
-                  </Motion.MotionDiv>
-                ) : (
-                  <Motion.MotionDiv key={'off'}>
-                    <MyRestaurantOffIcon className={`lg:w-6 w-5 absolute right-[6px] bottom-[6px] cursor-pointer`} />
-                  </Motion.MotionDiv>
-                )
-              ) : (
-                types?.includes('lodging') ? (
-                  isOn ? (
-                    <Motion.MotionDiv key={'on'}>
-                      <MyHotelOnIcon className={`lg:w-6 w-5 absolute right-[6px] bottom-[6px] cursor-pointer`} />
-                    </Motion.MotionDiv>
-                  ) : (
-                    <Motion.MotionDiv key={'off'}>
-                      <MyHotelOffIcon className={`lg:w-6 w-5 absolute right-[6px] bottom-[6px] cursor-pointer`} />
-                    </Motion.MotionDiv>
-                  )
-                ) : (
-                  isOn ? (
-                    <Motion.MotionDiv key={'on'}>
-                      <MyAttractionOnIcon className={`lg:w-6 w-5 absolute right-[6px] bottom-[6px] cursor-pointer`} />
-                    </Motion.MotionDiv>
-                  ) : (
-                    <Motion.MotionDiv key={'off'}>
-                      <MyAttractionOffIcon className={`lg:w-6 w-5 absolute right-[6px] bottom-[6px] cursor-pointer`} />
-                    </Motion.MotionDiv>
-                  )
-                )
-              )}
+              <div className={`absolute right-[6px] bottom-[6px] flex gap-1.5`}>
+                {types?.some(type => ['restaurant', 'food'].includes(type)) && (
+                  <div onClick={(e) => handlePlace(e, 'restaurant')}>
+                    {isRestaurantOn ? (
+                      <Motion.MotionDiv key={'restaurant on'}>
+                        <MyRestaurantOnIcon className={`lg:w-6 w-5 cursor-pointer`} />
+                      </Motion.MotionDiv>
+                    ) : (
+                      <Motion.MotionDiv key={'restaurant off'}>
+                        <MyRestaurantOffIcon className={`lg:w-6 w-5 cursor-pointer`} />
+                      </Motion.MotionDiv>
+                    )}
+                  </div>
+                )}
+                {types?.includes('cafe') && (
+                  <div onClick={(e) => handlePlace(e, 'cafe')}>
+                    {isCafeOn ? (
+                      <Motion.MotionDiv key={'cafe on'}>
+                        <MyCafeOnIcon className={`lg:w-6 w-5 cursor-pointer`} />
+                      </Motion.MotionDiv>
+                    ) : (
+                      <Motion.MotionDiv key={'cafe off'}>
+                        <MyCafeOffIcon className={`lg:w-6 w-5 cursor-pointer`} />
+                      </Motion.MotionDiv>
+                    )}
+                  </div>
+                )}
+                {types?.includes('lodging') && (
+                  <div onClick={(e) => handlePlace(e, 'hotel')}>
+                    {isHotelOn ? (
+                      <Motion.MotionDiv key={'hotel on'}>
+                        <MyHotelOnIcon className={`lg:w-6 w-5 cursor-pointer`} />
+                      </Motion.MotionDiv>
+                    ) : (
+                      <Motion.MotionDiv key={'hotel off'}>
+                        <MyHotelOffIcon className={`lg:w-6 w-5 cursor-pointer`} />
+                      </Motion.MotionDiv>
+                    )}
+                  </div>
+                )}
+                {!types?.some(type => ['restaurant', 'food'].includes(type)) &&
+                  !types?.includes('lodging') &&
+                  types?.includes('point_of_interest') && (
+                    <div onClick={(e) => handlePlace(e, 'attraction')}>
+                      {isAttractionOn ? (
+                        <Motion.MotionDiv key={'attraction on'}>
+                          <MyAttractionOnIcon className={`lg:w-6 w-5 cursor-pointer`} />
+                        </Motion.MotionDiv>
+                      ) : (
+                        <Motion.MotionDiv key={'attraction off'}>
+                          <MyAttractionOffIcon className={`lg:w-6 w-5 cursor-pointer`} />
+                        </Motion.MotionDiv>
+                      )}
+                    </div>
+                  )}
+              </div>
             </AnimatePresence>
           </div>
         </div>

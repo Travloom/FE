@@ -1,25 +1,27 @@
 import axiosInstance from "./axiosInstance"
 
-interface TagType {
+interface PlanType {
   title: string;
+  startDate: Date;
+  endDate: Date;
   region: string;
-  itinerary: string;
   companions: string;
   people: string;
   theme: string;
 }
 
-export const planRecommendRequest = async (tags: TagType) => {
+export const planRecommendRequest = async (Plan: PlanType) => {
   try {
     const response = await axiosInstance.post(`/proxy/api/places`, {
-      title: tags.title,
-      region: tags.region,
-      itinerary: tags.itinerary,
-      companions: tags.companions,
-      people: tags.people,
-      theme: tags.theme,
+      title: Plan.title,
+      startDate: Plan.startDate,
+      endDate: Plan.endDate,
+      region: Plan.region,
+      companions: Plan.companions,
+      people: Plan.people,
+      theme: Plan.theme,
     })
-    console.log(response)
+    return response.data;
   } catch (e) {
     console.log(e)
   }
