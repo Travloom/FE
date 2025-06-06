@@ -23,10 +23,10 @@ const CustomDatePicker = () => {
     ({ value, onClick, selectedDate, label }, ref) => {
       return (
         <div
-          className={`${selectedDate ? `text-point border-point w-[202px]` : `text-gray-300 border-gray-300 w-[60px]`} bg-white text-[18px] h-fit px-3 py-1.5 rounded-[20px] border text-center select-none cursor-pointer transition-all-300-out`}
+          className={`${selectedDate ? `text-point border-point w-[202px]` : `text-gray-300 border-gray-300 w-[60px]`} bg-white text-[18px] w-fit h-fit px-3 py-1.5 rounded-[20px] border text-center select-none cursor-pointer transition-all-300-out`}
           onClick={onClick}
           ref={ref}>
-          {value || label}
+          <p className={`mt-0.5`}>{value || label}</p>
         </div>
       );
     }
@@ -46,10 +46,10 @@ const CustomDatePicker = () => {
         selectsRange
         placeholderText='날짜를 선택해주세요.'
         customInput={
-          <CustomDateInput 
-            value={''} 
-            onClick={() => {}} 
-            selectedDate={startDate} 
+          <CustomDateInput
+            value={''}
+            onClick={() => { }}
+            selectedDate={startDate}
             label='일정' />}
         popperClassName='datepicker-fade-in'
         renderCustomHeader={({
