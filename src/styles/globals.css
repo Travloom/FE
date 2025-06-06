@@ -9,6 +9,9 @@
 @import "react-resizable/css/styles.css";
 @import "./react-grid-layout.css";
 
+@import 'react-datepicker/dist/react-datepicker.css';
+@import './date-picker.css';
+
 @font-face {
   font-family: 'GmarketSansLight';
   src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansLight.woff') format('woff');
