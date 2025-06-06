@@ -7,12 +7,12 @@ import { CustomLayout } from "@/types/schedule/types";
 interface Props {
   customLayout: CustomLayout[];
   onLayoutChange: (newLayout: Layout[]) => void;
-  _dayLen: number;
+  dayLen: number;
 }
 
 const ResponsiveGridLayout = WidthProvider(Responsive);
 
-const GridRendererMobile = ({ customLayout, onLayoutChange, _dayLen }: Props) => {
+const GridRendererMobile = ({ customLayout, onLayoutChange, dayLen }: Props) => {
 
   return (
     <ResponsiveGridLayout
@@ -21,7 +21,7 @@ const GridRendererMobile = ({ customLayout, onLayoutChange, _dayLen }: Props) =>
       containerPadding={[4, 4]}
       maxRows={TIME_DIVIDE}
       breakpoints={{ lg: 0 }}
-      cols={{ lg: 4 }}
+      cols={{ lg: dayLen }}
       rowHeight={46}
       verticalCompact={false}
       isDraggable={true}

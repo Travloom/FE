@@ -1,4 +1,3 @@
-import { AnimatePresence } from "framer-motion";
 import { RightArrowIcon } from "../../../assets/svgs";
 import Motion from "@/components/motion/Motion";
 import { useLongPress } from "@/hooks/common/useLongPress";
@@ -34,7 +33,7 @@ const ScheduleBox: React.FC<PlanBoxProps> = ({
   })
 
   return (
-    <AnimatePresence>
+    <>
       <Motion.MotionDiv
         {...bind}
         onContextMenu={handleOpenPlanModal}
@@ -62,7 +61,7 @@ const ScheduleBox: React.FC<PlanBoxProps> = ({
             md:h-3.5 md:rotate-0
             h-2.5 rotate-90 text-gray-300`} />
       </Motion.MotionDiv>
-    </AnimatePresence>
+    </>
   )
 }
 

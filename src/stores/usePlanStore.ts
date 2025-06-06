@@ -3,21 +3,29 @@ import { create } from "zustand";
 
 
 interface PlanState {
-  isPending: boolean;
+  isSchedulePending: boolean;
+  isInfoPending: boolean;
 
+  startDate: Date | null;
+  endDate: Date | null;
   days: number;
   tags: TagsType;
 
-  setIsPending: (value: boolean) => void;
+  setIsSchedulePending: (value: boolean) => void;
+  setIsInfoPending: (value: boolean) => void;
 
-  setDays: (value: number) => void;
+  setDays: (startDate: Date, endDate: Date) => void;
   setTag: (type: keyof TagsType, value: string) => void;
+  setTags: (tags: TagsType) => void;
 }
 
 const usePlanStore = create<PlanState>((set) => ({
-  isPending: true,
+  isSchedulePending: true,
+  isInfoPending: true,
 
-  days: 0,
+  startDate: null,
+  endDate: null,
+  days: 1,
   tags: {
     region: null,
     people: null,
@@ -25,9 +33,20 @@ const usePlanStore = create<PlanState>((set) => ({
     theme: null,
   },
 
-  setIsPending: (value: boolean) => set({ isPending: value }),
+  setIsSchedulePending: (value: boolean) => set({ isSchedulePending: value }),
+  setIsInfoPending: (value: boolean) => set({ isSchedulePending: value }),
 
-  setDays: (value: number) => set({ days: value }),
+  setDays: (startDate: Date, endDate: Date) => {
+
+    const convertedStartDate = new Date(startDate)
+    const convertedEndDate = new Date(endDate)
+
+    const timeDiff = convertedEndDate.getTime() - convertedStartDate.getTime() + 1;
+    const dayDiff = Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
+
+    set({ startDate: convertedStartDate, endDate: convertedEndDate, days: dayDiff})
+  },
+
   setTag: (type: keyof TagsType, value: string) =>
     set((state) => ({
       tags: {
@@ -35,6 +54,7 @@ const usePlanStore = create<PlanState>((set) => ({
         [type]: value,
       },
     })),
+  setTags: (tags: TagsType) => set({ tags: tags })
 }))
 
 export default usePlanStore;

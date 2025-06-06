@@ -1,21 +1,11 @@
-/* eslint-disable */
-
 'use client'
 
 import Button from "@/components/common/Button";
-import { AnimatePresence } from "framer-motion";
-import { useEffect, useState } from "react";
+import { useEffect  } from "react";
 import usePageStore from "../../stores/usePageStore";
 import Planner from "@/components/plan/Planner";
 import Motion from "@/components/motion/Motion";
 import usePlanStore from "@/stores/usePlanStore";
-
-interface tagProps {
-  region: string;
-  people: string;
-  companions: string;
-  theme: string;
-}
 
 const PlanPage = () => {
 
@@ -34,7 +24,6 @@ const PlanPage = () => {
 
   return (
     <>
-      <AnimatePresence>
         {!isPagePending && 
           <Motion.MotionDiv
             className={`
@@ -52,7 +41,6 @@ const PlanPage = () => {
             <Planner/>
           </Motion.MotionDiv>
         }
-      </AnimatePresence>
     </>
   )
 }

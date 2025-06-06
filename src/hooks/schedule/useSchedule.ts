@@ -8,8 +8,8 @@ import usePlanStore from "@/stores/usePlanStore";
 export const useSchedule = (planId: string) => {
 
   const {
-    isPending,
-    setIsPending,
+    isSchedulePending: isPending,
+    setIsSchedulePending: setIsPending,
   } = usePlanStore();
 
   const [layout, setLayout] = useState<CustomLayout[]>([]);

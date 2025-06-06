@@ -2,7 +2,6 @@
 
 import useScheduleModalStore from "@/stores/useScheduleModalStore";
 import Portal from "../../portal/Portal";
-import { AnimatePresence } from "framer-motion";
 import Motion from "../../motion/Motion";
 import { CustomLayout } from "@/types/schedule/types";
 import { ChangeEvent, Dispatch, SetStateAction, useCallback, useEffect, useRef } from "react";
@@ -90,7 +89,7 @@ const ScheduleModal: React.FC<ScheduleModalProps> = ({
 
   return (
     <Portal>
-      <AnimatePresence>
+      <>
         {isScheduleModalOpen && (
           <Motion.MotionDiv
             className="absolute top-0 left-0 w-full h-full bg-[rgba(1,1,1,0.2)] z-100 flex items-center justify-center"
@@ -129,7 +128,7 @@ const ScheduleModal: React.FC<ScheduleModalProps> = ({
             </div>
           </Motion.MotionDiv>
         )}
-      </AnimatePresence>
+      </>
     </Portal>
   );
 };

@@ -2,7 +2,6 @@
 
 import { KakaoIcon, MenuIcon } from "../../assets/svgs";
 import usePageAnimateRouter from "@/hooks/common/usePageAnimateRouter";
-import { AnimatePresence } from "framer-motion";
 import Motion from "../motion/Motion";
 import usePageStore from "@/stores/usePageStore";
 import { useEffect } from "react";
@@ -41,12 +40,10 @@ const Header = () => {
         className={`lg:block hidden mt-[0.5%] text-point cursor-pointer`}
         onClick={() => pageAnimateRouter.push('/')}>떠나,봄</p>
       <MenuIcon className={`lg:hidden text-point w-7`} />
-      <AnimatePresence>
         {title && !isPagePending &&
           <Motion.MotionP
             className={`lg:text-[32px] text-[24px] mt-[1%] text-point`}>{title}
           </Motion.MotionP>}
-      </AnimatePresence>
 
       {user ? (
         <Motion.MotionDiv>

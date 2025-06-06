@@ -3,7 +3,6 @@
 import PlanInput from "@/components/common/PlanInput";
 import TagButton from "@/components/common/TagButton";
 import { TAGLIST } from "@/constants/Tag";
-import { AnimatePresence } from "framer-motion";
 import usePageStore from "../stores/usePageStore";
 import usePageAnimateRouter from "@/hooks/common/usePageAnimateRouter";
 import Motion from "@/components/motion/Motion";
@@ -29,11 +28,10 @@ export default function Home() {
 
   return (
     <>
-      <AnimatePresence>
         {!isPagePending &&
           <Motion.MotionDiv
             className={`
-              md:px-[200px] 
+              md:px-[20%] 
               w-full h-full px-[28px] pb-[60px] pt-[100px] transition-all-300-out`}>
             <div className={`flex flex-col gap-[40px] pb-[20px] h-full justify-center`}>
               <div
@@ -78,7 +76,6 @@ export default function Home() {
             </div>
           </Motion.MotionDiv>
         }
-      </AnimatePresence>
     </>
   );
 }

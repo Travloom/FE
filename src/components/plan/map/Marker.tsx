@@ -1,7 +1,6 @@
 import Motion from "@/components/motion/Motion";
 import useMapStore from "@/stores/useMapStore";
 import usePlaceStore from "@/stores/usePlaceStore";
-import { AnimatePresence } from "framer-motion";
 import { useEffect, useState } from "react";
 import { createRoot } from "react-dom/client";
 
@@ -54,7 +53,7 @@ const Marker = () => {
         content: renderToDOMElement(<Pin placeId={place.placeId} />),
       });
 
-      marker.addListener("click", () => {
+      marker.addListener("gmp-click", () => {
         map.panTo(new google.maps.LatLng(place.lat, place.lng));
       });
 
@@ -94,7 +93,7 @@ const Pin = ({ placeId }: { placeId: string }) => {
 
 
   return (
-    <AnimatePresence>
+    <>
       <Motion.MotionDiv
         className={`
           ${selectedCategory === '맛집' ? `${placeId === selectedPlaceId ? `bg-[url('/svgs/restaurant_marker_hover.svg')]` : `bg-[url('/svgs/restaurant_marker.svg')]`} hover:bg-[url('/svgs/restaurant_marker_hover.svg')]` : (
@@ -108,7 +107,7 @@ const Pin = ({ placeId }: { placeId: string }) => {
           )}
           outline-0 w-10 aspect-3/4 transition-all duration-300`}
         onClick={handleIsActive} />
-    </AnimatePresence>
+    </>
   )
 }
 
