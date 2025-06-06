@@ -22,34 +22,28 @@ const SearchHeader = () => {
       setIsPending(true);
 
       const request = {
-        query: searchText,
-        location: map.getCenter(),
-        radius: 500,
-        bounds: map.getBounds(),
+        fields: ["displayName", "types", "editorialSummary", "formattedAddress", "googleMapsURI", "id", "location", "photos", "rating"],
+        textQuery: searchText,
+        locationBias: map.getCenter(),
       };
 
-      const service = new google.maps.places.PlacesService(map);
+      try {
+        const results = await google.maps.places.Place.searchByText(request);
 
-      service.textSearch(
-        request,
-        (
-          results: google.maps.places.PlaceResult[] | null,
-          status: google.maps.places.PlacesServiceStatus
-        ) => {
-          if (status === google.maps.places.PlacesServiceStatus.OK && results) {
-            const convertedPlaces = results.map(place => convertToPlaceType(place)).filter(Boolean);
+        console.log(results.places)
+        const convertedPlaces = results?.places?.map(place => convertToPlaceType(place)).filter(Boolean);
 
-            setPlaces('searchList', convertedPlaces)
-            map.panTo(results[0].geometry!.location!);
-            setIsPending(false);
+        console.log(convertedPlaces)
 
-          }
-          else {
-            setPlaces('searchList', [])
-            setIsPending(false);
-          }
-        }
-      );
+        setPlaces('searchList', convertedPlaces)
+        map.panTo(results?.places?.[0].location!);
+        setIsPending(false);
+      } catch (e) {
+        console.log(e)
+        setPlaces('searchList', [])
+        setIsPending(false);
+      }
+
     }
   }
 
