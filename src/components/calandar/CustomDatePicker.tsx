@@ -32,6 +32,9 @@ const CustomDatePicker = () => {
     }
   )
 
+  CustomDateInput.displayName = "CustomDateInput";
+
+
   return (
     <div className={`w-fit h-fit flex justify-center`}>
       <DatePicker

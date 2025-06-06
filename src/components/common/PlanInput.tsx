@@ -6,7 +6,6 @@ import { planRecommendRequest } from "@/apis/plan";
 import useHomeStore from "@/stores/useHomeStore";
 import { useMutation } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
-import { formatDate } from "@/utils/date/formatDate";
 
 const PlanInput = () => {
 

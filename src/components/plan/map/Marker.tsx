@@ -51,7 +51,7 @@ const Marker = () => {
       const marker = new google.maps.marker.AdvancedMarkerElement({
         map,
         position: new google.maps.LatLng(place.lat, place.lng),
-        content: renderToDOMElement(<Pin placeId={place.placeId} types={place.types} />),
+        content: renderToDOMElement(<Pin placeId={place.placeId} />),
       });
 
       marker.addListener("click", () => {
@@ -80,7 +80,7 @@ const Marker = () => {
 export default Marker;
 
 
-const Pin = ({ placeId, types }: { placeId: string, types: string[] }) => {
+const Pin = ({ placeId }: { placeId: string }) => {
 
   const {
     selectedPlaceId,

@@ -8,7 +8,6 @@ import usePageStore from "../stores/usePageStore";
 import usePageAnimateRouter from "@/hooks/common/usePageAnimateRouter";
 import Motion from "@/components/motion/Motion";
 import useInitPage from "@/hooks/common/useInitPage";
-import { useEffect, useState } from "react";
 import CustomDatePicker from "@/components/calandar/CustomDatePicker";
 import useHomeStore from "@/stores/useHomeStore";
 import { TagsType } from "@/types/place/type";

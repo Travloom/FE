@@ -36,7 +36,13 @@ const SearchHeader = () => {
         console.log(convertedPlaces)
 
         setPlaces('searchList', convertedPlaces)
-        map.panTo(results?.places?.[0].location!);
+
+        const firstPlaceLocation = results?.places?.[0].location;
+
+        if (firstPlaceLocation) {
+          map.panTo(firstPlaceLocation);
+        }
+
         setIsPending(false);
       } catch (e) {
         console.log(e)

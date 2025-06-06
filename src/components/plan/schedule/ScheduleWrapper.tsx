@@ -1,8 +1,6 @@
 import useMobile from "@/hooks/common/useMobile";
 import SchedulerMobile from "./SchedulerMobile";
 import Scheduler from "./Scheduler";
-import { useParams } from "next/navigation";
-import { useSchedule } from "@/hooks/schedule/useSchedule";
 import ScheduleModal from "@/components/plan/schedule/ScheduleModal";
 import { CustomLayout } from "@/types/schedule/types";
 import { Dispatch, SetStateAction } from "react";

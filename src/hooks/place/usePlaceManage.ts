@@ -1,7 +1,6 @@
 import { fireStore } from "@/firebase/firebaseClient";
 import usePlaceStore from "@/stores/usePlaceStore";
 import { Category, PlaceType } from "@/types/place/type";
-import axios from "axios";
 import { doc, getDoc, onSnapshot, setDoc } from "firebase/firestore";
 import { useEffect } from "react"
 
