@@ -8,6 +8,8 @@ export { default as DeleteIcon } from "./delete_icon.svg";
 
 export { default as MyRestaurantOnIcon } from "./my_restaurant_on_icon.svg";
 export { default as MyRestaurantOffIcon } from "./my_restaurant_off_icon.svg";
+export { default as MyCafeOnIcon } from "./my_cafe_on_icon.svg";
+export { default as MyCafeOffIcon } from "./my_cafe_off_icon.svg";
 export { default as MyHotelOnIcon } from "./my_hotel_on_icon.svg";
 export { default as MyHotelOffIcon } from "./my_hotel_off_icon.svg";
 export { default as MyAttractionOnIcon } from "./my_attraction_on_icon.svg";
