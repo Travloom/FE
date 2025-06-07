@@ -3,10 +3,10 @@ import { v4 as uuidv4 } from "uuid";
 import { TIME_DIVIDE, GRID_WIDTH, GRID_HEIGHT } from "@/constants/Plan";
 import { CustomLayout } from "@/types/schedule/types";
 
-export const useAddPlanBox = (layout: CustomLayout[], setLayout: (val: CustomLayout[]) => void) => {
+export const useAddPlanBox = (day: number, layout: CustomLayout[], setLayout: (val: CustomLayout[]) => void) => {
   return (e: MouseEvent<HTMLDivElement>) => {
     const colWidth = GRID_WIDTH / TIME_DIVIDE;
-    const rowHeight = GRID_HEIGHT / 4;
+    const rowHeight = GRID_HEIGHT / day;
 
     const rect = e.currentTarget.getBoundingClientRect();
     const offsetX = e.clientX - rect.left;

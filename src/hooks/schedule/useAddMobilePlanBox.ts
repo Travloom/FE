@@ -3,12 +3,12 @@ import { v4 as uuidv4 } from "uuid";
 import { TIME_DIVIDE } from "@/constants/Plan";
 import { CustomLayout } from "@/types/schedule/types";
 
-export const useAddMobilePlanBox = (layout: CustomLayout[], setLayout: (val: CustomLayout[]) => void) => {
+export const useAddMobilePlanBox = (day: number, layout: CustomLayout[], setLayout: (val: CustomLayout[]) => void) => {
   return (e: MouseEvent<HTMLDivElement>) => {
 
     const rect = e.currentTarget.getBoundingClientRect();
 
-    const colWidth = rect.width / 4;
+    const colWidth = rect.width / day;
     const rowHeight = rect.height / TIME_DIVIDE;
 
     const offsetX = e.clientY - rect.top;

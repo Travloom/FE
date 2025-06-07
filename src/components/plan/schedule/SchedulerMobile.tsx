@@ -23,7 +23,7 @@ const SchedulerMobile: React.FC<SchedulerProps> = ({
     days,
   } = usePlanStore();
 
-  const handleAddPlanBoxMobile = useAddMobilePlanBox(layout, setLayout);
+  const handleAddPlanBoxMobile = useAddMobilePlanBox(days || 1, layout, setLayout);
 
   const handleChangeLayoutMobile = useCallback((newLayout: Layout[]) => {
     const updatedLayout = newLayout.map((item: Layout) => {
@@ -65,10 +65,10 @@ const SchedulerMobile: React.FC<SchedulerProps> = ({
             <div className={`grow sticky top-0 bg-white z-10`}>
               <div
                 className={`flex flex-row bg-point border border-point w-full min-w-[300px] h-[24px] items-center rounded-t-[8px] justify-between text-white sticky top-0`}>
-                {["Day1", "Day2", "Day3", "Day4"].map((day, index) => (
+                {Array.from({ length: days || 1 }).map((_, index) => (
                   <p
                     key={index}
-                    className={`text-center content-center text-[10px] grow`}>{day}</p>
+                    className={`text-center content-center text-[10px] grow`}>Day{index + 1}</p>
                 ))}
               </div>
             </div>
@@ -77,7 +77,7 @@ const SchedulerMobile: React.FC<SchedulerProps> = ({
 
               {/* 그리드 세로줄 디자인 */}
               <div className={`flex flex-row gap-1 pt-1 w-full h-full absolute top-0`}>
-                {Array.from({ length: 4 }).map((_, index) => (
+                {Array.from({ length: days || 1 }).map((_, index) => (
                   <div key={index} className={`w-full h-full bg-[rgba(108,92,231,0.04)]`} />
                 ))}
               </div>
@@ -93,7 +93,7 @@ const SchedulerMobile: React.FC<SchedulerProps> = ({
               <div
                 className={`cursor-pointer w-full h-full`}
                 onMouseDown={handleAddPlanBoxMobile}>
-                <GridRendererMobile customLayout={layout} onLayoutChange={handleChangeLayoutMobile} dayLen={days} />
+                <GridRendererMobile customLayout={layout} onLayoutChange={handleChangeLayoutMobile} dayLen={days || 1} />
               </div>
 
             </div>

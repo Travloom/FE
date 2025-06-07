@@ -24,7 +24,7 @@ const Scheduler: React.FC<SchedulerProps> = ({
     days,
   } = usePlanStore();
 
-  const handleAddPlanBox = useAddPlanBox(layout, setLayout);
+  const handleAddPlanBox = useAddPlanBox(days || 1, layout, setLayout);
 
   const handleChangeLayout = useCallback((newLayout: Layout[]) => {
     const updatedLayout = newLayout.map((item: Layout) => {
@@ -50,7 +50,7 @@ const Scheduler: React.FC<SchedulerProps> = ({
             <div
               className={`flex flex-col gap-[2.5%] py-[25%] bg-point border border-point w-full p-1.5 items-center rounded-l-[8px] text-white`}
               style={{ paddingTop: CONTAINER_PADDING_Y, paddingBottom: CONTAINER_PADDING_Y, gap: `${PLAN_MARGIN_Y}px` }}>
-              {Array.from({ length: days }).map((_, index) => (
+              {Array.from({ length: days || 1 }).map((_, index) => (
                 <p
                   key={index}
                   className={`text-center content-center text-[12px]`}
@@ -74,7 +74,7 @@ const Scheduler: React.FC<SchedulerProps> = ({
             <div
               className={`flex flex-col absolute w-full h-[calc(100%-13px)]`}
               style={{ paddingTop: CONTAINER_PADDING_Y, paddingBottom: CONTAINER_PADDING_Y, gap: `${PLAN_MARGIN_Y}px` }}>
-              {Array.from({ length: days }).map((_, index) => (
+              {Array.from({ length: days || 1 }).map((_, index) => (
                 <div key={index} className={`w-full grow bg-[rgba(108,92,231,0.04)]`} />
               ))}
             </div>
@@ -90,7 +90,7 @@ const Scheduler: React.FC<SchedulerProps> = ({
             <div
               className={`cursor-pointer h-[calc(100%-13px)]`}
               onMouseDown={handleAddPlanBox}>
-              <GridRenderer customLayout={layout} onLayoutChange={handleChangeLayout} dayLen={days} />
+              <GridRenderer customLayout={layout} onLayoutChange={handleChangeLayout} dayLen={days || 1} />
             </div>
           </div>
         </div>
