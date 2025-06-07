@@ -39,6 +39,8 @@ export const usePlanInfo = (planId: string) => {
 
     return () => {
       unsubscribe()
+      setDays(null, null)
+      setTags(null)
       setIsInfoPending(true)
     };
   }, [planId]);

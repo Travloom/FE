@@ -8,12 +8,11 @@ import { useSchedule } from "@/hooks/schedule/useSchedule";
 import { useParams } from "next/navigation";
 import usePlanStore from "@/stores/usePlanStore";
 import Motion from "../motion/Motion";
-import { usePlanInfo } from "@/hooks/plan/usePlanInfo";
 
 const Planner = () => {
 
   const {
-    isSchedulePending: isPending,
+    isSchedulePending,
   } = usePlanStore();
 
   const { planId } : { planId: string } = useParams();
@@ -21,11 +20,9 @@ const Planner = () => {
 
   const [selectedToggle, setSelectedToggle] = useState("일정");
 
-  usePlanInfo(planId);
-
   return (
     <>
-      {!isPending ? (
+      {!isSchedulePending && (
         <Motion.MotionDiv className={`lg:rounded-[8px] flex flex-col border border-gray-300 bg-white h-full overflow-hidden`}>
           <div className={`flex flex-row gap-2.5 p-2.5 w-full border-b border-gray-300 shrink-0`}>
             <Toggle text={"일정"} isActive={selectedToggle === "일정"} setSelectedToggle={setSelectedToggle} />
@@ -48,8 +45,6 @@ const Planner = () => {
 
           </div>
         </Motion.MotionDiv>
-      ) : (
-        <></>
       )}
     </>
   )
