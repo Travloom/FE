@@ -9,9 +9,23 @@ export const CustomDateInput = forwardRef<HTMLDivElement, { value: string; onCli
 
     const { isMobile, isUnderTablet } = useMobile();
 
+    const [ dayDiff, setDayDiff ] = useState<number | null>(null);
+
     useEffect(() => {
+      
+      let diff
+
+      if (endDate && startDate) {
+        const timeDiff = endDate.getTime() - startDate.getTime() + 1;
+        diff = Math.ceil(timeDiff / (1000 * 60 * 60 * 24))
+        setDayDiff(diff);
+      }
+      else {
+        setDayDiff(null)
+      }
+      
       const w = 
-        isMobile ? 27 :
+        isMobile ? ( diff ? 50 : 27 ) :
         (endDate ? ( isUnderTablet ? 133 : 170 ) : 
         (startDate ? ( isUnderTablet ? 70 : 90 ) : ( isUnderTablet ? 27 : 35 )))
       setWidth(w)
@@ -28,7 +42,7 @@ export const CustomDateInput = forwardRef<HTMLDivElement, { value: string; onCli
         <p style={{
           width: width,
           whiteSpace: 'nowrap', // 필요에 따라
-        }} ref={pRef} className={`mt-0.5 transition-all-300-out flex justify-center items-center`}>{isMobile ? label : value || label}</p>
+        }} ref={pRef} className={`mt-0.5 transition-all-300-out flex justify-center items-center`}>{isMobile ? (dayDiff ? `${dayDiff}박 ${dayDiff+1}일` : label) : (value || label)}</p>
       </div>
     );
   }
