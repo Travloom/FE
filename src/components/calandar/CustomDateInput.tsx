@@ -14,7 +14,6 @@ export const CustomDateInput = forwardRef<HTMLDivElement, { value: string; onCli
         isMobile ? 27 :
         (endDate ? ( isUnderTablet ? 133 : 170 ) : 
         (startDate ? ( isUnderTablet ? 70 : 90 ) : ( isUnderTablet ? 27 : 35 )))
-      console.log(w)
       setWidth(w)
     }, [startDate, endDate, value, label, isMobile, isUnderTablet]);
 
