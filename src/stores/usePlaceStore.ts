@@ -7,7 +7,7 @@ interface PlaceState {
   selectedPlaceId: string | null;
   selectedCategory: string;
 
-  setPlaces: (category: ListCategory, newPlaces: PlaceType[]) => void;
+  setPlaces: (category: ListCategory, newPlaces: PlaceType[] | null) => void;
   setSelectedPlaceId: (value: string) => void;
   setSelectedCategory: (value: string) => void;
 
@@ -30,7 +30,7 @@ const usePlaceStore = create<PlaceState>((set) => ({
 
   isPending: false,
 
-  setPlaces: (category: ListCategory, newPlaces: PlaceType[] | google.maps.places.PlaceResult[] | null) =>
+  setPlaces: (category: ListCategory, newPlaces: PlaceType[] | null) =>
     set((state) => ({
       places: {
         ...state.places,

@@ -67,7 +67,7 @@ const Marker = () => {
 
   // 마커 배열이 변경 될 때마다 첫번째 장소로 panTo 실행
   useEffect(() => {
-    setSelectedPlaceId(markPlaces[0]?.placeId ?? "")
+    setSelectedPlaceId(markPlaces?.[0]?.placeId ?? "")
     if (markPlaces && markPlaces.length > 0 && map) {
       map.panTo(new google.maps.LatLng(markPlaces[0].lat, markPlaces[0].lng));
     }

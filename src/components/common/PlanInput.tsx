@@ -86,7 +86,7 @@ const PlanInput = () => {
                 <HashLoader
                   size={30}
                   color={`#6c5ce7`} />
-                  <p className={`lg:text-[16px] text-[14px] text-point`}>플랜 생성 중</p>
+                  <p className={`lg:text-[16px] text-[14px] text-point transition-all-300-out`}>플랜 생성 중</p>
               </div>
 
             </Motion.MotionDiv>

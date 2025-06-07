@@ -9,6 +9,7 @@ export const usePlaceManage = (planId: string) => {
   const {
     places,
     setPlaces,
+    setSelectedCategory,
   } = usePlaceStore();
 
   useEffect(() => {
@@ -39,7 +40,13 @@ export const usePlaceManage = (planId: string) => {
     })
 
     return () => {
-      unsubscribe()
+      setSelectedCategory('맛집');
+      setPlaces('restaurantList', null);
+      setPlaces('cafeList', null);
+      setPlaces('hotelList', null);
+      setPlaces('attractionList', null);
+      setPlaces('searchList', null);
+      unsubscribe();
     }
   }, [planId]);
 
