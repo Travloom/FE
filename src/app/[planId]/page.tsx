@@ -8,6 +8,7 @@ import Motion from "@/components/motion/Motion";
 import usePlanStore from "@/stores/usePlanStore";
 import { usePlanInfo } from "@/hooks/plan/usePlanInfo";
 import { useParams } from "next/navigation";
+import { AnimatePresence } from "framer-motion";
 
 const PlanPage = () => {
 
@@ -30,7 +31,7 @@ const PlanPage = () => {
   }, [])
 
   return (
-    <>
+    <AnimatePresence>
       {!isPagePending && !isInfoPending &&
         <Motion.MotionDiv
           className={`
@@ -48,7 +49,7 @@ const PlanPage = () => {
           <Planner />
         </Motion.MotionDiv>
       }
-    </>
+    </AnimatePresence>
   )
 }
 

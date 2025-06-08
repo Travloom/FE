@@ -60,8 +60,7 @@ const CustomDatePicker = () => {
               {">"}
             </button>
           </div>
-        )}
-      >
+        )}>
         {/* <div className={`absolute w-3 h-3 -top-[7px] left-[calc(50%-6px)] -rotate-45 border-t border-r border-point bg-white`} /> */}
       </DatePicker>
     </div>

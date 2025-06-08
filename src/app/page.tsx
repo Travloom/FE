@@ -7,9 +7,10 @@ import usePageStore from "../stores/usePageStore";
 import usePageAnimateRouter from "@/hooks/common/usePageAnimateRouter";
 import Motion from "@/components/motion/Motion";
 import useInitPage from "@/hooks/common/useInitPage";
-import CustomDatePicker from "@/components/calandar/CustomDatePicker";
+import CustomDatePicker from "@/components/date-picker/CustomDatePicker";
 import useHomeStore from "@/stores/useHomeStore";
 import { TagsType } from "@/types/place/type";
+import { AnimatePresence } from "framer-motion";
 
 export default function Home() {
 
@@ -27,7 +28,7 @@ export default function Home() {
   useInitPage(null)
 
   return (
-    <>
+    <AnimatePresence>
         {!isPagePending &&
           <Motion.MotionDiv
             className={`
@@ -76,6 +77,6 @@ export default function Home() {
             </div>
           </Motion.MotionDiv>
         }
-    </>
+    </AnimatePresence>
   );
 }

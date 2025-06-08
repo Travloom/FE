@@ -5,6 +5,7 @@ import Motion from "@/components/motion/Motion";
 import useInitPage from "@/hooks/common/useInitPage";
 import usePageStore from "@/stores/usePageStore";
 import useUserStore from "@/stores/useUserStore";
+import { AnimatePresence } from "framer-motion";
 import { useRouter } from "next/navigation";
 
 export default function Mypage() {
@@ -27,7 +28,7 @@ export default function Mypage() {
   useInitPage('마이페이지')
 
   return (
-    <>
+    <AnimatePresence>
         {!isPagePending &&
           <Motion.MotionDiv
             className={`
@@ -105,6 +106,6 @@ export default function Mypage() {
             </div>
           </Motion.MotionDiv>
         }
-    </>
+    </AnimatePresence>
   )
 }
