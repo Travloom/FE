@@ -8,6 +8,7 @@ import { useEffect } from "react";
 import useUserStore from "@/stores/useUserStore";
 import Image from "next/image";
 import { getUserRequest } from "@/apis/user";
+import { AnimatePresence } from "framer-motion";
 
 const Header = () => {
 
@@ -40,29 +41,31 @@ const Header = () => {
         className={`lg:block hidden mt-[0.5%] text-point cursor-pointer`}
         onClick={() => pageAnimateRouter.push('/')}>떠나,봄</p>
       <MenuIcon className={`lg:hidden text-point w-7`} />
+      <AnimatePresence>
         {title && !isPagePending &&
           <Motion.MotionP
             className={`lg:text-[32px] text-[24px] mt-[1%] text-point`}>{title}
           </Motion.MotionP>}
+      </AnimatePresence>
 
-      {user ? (
-        <Motion.MotionDiv>
-          <Image
-            className={`lg:w-10 w-8 cursor-pointer rounded-full`}
-            src={user.profileImageUrl || ''}
-            width={1000}
-            height={1000}
-            alt={'프로필'}
-            onClick={() => pageAnimateRouter.push(`/mypage`)} />
-        </Motion.MotionDiv>
-      ) : (
-        <Motion.MotionDiv>
-          <KakaoIcon
-            className={`lg:w-10 w-8 cursor-pointer`}
-            onClick={() => pageAnimateRouter.push(`${process.env.NEXT_PUBLIC_DOMAIN}/oauth2/authorization/kakao`)} />
-        </Motion.MotionDiv>
-      )
-      }
+        {user ? (
+          <Motion.MotionDiv>
+            <Image
+              className={`lg:w-10 w-8 cursor-pointer rounded-full`}
+              src={user.profileImageUrl || ''}
+              width={1000}
+              height={1000}
+              alt={'프로필'}
+              onClick={() => pageAnimateRouter.push(`/mypage`)} />
+          </Motion.MotionDiv>
+        ) : (
+          <Motion.MotionDiv>
+            <KakaoIcon
+              className={`lg:w-10 w-8 cursor-pointer`}
+              onClick={() => pageAnimateRouter.push(`${process.env.NEXT_PUBLIC_DOMAIN}/oauth2/authorization/kakao`)} />
+          </Motion.MotionDiv>
+        )
+        }
     </div>
   )
 }

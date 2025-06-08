@@ -3,6 +3,7 @@
 import { logOutRequest } from "@/apis/user";
 import Motion from "@/components/motion/Motion";
 import useInitPage from "@/hooks/common/useInitPage";
+import usePageAnimateRouter from "@/hooks/common/usePageAnimateRouter";
 import usePageStore from "@/stores/usePageStore";
 import useUserStore from "@/stores/useUserStore";
 import { AnimatePresence } from "framer-motion";
@@ -25,6 +26,8 @@ export default function Mypage() {
     router.push(logoutUrl)
   }
 
+  const pageAnimateRouter = usePageAnimateRouter();
+
   useInitPage('마이페이지')
 
   return (
@@ -36,9 +39,9 @@ export default function Mypage() {
               pt-[70px] gap-2.5 flex flex-col h-full transition-all-300-out`}>
             <div 
               className={`  
-                lg:text-[20px] 
+                lg:text-[20px] lg:rounded-[8px]
                 md:text-[18px]
-                text-[16px] w-full h-full p-2.5 flex flex-col gap-2.5 bg-white rounded-[8px] border border-gray-300 transition-all-300-out`}>
+                text-[16px] w-full h-full p-2.5 flex flex-col gap-2.5 bg-white border border-gray-300 transition-all-300-out`}>
               <div
                 className={`
                   lg:px-6
@@ -100,7 +103,7 @@ export default function Mypage() {
                   md:px-5 md:py-4
                   px-4 py-3 flex flex-col justify-between items-center w-full gap-5 rounded-[8px] border border-gray-300 transition-all-300-out`}>
                 <div className={`w-full`}>
-                  <p className={`w-fit cursor-pointer`}>캘린더 바로가기 &gt;</p>
+                  <p className={`w-fit cursor-pointer`} onClick={() => pageAnimateRouter.push('/mypage/calendar')}>캘린더 바로가기 &gt;</p>
                 </div>
               </div>
             </div>
