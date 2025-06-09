@@ -32,7 +32,7 @@ const nextConfig: NextConfig = {
     return [
       {
         source: "/proxy/:path*",
-        destination: "http://localhost:8080/:path*",  // 실제 api url 경로 (최종적으로 요청 보낼 url)
+        destination: `${process.env.NEXT_PUBLIC_DOMAIN}/:path*`,  // 실제 api url 경로 (최종적으로 요청 보낼 url)
       },
     ];
   },
