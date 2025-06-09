@@ -15,6 +15,7 @@ export default function Mypage() {
 
   const {
     user,
+    setUser,
   } = useUserStore();
 
   const {
@@ -22,8 +23,9 @@ export default function Mypage() {
   } = usePageStore()
 
   const logOut = async () => {
-    const logoutUrl = await logOutRequest();
-    router.push(logoutUrl)
+    await logOutRequest();
+    setUser(null)
+    router.push('/')
   }
 
   const pageAnimateRouter = usePageAnimateRouter();

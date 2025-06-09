@@ -21,8 +21,7 @@ export const getUserRequest = async () => {
 
 export const logOutRequest = async () => {
   try {
-    const response = await axiosInstance.get(`/proxy/api/auth/logout-url`)
-    return response.data.logoutUrl
+    await axiosInstance.get(`/proxy/api/auth/logout`)
   } catch (e) {
     console.log(e)
   }
