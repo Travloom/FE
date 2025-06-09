@@ -4,7 +4,7 @@ const nextConfig: NextConfig = {
   /* config options here */
 
   images: {
-    domains: ["img1.kakaocdn.net", "t1.kakaocdn.net"],
+    domains: ["img1.kakaocdn.net", "t1.kakaocdn.net", "k.kakaocdn.net"],
   },
 
   webpack(config) {
