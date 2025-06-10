@@ -32,6 +32,8 @@ export default function Home() {
 
   const [isAllTagSelected, setIsAllTagSelected] = useState(false);
 
+  const [isResponsePending, setIsResponsePending] = useState(false);
+
   useEffect(() => {
     setIsAllTagSelected(Object.values(tags).every((tag) => !!tag));
   }, [tags])
@@ -41,7 +43,8 @@ export default function Home() {
   useInitPage(null)
 
   const createPlan = async () => {
-    if (isAllTagSelected && title && startDate && endDate) {
+    if (isAllTagSelected && title && startDate && endDate && !isResponsePending) {
+      setIsResponsePending(true);
       try {
         const plan = await createPlanRequest({
           title: title,

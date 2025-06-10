@@ -1,0 +1,45 @@
+import { TagsType } from "@/types/place/type";
+import PlanTag from "./PlanTag";
+import dayjs from "dayjs";
+import usePageAnimateRouter from "@/hooks/common/usePageAnimateRouter";
+
+interface PlanBoxProps {
+  planId: string,
+  startDate: string;
+  endDate: string;
+  title: string;
+  tags: TagsType;
+}
+
+const PlanBox: React.FC<PlanBoxProps> = ({
+  planId,
+  startDate,
+  endDate,
+  title,
+  tags
+}) => {
+
+  const pageAnimateRouter = usePageAnimateRouter();
+
+  return (
+    <div 
+      className={`flex flex-col gap-2.5 h-[240px] rounded-[8px] border border-gray-200 text-point p-2.5 aspect-square cursor-pointer select-none`}
+      onClick={() => pageAnimateRouter.push(`/${planId}`)}>
+      <div className={`rounded-[4px] py-2 w-full h-fit text-white text-[12px] bg-point truncate flex items-center justify-center`}>
+        <p className={`truncate mt-0.5`}>
+          {dayjs(startDate).format("YYYY.MM.DD")} - {dayjs(endDate).format("YYYY.MM.DD")}
+        </p>
+      </div>
+      <div className={`w-full truncate text-[16px] border-b border-point text-center pb-1.5`}>
+        {title}
+      </div>
+      <div className={`flex flex-wrap gap-1.5 px-2.5`}>
+        {Object.entries(tags).map(([key, tag]) => (
+          <PlanTag key={planId + key} text={tag} />
+        ))}
+      </div>
+    </div>
+  )
+}
+
+export default PlanBox;
