@@ -4,6 +4,7 @@ import CustomFullCalendar from "@/components/calandar/FullCalendar";
 import Motion from "@/components/motion/Motion";
 import useInitPage from "@/hooks/common/useInitPage";
 import usePageStore from "@/stores/usePageStore";
+import { AnimatePresence } from "framer-motion";
 
 export default function CalendarPage() {
 
@@ -14,15 +15,15 @@ export default function CalendarPage() {
   useInitPage('캘린더')
 
   return (
-    <>
-        {!isPagePending &&
-          <Motion.MotionDiv
-            className={`
+    <AnimatePresence>
+      {!isPagePending &&
+        <Motion.MotionDiv
+          className={`
               lg:p-[60px] lg:pt-[140px]
               pt-[70px] gap-2.5 flex flex-col h-full transition-all-300-out`}>
-            <CustomFullCalendar/>
-          </Motion.MotionDiv>
-        }
-    </>
+          <CustomFullCalendar />
+        </Motion.MotionDiv>
+      }
+    </AnimatePresence>
   )
 }
