@@ -17,11 +17,8 @@ export const usePlaceManage = (planId: string) => {
       const docSnap = await getDoc(targetDoc);
 
       if (!docSnap.exists()) {
-        await setDoc(targetDoc, {
-          restaurantList: [],
-          hotelList: [],
-          attractionList: [],
-        })
+        // 에러 처리
+        console.log('Place 존재하지 않음')
       }
     }
 

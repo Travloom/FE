@@ -17,9 +17,8 @@ export const usePlanInfo = (planId: string) => {
       const docSnap = await getDoc(targetDoc);
 
       if (!docSnap.exists()) {
-        await setDoc(targetDoc, {
-          scheduleList: [],
-        });
+        // 에러 처리
+        console.log('Plan Info 존재하지 않음')
       }
     }
 
