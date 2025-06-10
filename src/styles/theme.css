@@ -17,6 +17,9 @@
     .shadow-point {
         box-shadow: var(--shadow-point);
     }
+    .no-scroll {
+        scrollbar-width: none;
+    }
 }
 
 @theme {
