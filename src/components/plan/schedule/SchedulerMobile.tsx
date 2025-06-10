@@ -2,7 +2,7 @@ import { MOBILE_TIME_HEIGHT, TIME_TABLE } from "@/constants/Plan";
 import GridRendererMobile from "./GridRendererMobile";
 import { Dispatch, SetStateAction, useCallback } from "react";
 import { Layout } from "react-grid-layout";
-import { useAddMobilePlanBox } from "@/hooks/schedule/useAddMobilePlanBox";
+import { useAddMobileScheduleBox } from "@/hooks/schedule/useAddMobileScheduleBox";
 import { CustomLayout } from "@/types/schedule/types";
 import usePlanStore from "@/stores/usePlanStore";
 
@@ -23,7 +23,7 @@ const SchedulerMobile: React.FC<SchedulerProps> = ({
     days,
   } = usePlanStore();
 
-  const handleAddPlanBoxMobile = useAddMobilePlanBox(days || 1, layout, setLayout);
+  const handleAddScheduleBoxMobile = useAddMobileScheduleBox(days || 1, layout, setLayout);
 
   const handleChangeLayoutMobile = useCallback((newLayout: Layout[]) => {
     const updatedLayout = newLayout.map((item: Layout) => {
@@ -92,7 +92,7 @@ const SchedulerMobile: React.FC<SchedulerProps> = ({
 
               <div
                 className={`cursor-pointer w-full h-full`}
-                onMouseDown={handleAddPlanBoxMobile}>
+                onMouseDown={handleAddScheduleBoxMobile}>
                 <GridRendererMobile customLayout={layout} onLayoutChange={handleChangeLayoutMobile} dayLen={days || 1} />
               </div>
 

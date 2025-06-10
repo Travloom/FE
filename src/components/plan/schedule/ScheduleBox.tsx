@@ -3,13 +3,13 @@ import Motion from "@/components/motion/Motion";
 import { useLongPress } from "@/hooks/common/useLongPress";
 import useScheduleModalStore from "@/stores/useScheduleModalStore";
 
-interface PlanBoxProps {
+interface ScheduleBoxProps {
   scheduleId: string;
   title: string;
   content: string;
 }
 
-const ScheduleBox: React.FC<PlanBoxProps> = ({
+const ScheduleBox: React.FC<ScheduleBoxProps> = ({
   scheduleId,
   title,
   content

@@ -3,7 +3,7 @@ import { v4 as uuidv4 } from "uuid";
 import { TIME_DIVIDE } from "@/constants/Plan";
 import { CustomLayout } from "@/types/schedule/types";
 
-export const useAddMobilePlanBox = (day: number, layout: CustomLayout[], setLayout: (val: CustomLayout[]) => void) => {
+export const useAddMobileScheduleBox = (day: number, layout: CustomLayout[], setLayout: (val: CustomLayout[]) => void) => {
   return (e: MouseEvent<HTMLDivElement>) => {
 
     const rect = e.currentTarget.getBoundingClientRect();

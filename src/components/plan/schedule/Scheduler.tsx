@@ -1,6 +1,6 @@
 import GridRenderer from "./GridRenderer";
 import { Dispatch, SetStateAction, useCallback } from "react";
-import { useAddPlanBox } from "@/hooks/schedule/useAddPlanBox";
+import { useAddScheduleBox } from "@/hooks/schedule/useAddScheduleBox";
 import { CONTAINER_PADDING_Y, PLAN_HEIGHT, PLAN_MARGIN_X, PLAN_MARGIN_Y, PLANNER_WIDTH, TIME_TABLE, TIME_WIDTH } from "@/constants/Plan";
 import { Layout } from "react-grid-layout";
 import { CustomLayout } from "@/types/schedule/types";
@@ -24,7 +24,7 @@ const Scheduler: React.FC<SchedulerProps> = ({
     days,
   } = usePlanStore();
 
-  const handleAddPlanBox = useAddPlanBox(days || 1, layout, setLayout);
+  const handleAddScheduleBox = useAddScheduleBox(days || 1, layout, setLayout);
 
   const handleChangeLayout = useCallback((newLayout: Layout[]) => {
     const updatedLayout = newLayout.map((item: Layout) => {
@@ -89,7 +89,7 @@ const Scheduler: React.FC<SchedulerProps> = ({
             </div>
             <div
               className={`cursor-pointer h-[calc(100%-13px)]`}
-              onMouseDown={handleAddPlanBox}>
+              onMouseDown={handleAddScheduleBox}>
               <GridRenderer customLayout={layout} onLayoutChange={handleChangeLayout} dayLen={days || 1} />
             </div>
           </div>
