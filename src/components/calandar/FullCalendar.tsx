@@ -1,20 +1,55 @@
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid'
 import koLocale from '@fullcalendar/core/locales/ko';
-import { useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { EventContentArg } from '@fullcalendar/core/index.js';
+import { useQuery } from '@tanstack/react-query';
+import { getPlansRequest } from '@/apis/plan';
+import dayjs from 'dayjs';
+import usePageAnimateRouter from '@/hooks/common/usePageAnimateRouter';
+
+interface EventState {
+  uuid: string;
+  title: string;
+  startDate: string;
+  endDate: string;
+}
 
 const CustomFullCalendar = () => {
 
-  const events = [
-    { title: "여행", start: '2025-06-05', end: '2025-06-10' },
-    { title: "여행", start: '2025-06-09', end: '2025-06-12' },
-  ]
-
   const calendarRef = useRef(null);
 
+  const pageAnimateRouter = usePageAnimateRouter();
+
+  const [year, setYear] = useState<number | null>(null);
+  const [month, setMonth] = useState<number | null>(null);
+
+  const { data: events } = useQuery({
+    queryKey: ['getPlans', 'calendar', year, month],
+    queryFn: () => getPlansRequest({ year: year || 0, month: month || 1 }),
+  })
+
+  function addOneDay(dateStr: string): string {
+    return dayjs(dateStr).add(1, 'day').format('YYYY-MM-DD');
+  }
+
+  function renderEventContent(eventInfo: EventContentArg) {
+
+    return (
+      <div
+        className={`bg-point my-[1px] p-0.5 rounded-[4px] cursor-pointer`}
+        onClick={() => pageAnimateRouter.push(`/${eventInfo.event.extendedProps.planId}`)}>
+        <p
+          className={`
+          lg:text-[14px] lg:h-[16px]
+          md:text-[10px] md:h-[12px]
+          text-[8px] h-[10px] flex justify-center items-center`}>{eventInfo.event.title}</p>
+      </div>
+    )
+  }
+
   return (
-    <div 
+    <div
       className={`
         lg:rounded-[8px] lg:border
         border-t border-gray-200 w-full h-full p-4 bg-white`}>
@@ -40,32 +75,19 @@ const CustomFullCalendar = () => {
         }}
         weekends={true}
         dayMaxEventRows={true}
-        events={events.map(event => ({
-          ...event,
-          end: addOneDay(event.end),
+        datesSet={(arg => {
+          setYear(arg.start.getFullYear());
+          setMonth(arg.start.getMonth() + 1);
+        })}
+        events={events?.map((event: EventState) => ({
+          title: event.title,
+          start: event.startDate,
+          end: addOneDay(event.endDate),
+          extendedProps: {
+            planId: event.uuid,
+          }
         }))}
-        eventContent={renderEventContent}>
-
-      </FullCalendar>
-    </div>
-  )
-}
-
-function addOneDay(dateStr: string): string {
-  const date = new Date(dateStr);
-  date.setDate(date.getDate() + 1);
-  return date.toISOString().split('T')[0]; // 'YYYY-MM-DD' 포맷으로 반환
-}
-
-function renderEventContent(eventInfo: EventContentArg) {
-  return (
-    <div className={`bg-point my-[1px] p-0.5 rounded-[4px]`}>
-      <b>{eventInfo.timeText}</b>
-      <p 
-        className={`
-          lg:text-[14px] lg:h-[16px]
-          md:text-[10px] md:h-[12px]
-          text-[8px] h-[10px] flex justify-center items-center`}>{eventInfo.event.title}</p>
+        eventContent={renderEventContent} />
     </div>
   )
 }
