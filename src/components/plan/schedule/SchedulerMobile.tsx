@@ -64,11 +64,11 @@ const SchedulerMobile: React.FC<SchedulerProps> = ({
             {/* Day List */}
             <div className={`grow sticky top-0 bg-white z-10`}>
               <div
-                className={`flex flex-row bg-point border border-point w-full min-w-[300px] h-[24px] items-center rounded-t-[8px] justify-between text-white sticky top-0`}>
+                className={`flex flex-row bg-point border border-point w-full h-[24px] items-center rounded-t-[8px] justify-between text-white sticky top-0`}>
                 {Array.from({ length: days || 1 }).map((_, index) => (
                   <p
                     key={index}
-                    className={`text-center content-center text-[10px] grow`}>Day{index + 1}</p>
+                    className={`text-center content-center text-[10px] grow min-w-[80px]`}>Day{index + 1}</p>
                 ))}
               </div>
             </div>
