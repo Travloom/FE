@@ -51,7 +51,7 @@ const Header = () => {
         {user ? (
           <Motion.MotionDiv>
             <Image
-              className={`lg:w-10 w-8 cursor-pointer rounded-full`}
+              className={`lg:w-10 w-8 cursor-pointer rounded-full object-cover aspect-square`}
               src={user.profileImageUrl as string}
               width={1000}
               height={1000}

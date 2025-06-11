@@ -75,7 +75,7 @@ export default function Mypage() {
                 className={`
                     lg:text-[18px] 
                     md:text-[16px]
-                    text-[14px] text-white bg-[#F37E7E] px-5 py-2.5 rounded-[8px] h-fit w-fit transition-all-300-out`}
+                    text-[14px] text-red-400 bg-white hover:text-white hover:bg-red-400 border border-red-400 px-5 py-2.5 rounded-[8px] h-fit w-fit transition-all-300-out`}
                 onClick={logOut}>로그아웃</button>
             </div>
 

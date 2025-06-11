@@ -23,7 +23,7 @@ const PlanBox: React.FC<PlanBoxProps> = ({
 
   return (
     <div 
-      className={`flex flex-col gap-2.5 h-[240px] rounded-[8px] border border-gray-200 text-point p-2.5 aspect-square cursor-pointer select-none`}
+      className={`flex flex-col gap-2.5 h-[240px] rounded-[8px] border border-gray-200 text-point p-2.5 aspect-square cursor-pointer select-none hover:bg-[rgba(108,92,231,0.08)] transition-all-300-out`}
       onClick={() => pageAnimateRouter.push(`/${planId}`)}>
       <div className={`rounded-[4px] py-2 w-full h-fit text-white text-[12px] bg-point truncate flex items-center justify-center`}>
         <p className={`truncate mt-0.5`}>
