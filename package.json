@@ -16,6 +16,7 @@
     "@fullcalendar/daygrid": "^6.1.17",
     "@fullcalendar/react": "^6.1.17",
     "@googlemaps/react-wrapper": "^1.2.0",
+    "@lottiefiles/dotlottie-react": "^0.14.1",
     "@svgr/webpack": "^8.1.0",
     "@tanstack/react-query": "^5.80.2",
     "@tanstack/react-query-devtools": "^5.80.6",
