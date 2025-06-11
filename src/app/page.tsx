@@ -1,7 +1,7 @@
 'use client'
 
-import PlanInput from "@/components/common/PlanInput";
-import TagButton from "@/components/common/TagButton";
+import PlanInput from "@/components/home/PlanInput";
+import TagButton from "@/components/home/TagButton";
 import { TAGLIST } from "@/constants/Tag";
 import usePageStore from "../stores/usePageStore";
 import usePageAnimateRouter from "@/hooks/common/usePageAnimateRouter";
