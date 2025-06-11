@@ -7,18 +7,12 @@ export const TIME_WIDTH = `w-[calc((3000px)/24)]`
 
 export const MOBILE_TIME_HEIGHT = 100;
 
-export const PLANNER_WIDTH = `w-[3000px]`
-export const GRID_WIDTH = 3000;
-
-export const PLANNER_HEIGHT = `h-[500px]`
-export const GRID_HEIGHT = 500;
-
 export const TIME_DIVIDE = 48;
 
 export const CONTAINER_PADDING_X = 4
 export const CONTAINER_PADDING_Y = 20
 
+export const SCHEDULE_HEIGHT = 125
+
 export const PLAN_MARGIN_X = 4
 export const PLAN_MARGIN_Y = 20
-
-export const PLAN_HEIGHT = (GRID_HEIGHT - CONTAINER_PADDING_Y) / 4 - PLAN_MARGIN_Y; 

@@ -43,7 +43,6 @@ export const useAddMobileScheduleBox = (day: number, layout: CustomLayout[], set
         resizeHandles: ["e"],
       };
       setLayout([...layout, newItem]);
-      console.log(layout)
     }
   };
 };

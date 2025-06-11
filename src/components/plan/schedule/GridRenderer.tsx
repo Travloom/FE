@@ -1,6 +1,6 @@
 import GridLayout, { Layout } from "react-grid-layout";
 import ScheduleBox from "./ScheduleBox";
-import { PLAN_HEIGHT, PLAN_MARGIN_X, PLAN_MARGIN_Y, CONTAINER_PADDING_X, CONTAINER_PADDING_Y, TIME_DIVIDE, GRID_WIDTH } from "@/constants/Plan";
+import { PLAN_MARGIN_X, PLAN_MARGIN_Y, CONTAINER_PADDING_X, CONTAINER_PADDING_Y, TIME_DIVIDE, SCHEDULE_HEIGHT } from "@/constants/Plan";
 import { CustomLayout } from "@/types/schedule/types";
 
 
@@ -20,9 +20,9 @@ const GridRenderer = ({ customLayout, onLayoutChange, dayLen }: Props) => {
       containerPadding={[CONTAINER_PADDING_X, CONTAINER_PADDING_Y]}
       cols={TIME_DIVIDE}
       maxRows={dayLen}
-      rowHeight={PLAN_HEIGHT}
+      rowHeight={SCHEDULE_HEIGHT}
       verticalCompact={false}
-      width={GRID_WIDTH}
+      width={3000}
       isDraggable={true}
       isResizable={true}
       compactType={null}

@@ -1,7 +1,7 @@
 import GridRenderer from "./GridRenderer";
 import { Dispatch, SetStateAction, useCallback } from "react";
 import { useAddScheduleBox } from "@/hooks/schedule/useAddScheduleBox";
-import { CONTAINER_PADDING_Y, PLAN_HEIGHT, PLAN_MARGIN_X, PLAN_MARGIN_Y, PLANNER_WIDTH, TIME_TABLE, TIME_WIDTH } from "@/constants/Plan";
+import { CONTAINER_PADDING_Y, PLAN_MARGIN_X, PLAN_MARGIN_Y, TIME_TABLE, TIME_WIDTH } from "@/constants/Plan";
 import { Layout } from "react-grid-layout";
 import { CustomLayout } from "@/types/schedule/types";
 import usePlanStore from "@/stores/usePlanStore";
@@ -43,7 +43,7 @@ const Scheduler: React.FC<SchedulerProps> = ({
       <div className={`h-full flex flex-col overflow-auto select-none`}>
 
         {/* PlanList */}
-        <div className={`${PLANNER_WIDTH} flex`}>
+        <div className={`w-[3000px] flex`}>
           <div className={`sticky shrink-0 left-0 bg-white z-20`}>
             {/* Day List */}
             <div className={`w-full h-[12px] shrink-0 sticky top-0 left-0 bg-white`}></div>
@@ -54,7 +54,7 @@ const Scheduler: React.FC<SchedulerProps> = ({
                 <p
                   key={index}
                   className={`text-center content-center text-[12px]`}
-                  style={{ height: PLAN_HEIGHT }}>Day{index + 1}</p>
+                  style={{ height: 125 }}>Day{index + 1}</p>
               ))}
             </div>
           </div>
