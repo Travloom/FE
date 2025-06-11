@@ -1,6 +1,6 @@
 'use client'
 
-import AlertModal from "@/components/common/AlertModal";
+import NoticeModal from "@/components/common/NoticeModal";
 import Header from "@/components/layout/Header";
 import "@/styles/globals.css";
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
@@ -22,7 +22,7 @@ export default function RootLayout({
           {children}
           <div className={`bg-[url('/images/background.png')] w-screen h-screen fixed top-0 bg-cover bg-center z-[-9999]`} />
           <div className={`z-9999`} id="portal-root" />
-          <AlertModal/>
+          <NoticeModal/>
           <ReactQueryDevtools initialIsOpen={false} />
         </QueryClientProvider>
       </body>

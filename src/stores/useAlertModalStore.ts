@@ -1,26 +1,36 @@
 import { create } from 'zustand';
 
-type AlertModalState = {
-  isAlertModalOpen: boolean;
-  setIsAlertModalOpen: (value: boolean) => void;
-  AlertModalText: string;
-  setAlertModalText: (value: string) => void;
+type NoticeModalState = {
+  isNoticeModalOpen: boolean;
+  setIsNoticeModalOpen: (value: boolean) => void;
+  NoticeModalText: string;
+  setNoticeModalText: (value: string) => void;
+
+  isAlert: boolean;
+  setIsAlert: (value: boolean) => void;
 }
 
-const useAlertModalStore = create<AlertModalState>((set) => ({
-  isAlertModalOpen: false,
-  AlertModalText: "",
+const useNoticeModalStore = create<NoticeModalState>((set) => ({
+  isNoticeModalOpen: false,
+  NoticeModalText: "",
+  isAlert: false,
 
-  setIsAlertModalOpen(value) {
-    set({ 
-      isAlertModalOpen: value 
-    })
-  },
-  setAlertModalText(value) {
+  setIsNoticeModalOpen(value) {
     set({
-      AlertModalText: value
+      isNoticeModalOpen: value
     })
   },
+  setNoticeModalText(value) {
+    set({
+      NoticeModalText: value
+    })
+  },
+
+  setIsAlert(value) {
+    set({
+      isAlert: value
+    })
+  }
 }))
 
-export default useAlertModalStore;
+export default useNoticeModalStore;
