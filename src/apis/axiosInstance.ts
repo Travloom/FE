@@ -11,7 +11,7 @@ axiosInstance.interceptors.response.use(
 
     if (error.response?.status === 401 && !originalRequest._retry) {
       try {
-        const response = await axios.post(
+        await axios.post(
           "/proxy/api/auth/refresh",
           {},
           { withCredentials: true }
@@ -22,6 +22,7 @@ axiosInstance.interceptors.response.use(
         console.log(e)
       }
     }
+    return Promise.reject(error);
   }
 )
 
