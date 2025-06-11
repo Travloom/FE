@@ -1,7 +1,7 @@
 'use client'
 
 import Button from "@/components/common/Button";
-import { useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 import usePageStore from "../../stores/usePageStore";
 import Planner from "@/components/plan/Planner";
 import Motion from "@/components/motion/Motion";
@@ -11,6 +11,11 @@ import { useParams } from "next/navigation";
 import { AnimatePresence } from "framer-motion";
 import useUserStore from "@/stores/useUserStore";
 import useInitPage from "@/hooks/common/useInitPage";
+import { PlaneIcon } from "@/assets/svgs";
+import { inviteUserRequest } from "@/apis/plan";
+import { useMutation } from "@tanstack/react-query";
+import useAlertModalStore from "@/stores/useAlertModalStore";
+import { AxiosError } from "axios";
 
 const PlanPage = () => {
 
@@ -30,15 +35,56 @@ const PlanPage = () => {
     setIsPagePending,
   } = usePageStore()
 
+  const {
+    setIsAlertModalOpen,
+    setAlertModalText,
+  } = useAlertModalStore();
+
   const { planId }: { planId: string } = useParams();
 
   usePlanInfo(planId);
 
   useInitPage(title)
 
+  const [isInviteModalOpen, setIsInviteModalOpen] = useState(false);
+  const closeTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  const [email, setEmail] = useState("");
+
   useEffect(() => {
     setIsPagePending(false);
   }, [])
+
+  const handleOver = () => {
+    if (closeTimeoutRef.current) {
+      clearTimeout(closeTimeoutRef.current);
+      closeTimeoutRef.current = null;
+    }
+    setIsInviteModalOpen(true);
+  }
+
+  const handleLeave = () => {
+    closeTimeoutRef.current = setTimeout(() => {
+      setIsInviteModalOpen(false);
+      closeTimeoutRef.current = null;
+    }, 500);
+  }
+
+  const handleErrorMessage = (message: string) => {
+    setAlertModalText(message)
+    setIsAlertModalOpen(true)
+  }
+
+  const { mutate } = useMutation({
+    mutationFn: async () => {
+      setIsInviteModalOpen(false)
+      await inviteUserRequest(planId, email);
+    },
+    onError: (error: AxiosError<any>) => {
+      const message = error.response?.data?.message;
+      handleErrorMessage(message);
+    }
+  })
 
   return (
     <AnimatePresence>
@@ -55,7 +101,34 @@ const PlanPage = () => {
               {tags?.theme && <Button text={tags?.theme} isActive={false} />}
             </div>
             <div className={`grow justify-end flex flex-row gap-2.5`}>
-              <Button text={"초대"} isActive={true} />
+              <div
+                className={`relative`}
+                onMouseEnter={handleOver}
+                onMouseLeave={handleLeave}>
+                <Button text={"초대"} isActive={true} />
+                <AnimatePresence>
+                  {isInviteModalOpen &&
+                    <Motion.MotionDiv
+                      className={`flex flex-col gap-1 absolute right-0 top-10 bg-white p-2.5 border border-gray-300 rounded-[8px] z-[999]`}
+                      onMouseEnter={handleOver}
+                      onMouseLeave={handleLeave}>
+                      <div className={`px-3 py-2 rounded-full border border-gray-300 flex flex-row gap-1`}>
+                        <input
+                          className={`text-[12px] w-[200px] mt-0.5`}
+                          placeholder="초대할 상대방 이메일을 입력해주세요"
+                          value={email}
+                          onChange={(e) => setEmail(e.target.value)}
+                          onKeyDown={() => { }} />
+                        <PlaneIcon
+                          className={`${email.trim() !== "" ? `text-point cursor-pointer` : `text-gray-300`}
+                          w-4 transition-all-300-out`}
+                          onClick={() => mutate()} />
+                      </div>
+                    </Motion.MotionDiv>
+                  }
+                </AnimatePresence>
+
+              </div>
               {user?.email === authorEmail ? (
                 <Button text={"삭제"} isActive={true} isDelete={true} />
               ) : (

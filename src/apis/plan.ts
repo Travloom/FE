@@ -1,3 +1,4 @@
+import useAlertModalStore from "@/stores/useAlertModalStore";
 import axiosInstance from "./axiosInstance"
 
 interface PlanType {
@@ -10,7 +11,25 @@ interface PlanType {
   theme: string;
 }
 
-// 장소 추천받아 플랜 생성성
+// 플랜 목록 조회
+export const getPlansRequest = async ({ before, after, year, month }: { before?: Date, after?: Date, year?: number, month?: number }) => {
+  try {
+    const response = await axiosInstance(`/proxy/api/plans`, {
+      params: {
+        before,
+        after,
+        year,
+        month,
+      }
+    })
+    return response.data;
+  } catch (e) {
+    console.log(e)
+    return null;
+  }
+}
+
+// 장소 추천받아 플랜 생성
 export const planRecommendRequest = async (Plan: PlanType) => {
   try {
     const response = await axiosInstance.post(`/proxy/api/places`, {
@@ -46,20 +65,9 @@ export const createPlanRequest = async (Plan: PlanType) => {
   }
 }
 
-// 플랜 목록 조회
-export const getPlansRequest = async ({before, after, year, month}: {before?: Date, after?: Date, year?: number, month?: number}) => {
-  try {
-    const response = await axiosInstance(`/proxy/api/plans`, {
-      params: {
-        before,
-        after,
-        year,
-        month,
-      }
+export const inviteUserRequest = async (planId: string, email: string) => {
+  if (email.trim() !== "")
+    await axiosInstance.post(`/proxy/api/plan/invite/${planId}`, {
+      email
     })
-    return response.data;
-  } catch (e) {
-    console.log(e)
-    return null;
-  }
 }
