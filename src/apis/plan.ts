@@ -1,4 +1,4 @@
-import useAlertModalStore from "@/stores/useAlertModalStore";
+import useNoticeModalStore from "@/stores/useAlertModalStore";
 import axiosInstance from "./axiosInstance"
 
 interface PlanType {
@@ -66,8 +66,18 @@ export const createPlanRequest = async (Plan: PlanType) => {
 }
 
 export const inviteUserRequest = async (planId: string, email: string) => {
-  if (email.trim() !== "")
-    await axiosInstance.post(`/proxy/api/plan/invite/${planId}`, {
+  if (email.trim() !== "") {
+    const response = await axiosInstance.post(`/proxy/api/plan/invite/${planId}`, {
       email
     })
+    return response.data;
+  }
+}
+
+export const deletePlanRequest = async (planId: string) => {
+  await axiosInstance.delete(`/proxy/api/plan/${planId}`);
+}
+
+export const exitPlanRequest = async (planId: string) => {
+  await axiosInstance.delete(`/proxy/api/plan/exit/${planId}`);
 }

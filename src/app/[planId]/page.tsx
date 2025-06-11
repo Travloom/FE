@@ -12,10 +12,11 @@ import { AnimatePresence } from "framer-motion";
 import useUserStore from "@/stores/useUserStore";
 import useInitPage from "@/hooks/common/useInitPage";
 import { PlaneIcon } from "@/assets/svgs";
-import { inviteUserRequest } from "@/apis/plan";
+import { deletePlanRequest, exitPlanRequest, inviteUserRequest } from "@/apis/plan";
 import { useMutation } from "@tanstack/react-query";
-import useAlertModalStore from "@/stores/useAlertModalStore";
+import useNoticeModalStore from "@/stores/useAlertModalStore";
 import { AxiosError } from "axios";
+import usePageAnimateRouter from "@/hooks/common/usePageAnimateRouter";
 
 const PlanPage = () => {
 
@@ -36,15 +37,18 @@ const PlanPage = () => {
   } = usePageStore()
 
   const {
-    setIsAlertModalOpen,
-    setAlertModalText,
-  } = useAlertModalStore();
+    setIsNoticeModalOpen,
+    setNoticeModalText,
+    setIsAlert,
+  } = useNoticeModalStore();
 
   const { planId }: { planId: string } = useParams();
 
   usePlanInfo(planId);
 
   useInitPage(title)
+
+  const pageAnimateRouter = usePageAnimateRouter();
 
   const [isInviteModalOpen, setIsInviteModalOpen] = useState(false);
   const closeTimeoutRef = useRef<NodeJS.Timeout | null>(null);
@@ -70,19 +74,35 @@ const PlanPage = () => {
     }, 500);
   }
 
-  const handleErrorMessage = (message: string) => {
-    setAlertModalText(message)
-    setIsAlertModalOpen(true)
+  const handleNotice = (message: string, isAlert: boolean) => {
+    setIsAlert(isAlert)
+    setNoticeModalText(message)
+    setIsNoticeModalOpen(true)
   }
 
-  const { mutate } = useMutation({
+  const { mutate: invitePlan } = useMutation({
     mutationFn: async () => {
       setIsInviteModalOpen(false)
-      await inviteUserRequest(planId, email);
+      const data = await inviteUserRequest(planId, email);
+      handleNotice(`${data?.userName}님을 초대하였습니다.`, false);
     },
     onError: (error: AxiosError<any>) => {
       const message = error.response?.data?.message;
-      handleErrorMessage(message);
+      handleNotice(message, true);
+    },
+  })
+
+  const { mutate: deletePlan } = useMutation({
+    mutationFn: async () => {
+      await deletePlanRequest(planId)
+      pageAnimateRouter.push('/');
+    }
+  })
+
+  const { mutate: exitPlan} = useMutation({
+    mutationFn: async () => {
+      await exitPlanRequest(planId)
+      pageAnimateRouter.push('/');
     }
   })
 
@@ -122,7 +142,7 @@ const PlanPage = () => {
                         <PlaneIcon
                           className={`${email.trim() !== "" ? `text-point cursor-pointer` : `text-gray-300`}
                           w-4 transition-all-300-out`}
-                          onClick={() => mutate()} />
+                          onClick={() => invitePlan()} />
                       </div>
                     </Motion.MotionDiv>
                   }
@@ -130,9 +150,9 @@ const PlanPage = () => {
 
               </div>
               {user?.email === authorEmail ? (
-                <Button text={"삭제"} isActive={true} isDelete={true} />
+                <Button text={"삭제"} isActive={true} isDelete={true} onClick={deletePlan}/>
               ) : (
-                <Button text={"나가기"} isActive={true} isDelete={true} />
+                <Button text={"나가기"} isActive={true} isDelete={true} onClick={exitPlan}/>
               )}
             </div>
           </div>
