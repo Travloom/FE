@@ -6,6 +6,8 @@ interface PlanState {
   isSchedulePending: boolean;
   isInfoPending: boolean | null;
 
+  title: string | null;
+  authorEmail: string | null;
   startDate: Date | null;
   endDate: Date | null;
   days: number | null;
@@ -14,6 +16,8 @@ interface PlanState {
   setIsSchedulePending: (value: boolean) => void;
   setIsInfoPending: (value: boolean) => void;
 
+  setTitle: (value: string | null) => void;
+  setAuthorEmail: (email: string | null) => void;
   setDays: (startDate: Date | null, endDate: Date | null) => void;
   setTag: (type: keyof TagsType, value: string) => void;
   setTags: (tags: TagsType | null) => void;
@@ -23,6 +27,8 @@ const usePlanStore = create<PlanState>((set) => ({
   isSchedulePending: true,
   isInfoPending: true,
 
+  title: null,
+  authorEmail: null,
   startDate: null,
   endDate: null,
   days: 1,
@@ -32,6 +38,9 @@ const usePlanStore = create<PlanState>((set) => ({
     companions: null,
     theme: null,
   },
+
+  setTitle: (value: string | null) => set({ title: value }),
+  setAuthorEmail: (email: string | null) => set({ authorEmail: email }),
 
   setIsSchedulePending: (value: boolean) => set({ isSchedulePending: value }),
   setIsInfoPending: (value: boolean) => set({ isInfoPending: value }),

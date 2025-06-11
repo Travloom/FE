@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { doc, getDoc, onSnapshot, setDoc } from "firebase/firestore";
+import { doc, getDoc, onSnapshot } from "firebase/firestore";
 import { fireStore } from "@/firebase/firebaseClient";
 import usePlanStore from "@/stores/usePlanStore";
 
@@ -7,6 +7,8 @@ export const usePlanInfo = (planId: string) => {
 
   const {
     setIsInfoPending,
+    setTitle,
+    setAuthorEmail,
     setDays,
     setTags,
   } = usePlanStore();
@@ -30,6 +32,8 @@ export const usePlanInfo = (planId: string) => {
       const data = docSnapshot.data();
 
       if (data) {
+        setTitle(data?.title)
+        setAuthorEmail(data?.authorEmail)
         setDays(data?.startDate, data?.endDate)
         setTags(data?.tags)
         setIsInfoPending(false)
@@ -37,10 +41,12 @@ export const usePlanInfo = (planId: string) => {
     });
 
     return () => {
-      unsubscribe()
+      setTitle(null)
+      setAuthorEmail(null)
       setDays(null, null)
       setTags(null)
       setIsInfoPending(true)
+      unsubscribe()
     };
   }, [planId]);
 };

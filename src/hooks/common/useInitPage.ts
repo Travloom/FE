@@ -5,13 +5,16 @@ const useInitPage = (title: string | null) => {
 
   const {
     setIsPagePending,
-    setTitle,
+    setPageTitle,
   } = usePageStore();
 
   useEffect(() => {
     setIsPagePending(false);
-    setTitle(title);
   }, []);
+
+  useEffect(() => {
+    setPageTitle(title);
+  }, [title])
 }
 
 export default useInitPage;

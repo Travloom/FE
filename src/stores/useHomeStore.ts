@@ -2,10 +2,14 @@ import { TagsType } from "@/types/place/type";
 import { create } from "zustand";
 
 interface TagState {
+  isCreating: boolean;
+
   title: string | null;
   startDate: Date | null;
   endDate: Date | null;
   tags: TagsType;
+
+  setIsCreating: (value: boolean) => void;
   
   setTitle: (value: string) => void;
   setStartDate: (date: Date | null) => void;
@@ -14,6 +18,8 @@ interface TagState {
 }
 
 const useHomeStore = create<TagState>((set) => ({
+  isCreating: false,
+
   title: null,
   startDate: null,
   endDate: null,
@@ -23,6 +29,8 @@ const useHomeStore = create<TagState>((set) => ({
     companions: null,
     theme: null,
   },
+
+  setIsCreating: (value: boolean) => set({isCreating: value}),
 
   setTitle: (value: string | null) => set({title: value}),
   setStartDate: (date: Date | null) => set({startDate: date}),

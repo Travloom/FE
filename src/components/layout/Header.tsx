@@ -14,7 +14,7 @@ const Header = () => {
 
   const {
     isPagePending,
-    title
+    pageTitle
   } = usePageStore();
 
   const {
@@ -42,9 +42,9 @@ const Header = () => {
         onClick={() => pageAnimateRouter.push('/')}>떠나,봄</p>
       <MenuIcon className={`lg:hidden text-point w-7`} />
       <AnimatePresence>
-        {title && !isPagePending &&
+        {pageTitle && !isPagePending &&
           <Motion.MotionP
-            className={`lg:text-[32px] text-[24px] mt-[1%] text-point`}>{title}
+            className={`lg:text-[32px] text-[24px] mt-[1%] text-point`}>{pageTitle}
           </Motion.MotionP>}
       </AnimatePresence>
 
