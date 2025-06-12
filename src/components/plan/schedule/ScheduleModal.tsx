@@ -2,12 +2,12 @@
 
 import useScheduleModalStore from "@/stores/useScheduleModalStore";
 import Portal from "../../portal/Portal";
-import { AnimatePresence } from "framer-motion";
 import Motion from "../../motion/Motion";
 import { CustomLayout } from "@/types/schedule/types";
 import { ChangeEvent, Dispatch, SetStateAction, useCallback, useEffect, useRef } from "react";
 import { debounce } from "lodash";
 import { DeleteIcon } from "@/assets/svgs";
+import { AnimatePresence } from "framer-motion";
 
 
 interface ScheduleModalProps {
@@ -39,7 +39,7 @@ const ScheduleModal: React.FC<ScheduleModalProps> = ({
   const deleteSchedule = () => {
     if (!schedule.scheduleId) return;
 
-    setSchedule({scheduleId: null, title: null, content: null})
+    setSchedule({ scheduleId: null, title: null, content: null })
     setIsScheduleModalOpen(false);
 
     setLayout((prevLayout) => {
@@ -52,10 +52,8 @@ const ScheduleModal: React.FC<ScheduleModalProps> = ({
 
   useEffect(() => {
     if (textareaRef.current) {
-
-      const lineCount = schedule.content?.split('\n').length;
-
-      textareaRef.current.style.height = `${8 + 14 * 1.15 * (lineCount || 1) + 2}px`;
+      textareaRef.current.style.height = 'auto';
+      textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
     }
   }, [schedule.content, isScheduleModalOpen])
 
@@ -98,7 +96,7 @@ const ScheduleModal: React.FC<ScheduleModalProps> = ({
           >
             <div
               className="
-                md:w-1/2 md:h-1/2
+                md:w-1/3 md:h-fit
                 w-2/3 h-2/5 min-h-[300px]
                 relative flex flex-col justify-start gap-1 items-center p-4 bg-white rounded-[8px] border border-gray-300"
               onClick={preventEvent}
@@ -118,14 +116,14 @@ const ScheduleModal: React.FC<ScheduleModalProps> = ({
                   hover:bg-gray-100 focus:cursor-text focus:bg-gray-50 content-start overflow-clip
                   py-1 px-1.5 text-center text-[14px] cursor-pointer text-gray-500 w-full resize-none outline-0 rounded-[4px] transition-all-300-out`}
                 value={schedule.content || ""}
-                
+
                 onChange={(e) => onScheduleChange(e, setScheduleContent)}
               />
-              <DeleteIcon 
+              <DeleteIcon
                 className={`
                   md:w-8 md:-right-10
                   text-[#ff4d4d] w-6 -right-7.5 top-2 absolute cursor-pointer transition-all-300-out`}
-                onClick={deleteSchedule}/>
+                onClick={deleteSchedule} />
             </div>
           </Motion.MotionDiv>
         )}

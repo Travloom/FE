@@ -8,8 +8,8 @@ import usePlanStore from "@/stores/usePlanStore";
 export const useSchedule = (planId: string) => {
 
   const {
-    isPending,
-    setIsPending,
+    isSchedulePending: isPending,
+    setIsSchedulePending: setIsPending,
   } = usePlanStore();
 
   const [layout, setLayout] = useState<CustomLayout[]>([]);
@@ -20,9 +20,8 @@ export const useSchedule = (planId: string) => {
       const docSnap = await getDoc(targetDoc);
 
       if (!docSnap.exists()) {
-        await setDoc(targetDoc, {
-          scheduleList: [],
-        });
+        setIsPending(true);
+        return;
       }
     }
 
@@ -39,8 +38,9 @@ export const useSchedule = (planId: string) => {
     });
 
     return () => {
-      unsubscribe()
+      setLayout([]);
       setIsPending(true);
+      unsubscribe()
     };
   }, [planId]);
 

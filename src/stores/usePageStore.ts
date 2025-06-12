@@ -3,21 +3,21 @@ import { create } from "zustand";
 interface PageState {
   isPagePending: boolean;
 
-  title: string | null;
+  pageTitle: string | null;
   
   setIsPagePending: (value: boolean) => void;
 
-  setTitle: (value: string | null) => void;
+  setPageTitle: (value: string | null) => void;
 }
 
 const usePageStore = create<PageState>((set) => ({
   isPagePending: false,
 
-  title: null,
+  pageTitle: null,
 
   setIsPagePending: (value: boolean) => set({isPagePending: value}),
 
-  setTitle: (value : string | null) => set({ title: value }),
+  setPageTitle: (value : string | null) => set({ pageTitle: value }),
 }))
 
 export default usePageStore;

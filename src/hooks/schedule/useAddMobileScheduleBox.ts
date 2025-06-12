@@ -1,27 +1,27 @@
 import { MouseEvent } from "react";
 import { v4 as uuidv4 } from "uuid";
-import { TIME_DIVIDE, GRID_WIDTH, GRID_HEIGHT } from "@/constants/Plan";
+import { TIME_DIVIDE } from "@/constants/Plan";
 import { CustomLayout } from "@/types/schedule/types";
 
-export const useAddPlanBox = (layout: CustomLayout[], setLayout: (val: CustomLayout[]) => void) => {
+export const useAddMobileScheduleBox = (day: number, layout: CustomLayout[], setLayout: (val: CustomLayout[]) => void) => {
   return (e: MouseEvent<HTMLDivElement>) => {
-    const colWidth = GRID_WIDTH / TIME_DIVIDE;
-    const rowHeight = GRID_HEIGHT / 4;
 
     const rect = e.currentTarget.getBoundingClientRect();
-    const offsetX = e.clientX - rect.left;
-    const offsetY = e.clientY - rect.top;
 
-    const x = Math.floor(offsetX / colWidth);
-    const y = Math.floor(offsetY / rowHeight);
+    const colWidth = rect.width / day;
+    const rowHeight = rect.height / TIME_DIVIDE;
+
+    const offsetX = e.clientY - rect.top;
+    const offsetY = e.clientX - rect.left;
+
+    const x = Math.floor(offsetX / rowHeight);
+    const y = Math.floor(offsetY / colWidth);
 
     const isOccupied = layout.some(item =>
-      (
-        x < item.x + item.w &&
-        x + 2 > item.x &&
-        y < item.y + item.h &&
-        y + 1 > item.y
-      ) || y > 3
+      x < item.x + item.w &&
+      x + 2 > item.x &&
+      y < item.y + item.h &&
+      y + 1 > item.y
     );
 
     if (!isOccupied) {

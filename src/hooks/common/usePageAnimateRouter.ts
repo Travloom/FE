@@ -19,7 +19,16 @@ const usePageAnimateRouter = () => {
     }
   }
 
-  return { push }
+  const replace = (url: string) => {
+    if (pathName !== url){
+      setIsPagePending(true)
+      setTimeout(() => {
+        router.replace(url)
+      }, 300);
+    }
+  }
+
+  return { push, replace }
 }
 
 export default usePageAnimateRouter;

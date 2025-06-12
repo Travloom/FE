@@ -1,5 +1,5 @@
-export const TAGLIST = [
-  {
+export const TAGLIST = {
+  region: {
     title: "지역",
     tagList: [
       "속초",
@@ -8,7 +8,16 @@ export const TAGLIST = [
       "제주도",
     ]
   },
-  {
+  people: {
+    title: "인원",
+    tagList: [
+      "1명",
+      "2명",
+      "3명",
+      "4명",
+    ]
+  },
+  companions: {
     title: "누구",
     tagList: [
       "가족",
@@ -16,7 +25,7 @@ export const TAGLIST = [
       "연인",
     ]
   },
-  {
+  theme: {
     title: "테마",
     tagList: [
       "맛집 탐방",
@@ -24,4 +33,4 @@ export const TAGLIST = [
       "가족 여행",
     ]
   },
-]
+}

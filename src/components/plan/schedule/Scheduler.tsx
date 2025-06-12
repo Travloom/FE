@@ -1,9 +1,10 @@
 import GridRenderer from "./GridRenderer";
-import { Dispatch, SetStateAction, useCallback, useState } from "react";
-import { useAddPlanBox } from "@/hooks/schedule/useAddPlanBox";
-import { CONTAINER_PADDING_Y, PLAN_HEIGHT, PLAN_MARGIN_X, PLAN_MARGIN_Y, PLANNER_HEIGHT, PLANNER_WIDTH, TIME_TABLE, TIME_WIDTH } from "@/constants/Plan";
+import { Dispatch, SetStateAction, useCallback } from "react";
+import { useAddScheduleBox } from "@/hooks/schedule/useAddScheduleBox";
+import { CONTAINER_PADDING_Y, PLAN_MARGIN_X, PLAN_MARGIN_Y, TIME_TABLE, TIME_WIDTH } from "@/constants/Plan";
 import { Layout } from "react-grid-layout";
 import { CustomLayout } from "@/types/schedule/types";
+import usePlanStore from "@/stores/usePlanStore";
 
 
 interface SchedulerProps {
@@ -18,8 +19,12 @@ const Scheduler: React.FC<SchedulerProps> = ({
   setLayout,
   updateSchedule,
 }) => {
-  const [dayLen] = useState(4);
-  const handleAddPlanBox = useAddPlanBox(layout, setLayout);
+
+  const {
+    days,
+  } = usePlanStore();
+
+  const handleAddScheduleBox = useAddScheduleBox(days || 1, layout, setLayout);
 
   const handleChangeLayout = useCallback((newLayout: Layout[]) => {
     const updatedLayout = newLayout.map((item: Layout) => {
@@ -38,18 +43,18 @@ const Scheduler: React.FC<SchedulerProps> = ({
       <div className={`h-full flex flex-col overflow-auto select-none`}>
 
         {/* PlanList */}
-        <div className={`${PLANNER_WIDTH} flex`}>
+        <div className={`w-[3000px] flex`}>
           <div className={`sticky shrink-0 left-0 bg-white z-20`}>
             {/* Day List */}
             <div className={`w-full h-[12px] shrink-0 sticky top-0 left-0 bg-white`}></div>
             <div
               className={`flex flex-col gap-[2.5%] py-[25%] bg-point border border-point w-full p-1.5 items-center rounded-l-[8px] text-white`}
               style={{ paddingTop: CONTAINER_PADDING_Y, paddingBottom: CONTAINER_PADDING_Y, gap: `${PLAN_MARGIN_Y}px` }}>
-              {["Day1", "Day2", "Day3", "Day4"].map((day, index) => (
+              {Array.from({ length: days || 1 }).map((_, index) => (
                 <p
                   key={index}
                   className={`text-center content-center text-[12px]`}
-                  style={{ height: PLAN_HEIGHT }}>Day{index + 1}</p>
+                  style={{ height: 125 }}>Day{index + 1}</p>
               ))}
             </div>
           </div>
@@ -67,16 +72,16 @@ const Scheduler: React.FC<SchedulerProps> = ({
 
             {/* 그리드 가로줄 디자인 */}
             <div
-              className={`flex flex-col absolute w-full ${PLANNER_HEIGHT}`}
+              className={`flex flex-col absolute w-full h-[calc(100%-13px)]`}
               style={{ paddingTop: CONTAINER_PADDING_Y, paddingBottom: CONTAINER_PADDING_Y, gap: `${PLAN_MARGIN_Y}px` }}>
-              {Array.from({ length: dayLen }).map((_, index) => (
+              {Array.from({ length: days || 1 }).map((_, index) => (
                 <div key={index} className={`w-full grow bg-[rgba(108,92,231,0.04)]`} />
               ))}
             </div>
 
             {/* 그리드 세로줄 디자인 */}
             <div
-              className={`flex flex-row absolute w-full ${PLANNER_HEIGHT}`}
+              className={`flex flex-row absolute w-full h-[calc(100%-13px)]`}
               style={{ paddingLeft: `${PLAN_MARGIN_X}px` }}>
               {Array.from({ length: 24 }).map((_, index) => (
                 <div key={index} className={`w-full grow bg-[rgba(108,92,231,0.04)]`} style={{ marginRight: `${PLAN_MARGIN_X}px` }} />
@@ -84,8 +89,8 @@ const Scheduler: React.FC<SchedulerProps> = ({
             </div>
             <div
               className={`cursor-pointer h-[calc(100%-13px)]`}
-              onMouseDown={handleAddPlanBox}>
-              <GridRenderer customLayout={layout} onLayoutChange={handleChangeLayout} dayLen={dayLen} />
+              onMouseDown={handleAddScheduleBox}>
+              <GridRenderer customLayout={layout} onLayoutChange={handleChangeLayout} dayLen={days || 1} />
             </div>
           </div>
         </div>
