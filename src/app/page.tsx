@@ -85,7 +85,7 @@ export default function Home() {
           <Motion.MotionDiv
             className={`
               md:px-[20%] 
-              w-full h-full px-[28px] pb-[60px] pt-[100px] transition-all-300-out`}>
+              w-full h-full px-10 pb-[60px] pt-[100px] transition-all-300-out`}>
             <div className={`flex flex-col gap-[40px] pb-[20px] h-full justify-center`}>
               <div
                 className={`
