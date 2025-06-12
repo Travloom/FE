@@ -14,3 +14,5 @@ export { default as MyHotelOnIcon } from "./my_hotel_on_icon.svg";
 export { default as MyHotelOffIcon } from "./my_hotel_off_icon.svg";
 export { default as MyAttractionOnIcon } from "./my_attraction_on_icon.svg";
 export { default as MyAttractionOffIcon } from "./my_attraction_off_icon.svg";
+
+export { default as PlaneMarker } from "./plane_marker.svg";
