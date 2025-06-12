@@ -1,4 +1,3 @@
-import useNoticeModalStore from "@/stores/useAlertModalStore";
 import axiosInstance from "./axiosInstance"
 
 interface PlanType {

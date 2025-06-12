@@ -1,6 +1,5 @@
 import { AnimatePresence } from "framer-motion";
 import Motion from "../motion/Motion";
-import { HashLoader } from "react-spinners";
 import useHomeStore from "@/stores/useHomeStore";
 import Portal from "../portal/Portal";
 import { DotLottieReact } from "@lottiefiles/dotlottie-react";

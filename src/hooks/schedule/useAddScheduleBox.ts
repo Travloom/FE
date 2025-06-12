@@ -1,6 +1,6 @@
 import { MouseEvent } from "react";
 import { v4 as uuidv4 } from "uuid";
-import { CONTAINER_PADDING_Y, PLAN_MARGIN_Y, SCHEDULE_HEIGHT, TIME_DIVIDE } from "@/constants/Plan";
+import { SCHEDULE_HEIGHT, TIME_DIVIDE } from "@/constants/Plan";
 import { CustomLayout } from "@/types/schedule/types";
 
 export const useAddScheduleBox = (day: number, layout: CustomLayout[], setLayout: (val: CustomLayout[]) => void) => {

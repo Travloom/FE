@@ -18,6 +18,10 @@ import useNoticeModalStore from "@/stores/useAlertModalStore";
 import { AxiosError } from "axios";
 import usePageAnimateRouter from "@/hooks/common/usePageAnimateRouter";
 
+interface ErrorResponse {
+  error: string;
+}
+
 const PlanPage = () => {
 
   const {
@@ -86,8 +90,8 @@ const PlanPage = () => {
       const data = await inviteUserRequest(planId, email);
       handleNotice(`${data?.userName}님을 초대하였습니다.`, false);
     },
-    onError: (e: AxiosError<any>) => {
-      const message = e.response?.data?.error;
+    onError: (e: AxiosError<ErrorResponse>) => {
+      const message = e?.response?.data?.error || "";
       handleNotice(message, true);
     },
   })

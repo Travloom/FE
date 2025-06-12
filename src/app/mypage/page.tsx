@@ -1,30 +1,14 @@
 'use client'
 
-import { getPlansRequest } from "@/apis/plan";
 import { logOutRequest } from "@/apis/user";
 import Motion from "@/components/motion/Motion";
-import PlanBox from "@/components/mypage/PlanBox";
 import PlanList from "@/components/mypage/PlanList";
 import useInitPage from "@/hooks/common/useInitPage";
 import usePageAnimateRouter from "@/hooks/common/usePageAnimateRouter";
 import usePageStore from "@/stores/usePageStore";
 import useUserStore from "@/stores/useUserStore";
-import { useQuery } from "@tanstack/react-query";
 import { AnimatePresence } from "framer-motion";
 import { useRouter } from "next/navigation";
-
-const PlanProp = {
-  planId: "1",
-  startDate: "2025-06-05",
-  endDate: "2025-06-10",
-  title: "부산 여행",
-  tags: {
-    region: "부산",
-    people: "2명",
-    companions: "연인",
-    theme: "힐링 여행",
-  },
-}
 
 export default function Mypage() {
 
@@ -37,9 +21,11 @@ export default function Mypage() {
 
   const {
     isPagePending,
+    setIsPagePending,
   } = usePageStore()
 
   const logOut = async () => {
+    setIsPagePending(true);
     await logOutRequest();
     setUser(null)
     router.push('/')

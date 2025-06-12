@@ -1,7 +1,7 @@
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid'
 import koLocale from '@fullcalendar/core/locales/ko';
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { EventContentArg } from '@fullcalendar/core/index.js';
 import { useQuery } from '@tanstack/react-query';
 import { getPlansRequest } from '@/apis/plan';
