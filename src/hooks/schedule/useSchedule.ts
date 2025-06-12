@@ -20,8 +20,8 @@ export const useSchedule = (planId: string) => {
       const docSnap = await getDoc(targetDoc);
 
       if (!docSnap.exists()) {
-        // 에러 처리
-        console.log('schedule 존재하지 않음')
+        setIsPending(true);
+        return;
       }
     }
 
@@ -38,8 +38,9 @@ export const useSchedule = (planId: string) => {
     });
 
     return () => {
-      unsubscribe()
+      setLayout([]);
       setIsPending(true);
+      unsubscribe()
     };
   }, [planId]);
 

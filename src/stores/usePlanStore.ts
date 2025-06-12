@@ -82,7 +82,7 @@ const usePlanStore = create<PlanState>((set) => ({
         }
       })
     }
-  }
+  },
 }))
 
 export default usePlanStore;

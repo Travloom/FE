@@ -17,8 +17,13 @@ export const usePlaceManage = (planId: string) => {
       const docSnap = await getDoc(targetDoc);
 
       if (!docSnap.exists()) {
-        // 에러 처리
-        console.log('Place 존재하지 않음')
+        setSelectedCategory('맛집');
+        setPlaces('restaurantList', null);
+        setPlaces('cafeList', null);
+        setPlaces('hotelList', null);
+        setPlaces('attractionList', null);
+        setPlaces('searchList', null);
+        return;
       }
     }
 

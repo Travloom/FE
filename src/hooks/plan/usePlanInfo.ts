@@ -19,8 +19,12 @@ export const usePlanInfo = (planId: string) => {
       const docSnap = await getDoc(targetDoc);
 
       if (!docSnap.exists()) {
-        // 에러 처리
-        console.log('Plan Info 존재하지 않음')
+        setTitle(null)
+        setAuthorEmail(null)
+        setDays(null, null)
+        setTags(null)
+        setIsInfoPending(true)
+        return;
       }
     }
 

@@ -11,6 +11,17 @@ interface PlanType {
   theme: string;
 }
 
+// 플랜 참여 확인
+export const isCollaboratorRequest = async (planId: string) => {
+  try {
+    const response = await axiosInstance(`/proxy/api/plan/is-collaborator/${planId}`)
+    return response.data
+  } catch (e) {
+    console.log(e)
+    return null
+  }
+}
+
 // 플랜 목록 조회
 export const getPlansRequest = async ({ before, after, year, month }: { before?: Date, after?: Date, year?: number, month?: number }) => {
   try {
@@ -74,10 +85,12 @@ export const inviteUserRequest = async (planId: string, email: string) => {
   }
 }
 
+// 플랜 삭제제
 export const deletePlanRequest = async (planId: string) => {
   await axiosInstance.delete(`/proxy/api/plan/${planId}`);
 }
 
+// 플랜 나가기
 export const exitPlanRequest = async (planId: string) => {
   await axiosInstance.delete(`/proxy/api/plan/exit/${planId}`);
 }

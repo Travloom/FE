@@ -12,8 +12,8 @@ import { AnimatePresence } from "framer-motion";
 import useUserStore from "@/stores/useUserStore";
 import useInitPage from "@/hooks/common/useInitPage";
 import { PlaneIcon } from "@/assets/svgs";
-import { deletePlanRequest, exitPlanRequest, inviteUserRequest } from "@/apis/plan";
-import { useMutation } from "@tanstack/react-query";
+import { deletePlanRequest, exitPlanRequest, inviteUserRequest, isCollaboratorRequest } from "@/apis/plan";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import useNoticeModalStore from "@/stores/useAlertModalStore";
 import { AxiosError } from "axios";
 import usePageAnimateRouter from "@/hooks/common/usePageAnimateRouter";
@@ -86,8 +86,8 @@ const PlanPage = () => {
       const data = await inviteUserRequest(planId, email);
       handleNotice(`${data?.userName}님을 초대하였습니다.`, false);
     },
-    onError: (error: AxiosError<any>) => {
-      const message = error.response?.data?.message;
+    onError: (e: AxiosError<any>) => {
+      const message = e.response?.data?.error;
       handleNotice(message, true);
     },
   })
@@ -95,20 +95,39 @@ const PlanPage = () => {
   const { mutate: deletePlan } = useMutation({
     mutationFn: async () => {
       await deletePlanRequest(planId)
-      pageAnimateRouter.push('/');
+      pageAnimateRouter.replace('/');
     }
   })
 
-  const { mutate: exitPlan} = useMutation({
+  const { mutate: exitPlan } = useMutation({
     mutationFn: async () => {
       await exitPlanRequest(planId)
-      pageAnimateRouter.push('/');
+      pageAnimateRouter.replace('/');
     }
   })
+
+  const { data: isCollaborator, isPending: isCollabPending } = useQuery({
+    queryKey: ["isCollaborator", planId],
+    queryFn: async () => isCollaboratorRequest(planId),
+    enabled: !!planId,
+  })
+
+  useEffect(() => {
+    if (!isCollabPending) {
+      if (!isCollaborator?.isExist) {
+        handleNotice("존재하지 않는 플랜입니다.", true)
+        pageAnimateRouter.replace('/')
+      }
+      else if (!isCollaborator?.isCollaborator) {
+        handleNotice("참여중인 플랜이 아닙니다.", true)
+        pageAnimateRouter.replace('/')
+      }
+    }
+  }, [isCollaborator])
 
   return (
     <AnimatePresence>
-      {!isPagePending && !isInfoPending &&
+      {!isPagePending && !isInfoPending && !isCollabPending &&
         <Motion.MotionDiv
           className={`
               lg:p-[60px] lg:pt-[140px]
@@ -122,7 +141,7 @@ const PlanPage = () => {
             </div>
             <div className={`grow justify-end flex flex-row gap-2.5`}>
               <div
-                className={`relative`}
+                className={`relative rounded-[22px]`}
                 onMouseEnter={handleOver}
                 onMouseLeave={handleLeave}>
                 <Button text={"초대"} isActive={true} />
@@ -150,9 +169,9 @@ const PlanPage = () => {
 
               </div>
               {user?.email === authorEmail ? (
-                <Button text={"삭제"} isActive={true} isDelete={true} onClick={deletePlan}/>
+                <Button text={"삭제"} isActive={true} isDelete={true} onClick={deletePlan} />
               ) : (
-                <Button text={"나가기"} isActive={true} isDelete={true} onClick={exitPlan}/>
+                <Button text={"나가기"} isActive={true} isDelete={true} onClick={exitPlan} />
               )}
             </div>
           </div>
