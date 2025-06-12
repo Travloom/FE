@@ -6,14 +6,10 @@ import { planRecommendRequest } from "@/apis/plan";
 import useHomeStore from "@/stores/useHomeStore";
 import { useMutation } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
-import Motion from "../motion/Motion";
-import { HashLoader } from "react-spinners";
-import { AnimatePresence } from "framer-motion";
 
 const PlanInput = () => {
 
   const {
-    isCreating,
     setIsCreating,
 
     title,
@@ -52,7 +48,7 @@ const PlanInput = () => {
     }
   }
 
-  const { mutate } = useMutation({
+  const { mutate, isPending } = useMutation({
     mutationFn: planRecommend,
     onMutate: () => {
       setIsCreating(true)
@@ -80,7 +76,7 @@ const PlanInput = () => {
           ${(title?.trim() !== "" && isAllTagSelected && title && startDate && endDate) ? `text-point` : `text-gray-300`}
           lg:w-6 w-4 cursor-pointer transition-all-300-out`}
           onClick={() => {
-            if (title?.trim() !== "" && isAllTagSelected && startDate && endDate && !isCreating) {
+            if (title?.trim() !== "" && isAllTagSelected && startDate && endDate && !isPending) {
               setIsCreating(true);
               mutate();
             }
