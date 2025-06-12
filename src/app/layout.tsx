@@ -14,7 +14,7 @@ export const metadata = {
     siteName: '떠나,봄',
     images: [
       {
-        url: '/images/seo_image.png',
+        url: './images/seo_image.png',
         width: 1200,
         height: 630,
         alt: '떠나,봄 서비스 소개 이미지',

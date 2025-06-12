@@ -8,11 +8,8 @@ import usePageAnimateRouter from "@/hooks/common/usePageAnimateRouter";
 import usePageStore from "@/stores/usePageStore";
 import useUserStore from "@/stores/useUserStore";
 import { AnimatePresence } from "framer-motion";
-import { useRouter } from "next/navigation";
 
 export default function Mypage() {
-
-  const router = useRouter();
 
   const {
     user,
@@ -21,17 +18,15 @@ export default function Mypage() {
 
   const {
     isPagePending,
-    setIsPagePending,
   } = usePageStore()
 
+  const pageAnimateRouter = usePageAnimateRouter();
+
   const logOut = async () => {
-    setIsPagePending(true);
     await logOutRequest();
     setUser(null)
-    router.push('/')
+    pageAnimateRouter.replace('/')
   }
-
-  const pageAnimateRouter = usePageAnimateRouter();
 
   useInitPage('마이페이지')
 

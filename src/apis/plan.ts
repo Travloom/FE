@@ -41,38 +41,30 @@ export const getPlansRequest = async ({ before, after, year, month }: { before?:
 
 // 장소 추천받아 플랜 생성
 export const planRecommendRequest = async (Plan: PlanType) => {
-  try {
-    const response = await axiosInstance.post(`/proxy/api/places`, {
-      title: Plan.title,
-      startDate: Plan.startDate,
-      endDate: Plan.endDate,
-      region: Plan.region,
-      companions: Plan.companions,
-      people: Plan.people,
-      theme: Plan.theme,
-    })
-    return response.data;
-  } catch (e) {
-    console.log(e)
-  }
+  const response = await axiosInstance.post(`/proxy/api/places`, {
+    title: Plan.title,
+    startDate: Plan.startDate,
+    endDate: Plan.endDate,
+    region: Plan.region,
+    companions: Plan.companions,
+    people: Plan.people,
+    theme: Plan.theme,
+  })
+  return response.data;
 }
 
 // 추천 없이 플랜 생성
 export const createPlanRequest = async (Plan: PlanType) => {
-  try {
-    const response = await axiosInstance.post(`/proxy/api/plan`, {
-      title: Plan.title,
-      startDate: Plan.startDate,
-      endDate: Plan.endDate,
-      region: Plan.region,
-      companions: Plan.companions,
-      people: Plan.people,
-      theme: Plan.theme,
-    })
-    return response.data;
-  } catch (e) {
-    console.log(e)
-  }
+  const response = await axiosInstance.post(`/proxy/api/plan`, {
+    title: Plan.title,
+    startDate: Plan.startDate,
+    endDate: Plan.endDate,
+    region: Plan.region,
+    companions: Plan.companions,
+    people: Plan.people,
+    theme: Plan.theme,
+  })
+  return response.data;
 }
 
 export const inviteUserRequest = async (planId: string, email: string) => {

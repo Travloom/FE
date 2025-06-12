@@ -2,7 +2,6 @@
 
 import Button from "@/components/common/Button";
 import { useEffect, useRef, useState } from "react";
-import usePageStore from "../../stores/usePageStore";
 import Planner from "@/components/plan/Planner";
 import Motion from "@/components/motion/Motion";
 import usePlanStore from "@/stores/usePlanStore";
@@ -17,10 +16,8 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import useNoticeModalStore from "@/stores/useAlertModalStore";
 import { AxiosError } from "axios";
 import usePageAnimateRouter from "@/hooks/common/usePageAnimateRouter";
-
-interface ErrorResponse {
-  error: string;
-}
+import usePageStore from "@/stores/usePageStore";
+import { ErrorResponse } from "@/types/error/type";
 
 const PlanPage = () => {
 
@@ -32,7 +29,7 @@ const PlanPage = () => {
   } = usePlanStore();
 
   const {
-    user
+    user,
   } = useUserStore();
 
   const {
@@ -117,7 +114,7 @@ const PlanPage = () => {
   })
 
   useEffect(() => {
-    if (!isCollabPending) {
+    if (!isCollabPending && isCollaborator) {
       if (!isCollaborator?.isExist) {
         handleNotice("존재하지 않는 플랜입니다.", true)
         pageAnimateRouter.replace('/')

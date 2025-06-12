@@ -6,6 +6,7 @@ import { planRecommendRequest } from "@/apis/plan";
 import useHomeStore from "@/stores/useHomeStore";
 import { useMutation } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
+import { isAxiosError } from "axios";
 
 const PlanInput = () => {
 
@@ -42,8 +43,11 @@ const PlanInput = () => {
 
         pageAnimateRouter.push(`/${plan.uuid}`)
 
-      } catch (e) {
-        console.log(e)
+      } catch (e: unknown) {
+        if (isAxiosError(e))
+          if (e?.response?.data?.error === "Unauthorized") {
+            pageAnimateRouter.replace(`${process.env.NEXT_PUBLIC_DOMAIN}/oauth2/authorization/kakao`)
+          }
       }
     }
   }
@@ -67,7 +71,7 @@ const PlanInput = () => {
         <input
           className={`
           lg:text-[20px] 
-          w-full text-[16px] font-light text-gray-700 placeholder:text-gray-300 grow transition-all-300-out`}
+          w-full text-[14px] font-light text-gray-700 placeholder:text-gray-300 grow transition-all-300-out`}
           placeholder="여행 플랜 이름을 입력해주세요"
           value={title || ``}
           onChange={(e) => setTitle(e.target.value)} />

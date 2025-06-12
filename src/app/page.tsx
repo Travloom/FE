@@ -15,6 +15,7 @@ import { createPlanRequest } from "@/apis/plan";
 import { useEffect, useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 import LoadingModal from "@/components/home/LodingModal";
+import { isAxiosError } from "axios";
 
 export default function Home() {
 
@@ -44,7 +45,7 @@ export default function Home() {
   useInitPage(null)
 
   const createPlan = async () => {
-    if (isAllTagSelected && title && startDate && endDate && !isPending) {
+    if (isAllTagSelected && title && startDate && endDate) {
       try {
         const plan = await createPlanRequest({
           title: title,
@@ -58,8 +59,11 @@ export default function Home() {
 
         pageAnimateRouter.push(`/${plan.uuid}`)
 
-      } catch (e) {
-        console.log(e)
+      } catch (e: unknown) {
+        if (isAxiosError(e))
+          if (e?.response?.data?.error === "Unauthorized") {
+            pageAnimateRouter.replace(`${process.env.NEXT_PUBLIC_DOMAIN}/oauth2/authorization/kakao`)
+          }
       }
     }
   }
@@ -90,7 +94,7 @@ export default function Home() {
                 <p
                   className={`
                     lg:text-[40px]
-                    text-point text-[28px] transition-all-300-out`}>
+                    text-point text-[28px] transition-all-300-out select-none`}>
                   어디로 떠나볼까요?
                 </p>
                 <div
