@@ -5,6 +5,7 @@ import PlanBox from "./PlanBox";
 import { before } from "lodash";
 import { getPlansRequest } from "@/apis/plan";
 import { TagsType } from "@/types/place/type";
+import { HashLoader } from "react-spinners";
 
 interface Plan {
   uuid: string;
@@ -42,16 +43,24 @@ const PlanList: React.FC<PlanListProps> = ({
         <p className={`w-fit`}>{requestQuery.before ? `지난 여행` : `다가오는 여행`}</p>
       </div>
       <div className={`w-full h-full overflow-auto pt-4 flex gap-2.5 no-scroll`}>
-        {data?.length > 0 ? (
-          data?.map((plan: Plan) => (
-            <PlanBox key={plan.uuid} planId={plan.uuid} startDate={plan.startDate.toString()} endDate={plan.endDate.toString()} title={plan.title} tags={plan.tags} />
-          ))
+        {isPending ? (
+          <div className={`flex justify-center items-center w-full h-full`}>
+            <HashLoader
+              size={30}
+              color={`#6c5ce7`} />
+          </div>
         ) : (
-          <p
-            className={`
+          data?.length > 0 ? (
+            data?.map((plan: Plan) => (
+              <PlanBox key={plan.uuid} planId={plan.uuid} startDate={plan.startDate.toString()} endDate={plan.endDate.toString()} title={plan.title} tags={plan.tags} />
+            ))
+          ) : (
+            <p
+              className={`
               lg:text-[18px]
               md:text-[16px] 
               text-[14px] text-gray-200 w-full h-full flex justify-center items-center text-center transition-all-300-out py-5`}>여행 기록이 없어요. 여행을 떠나보세요!</p>
+          )
         )}
       </div>
     </div>
