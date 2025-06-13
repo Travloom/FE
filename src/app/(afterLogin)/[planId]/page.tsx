@@ -52,8 +52,6 @@ const PlanPage = () => {
 
   const [email, setEmail] = useState("");
 
-  const [isTagOpen, setIsTagOpen] = useState(false);
-
   const handleOver = () => {
     if (closeTimeoutRef.current) {
       clearTimeout(closeTimeoutRef.current);
@@ -135,14 +133,6 @@ const PlanPage = () => {
                 currentTag={"태그"}
                 isHome={false}
                 className={`absolute z-[50]`}/>
-              {isTagOpen &&
-                <div className={`flex flex-row gap-2.5 transition-all-300-out overflow-auto no-scroll`}>
-                  {tags?.region && <Button text={tags?.region} isActive={false} />}
-                  {tags?.people && <Button text={tags?.people} isActive={false} />}
-                  {tags?.companions && <Button text={tags?.companions} isActive={false} />}
-                  {tags?.theme && <Button text={tags?.theme} isActive={false} />}
-                </div>
-              }
             </div>
             <div className={`justify-end flex flex-row gap-2.5`}>
               <div

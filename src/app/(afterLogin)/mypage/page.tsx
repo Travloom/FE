@@ -3,7 +3,6 @@
 import { logOutRequest } from "@/apis/user";
 import Motion from "@/components/motion/Motion";
 import PlanList from "@/components/mypage/PlanList";
-import useInitPage from "@/hooks/common/useInitPage";
 import usePageAnimateRouter from "@/hooks/common/usePageAnimateRouter";
 import usePageStore from "@/stores/usePageStore";
 import useUserStore from "@/stores/useUserStore";
