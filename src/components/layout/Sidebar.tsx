@@ -34,7 +34,7 @@ const Sidebar = () => {
       <AnimatePresence>
         {isSidebarOpen &&
           <Motion.MotionDiv
-            className={`absolute z-[500] transition-all-300-out bg-[rgba(1,1,1,0.2)] w-screen h-screen lg:hidden`}
+            className={`absolute z-[500] bg-[rgba(1,1,1,0.2)] w-screen h-screen lg:hidden`}
             onClick={() => { setIsSidebarOpen(false) }} />
         }
       </AnimatePresence>

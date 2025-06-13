@@ -8,7 +8,7 @@ import { useEffect } from "react";
 export default function AfterLoginLayout({ children }: { children: React.ReactNode }) {
 
   const {
-    user
+    isLoggedIn
   } = useUserStore();
 
   const {
@@ -18,10 +18,10 @@ export default function AfterLoginLayout({ children }: { children: React.ReactNo
   const pageAnimateRouter = usePageAnimateRouter();
 
   useEffect(() => {
-    if (!user && !isPagePending) {
+    if (isLoggedIn !== null && !isLoggedIn && !isPagePending) {
       pageAnimateRouter.replace(`${process.env.NEXT_PUBLIC_DOMAIN}/oauth2/authorization/kakao`)
     }
-  }, [user, isPagePending])
+  }, [isLoggedIn, isPagePending])
 
   return (
     <>

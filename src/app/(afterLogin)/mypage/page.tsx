@@ -13,6 +13,7 @@ export default function Mypage() {
 
   const {
     user,
+    isLoggedIn,
     setUser,
   } = useUserStore();
 
@@ -32,7 +33,7 @@ export default function Mypage() {
 
   return (
     <AnimatePresence>
-      {!isPagePending &&
+      {!isPagePending && isLoggedIn && 
         <Motion.MotionDiv
           className={`
               lg:p-[60px] lg:pt-[140px]

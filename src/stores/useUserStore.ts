@@ -8,14 +8,18 @@ interface UserType {
 
 interface UserState {
   user: UserType | null;
+  isLoggedIn: boolean | null;
 
   setUser: (value: UserType | null) => void
 }
 
 const useUserStore = create<UserState>((set) => ({
   user: null,
+  isLoggedIn: null,
 
-  setUser: (user: UserType | null) => set({user: user}),
+  setUser(user) {
+    set({user: user, isLoggedIn: !!user})
+  },
 }))
 
 export default useUserStore;

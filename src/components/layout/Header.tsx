@@ -24,6 +24,7 @@ const Header = () => {
 
   const {
     user,
+    isLoggedIn,
     setUser,
   } = useUserStore();
 
@@ -66,24 +67,26 @@ const Header = () => {
         )}
       </AnimatePresence>
 
-      {user ? (
-        <Motion.MotionDiv>
-          <Image
-            className={`lg:w-10 w-8 cursor-pointer rounded-full object-cover aspect-square`}
-            src={user.profileImageUrl as string}
-            width={1000}
-            height={1000}
-            alt={'프로필'}
-            onClick={() => pageAnimateRouter.push(`/mypage`)} />
+
+      {isLoggedIn !== null ? (
+        <Motion.MotionDiv className={`lg:w-10 w-8`}>
+          {(user ? (
+            <Image
+              className={`lg:w-10 w-8 cursor-pointer rounded-full object-cover aspect-square`}
+              src={user.profileImageUrl as string}
+              width={1000}
+              height={1000}
+              alt={'프로필'}
+              onClick={() => pageAnimateRouter.push(`/mypage`)} />
+          ) : (
+            <KakaoIcon
+              className={`lg:w-10 w-8 cursor-pointer`}
+              onClick={() => pageAnimateRouter.push(`${process.env.NEXT_PUBLIC_DOMAIN}/oauth2/authorization/kakao`)} />
+          ))}
         </Motion.MotionDiv>
       ) : (
-        <Motion.MotionDiv>
-          <KakaoIcon
-            className={`lg:w-10 w-8 cursor-pointer`}
-            onClick={() => pageAnimateRouter.push(`${process.env.NEXT_PUBLIC_DOMAIN}/oauth2/authorization/kakao`)} />
-        </Motion.MotionDiv>
-      )
-      }
+        <div className={`lg:w-10 w-8`}></div>
+      )}
     </div>
   )
 }
