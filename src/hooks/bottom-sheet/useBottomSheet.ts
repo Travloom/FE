@@ -199,8 +199,8 @@ export default function useBottomSheet() {
     const updateSheetHeight = () => {
       const newMaxHeight = window.innerHeight - 100 - MIN_HEIGHT
       setMaxHeight(newMaxHeight);
-      metrics.current.prevHeight = newMaxHeight;
-      sheet.current!.style.height = `${newMaxHeight}px`;
+      metrics.current.prevHeight = MID_HEIGHT;
+      sheet.current!.style.height = `${MID_HEIGHT}px`;
     };
     
     initialUpdateSheetHeight();

@@ -9,7 +9,6 @@ import { usePlanInfo } from "@/hooks/plan/usePlanInfo";
 import { useParams } from "next/navigation";
 import { AnimatePresence } from "framer-motion";
 import useUserStore from "@/stores/useUserStore";
-import useInitPage from "@/hooks/common/useInitPage";
 import { PlaneIcon } from "@/assets/svgs";
 import { deletePlanRequest, exitPlanRequest, inviteUserRequest, isCollaboratorRequest } from "@/apis/plan";
 import { useMutation, useQuery } from "@tanstack/react-query";
@@ -18,6 +17,7 @@ import { AxiosError } from "axios";
 import usePageAnimateRouter from "@/hooks/common/usePageAnimateRouter";
 import usePageStore from "@/stores/usePageStore";
 import { ErrorResponse } from "@/types/error/type";
+import TagButton from "@/components/common/TagButton";
 
 const PlanPage = () => {
 
@@ -51,6 +51,8 @@ const PlanPage = () => {
   const closeTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   const [email, setEmail] = useState("");
+
+  const [isTagOpen, setIsTagOpen] = useState(false);
 
   const handleOver = () => {
     if (closeTimeoutRef.current) {
@@ -123,16 +125,26 @@ const PlanPage = () => {
       {!isPagePending && !isInfoPending && !isCollabPending &&
         <Motion.MotionDiv
           className={`
-              lg:p-[60px] lg:pt-[140px]
+              lg:p-[60px] lg:pt-[90px]
               pt-[70px] gap-2.5 flex flex-col h-full transition-all-300-out`}>
-          <div className={`lg:p-0 px-2.5 flex flex-row justify-between flex-wrap gap-2.5`}>
-            <div className={`flex flex-row gap-2.5 transition-all-300-out flex-wrap`}>
-              {tags?.region && <Button text={tags?.region} isActive={false} />}
-              {tags?.people && <Button text={tags?.people} isActive={false} />}
-              {tags?.companions && <Button text={tags?.companions} isActive={false} />}
-              {tags?.theme && <Button text={tags?.theme} isActive={false} />}
+          <div className={`lg:p-0 px-2.5 flex flex-row justify-between gap-2.5`}>
+            <div className={`relative`}>
+              <TagButton 
+                title={""} 
+                tagList={[tags?.region, tags?.people, tags?.companions, tags?.theme].filter((tag) => tag != null)} 
+                currentTag={"태그"}
+                isHome={false}
+                className={`absolute z-[50]`}/>
+              {isTagOpen &&
+                <div className={`flex flex-row gap-2.5 transition-all-300-out overflow-auto no-scroll`}>
+                  {tags?.region && <Button text={tags?.region} isActive={false} />}
+                  {tags?.people && <Button text={tags?.people} isActive={false} />}
+                  {tags?.companions && <Button text={tags?.companions} isActive={false} />}
+                  {tags?.theme && <Button text={tags?.theme} isActive={false} />}
+                </div>
+              }
             </div>
-            <div className={`grow justify-end flex flex-row gap-2.5`}>
+            <div className={`justify-end flex flex-row gap-2.5`}>
               <div
                 className={`relative rounded-[22px]`}
                 onMouseEnter={handleOver}

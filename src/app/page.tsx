@@ -1,12 +1,11 @@
 'use client'
 
 import PlanInput from "@/components/home/PlanInput";
-import TagButton from "@/components/home/TagButton";
+import TagButton from "@/components/common/TagButton";
 import { TAGLIST } from "@/constants/Tag";
 import usePageStore from "../stores/usePageStore";
 import usePageAnimateRouter from "@/hooks/common/usePageAnimateRouter";
 import Motion from "@/components/motion/Motion";
-import useInitPage from "@/hooks/common/useInitPage";
 import CustomDatePicker from "@/components/date-picker/CustomDatePicker";
 import useHomeStore from "@/stores/useHomeStore";
 import { TagsType } from "@/types/place/type";
@@ -113,6 +112,7 @@ export default function Home() {
                           tagList={tag.tagList}
                           currentTag={tags[key as keyof TagsType] || tag.title}
                           setCurrentTag={(value: string) => setTag(key as keyof TagsType, value)}
+                          isHome={true}
                         />
                       ))}
                     </div>
