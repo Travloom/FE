@@ -7,7 +7,9 @@ interface TagButtonProps {
   title: string;
   tagList: string[];
   currentTag: string;
-  setCurrentTag: (value: string) => void;
+  setCurrentTag?: (value: string) => void;
+  isHome: boolean;
+  className?: string;
 }
 
 const TagButton: React.FC<TagButtonProps> = ({
@@ -15,6 +17,8 @@ const TagButton: React.FC<TagButtonProps> = ({
   tagList,
   currentTag,
   setCurrentTag,
+  isHome,
+  className,
 }) => {
 
   const [isHover, setIsHover] = useState(false);
@@ -34,7 +38,7 @@ const TagButton: React.FC<TagButtonProps> = ({
   }
 
   const handleAnimationComplete = () => {
-    if (isFadingOut && tempTag) {
+    if (isFadingOut && tempTag && setCurrentTag) {
       setCurrentTag(tempTag);
       setTempTag(null);
       setIsFadingOut(false);
@@ -63,7 +67,8 @@ const TagButton: React.FC<TagButtonProps> = ({
   return (
     <div
       className={`
-        h-fit w-fit
+        ${className} 
+        h-fit w-fit whitespace-nowrap
       bg-white text-gray-300 border-[1px] ${currentTag !== title ? `border-point` : `border-gray-300`}
         lg:text-[18px] lg:px-3 lg:py-1.5 lg:rounded-[18px]
         text-[14px] px-3 py-1.5 rounded-[16px] flex flex-col w-fit h-fit cursor-pointer transition-all-300-out items-center select-none`}
@@ -87,13 +92,16 @@ const TagButton: React.FC<TagButtonProps> = ({
               animate={{ opacity: 1, width: "auto", height: "auto", marginTop: 10 }}
               exit={{ opacity: 0, width: 0, height: 0, marginTop: 0 }}
               transition={{ duration: 0.5 }}
-              className={`overflow-x-hidden overflow-y-clip hover:text-point`}
-              onClick={() => handleTagButton(item)}>
+              className={`overflow-x-hidden overflow-y-clip ${isHome ? `hover:text-point` : `text-point`}`}
+              onClick={setCurrentTag ? () => handleTagButton(item) : () => {}}>
               <p className={`transition-all-300-out`}>{item}</p>
             </motion.div>
           )
         })}
-        {isHover &&
+
+
+
+        {isHover && isHome &&
           (!isEditing ? (
             <motion.div
               initial={{ opacity: 0, width: 0, height: "auto", marginTop: 0 }}

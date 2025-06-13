@@ -28,7 +28,7 @@ const Toggle:React.FC<ToggleProps> = ({
       {isSearch ? (
         <SearchIcon className={`h-full`}/>
       ) : (
-        <p className={`mt-0.5`}>{text}</p>
+        <p className={`mt-0.5 whitespace-nowrap`}>{text}</p>
       )}
     </div>
   )

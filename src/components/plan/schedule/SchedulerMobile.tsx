@@ -48,8 +48,8 @@ const SchedulerMobile: React.FC<SchedulerProps> = ({
         <div className={` flex flex-row select-none`}>
 
           {/* Time */}
-          <div className={`flex flex-col h-fit sticky left-0 z-10`}>
-            <div className={`w-full h-[24px] bg-white sticky top-0 shrink-0 z-10`}></div>
+          <div className={`flex flex-col h-fit sticky left-0 z-10 pointer-events-none`}>
+            <div className={`w-full h-[24px] bg-white top-0 shrink-0 z-10`}></div>
             {TIME_TABLE.map((time, index) => (
               <div
                 key={index}

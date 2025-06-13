@@ -22,7 +22,7 @@ const Button:React.FC<ButtonProps> = ({
         lg:text-[18px] lg:px-3 lg:py-1.5
         text-[14px] px-3 py-1.5 border rounded-[22px] w-fit h-fit cursor-pointer select-none ${className}`}
       onClick={onClick}>
-        <p className={`mt-0.5`}>{text}</p>
+        <p className={`mt-0.5 whitespace-nowrap`}>{text}</p>
     </div>
   )
 }

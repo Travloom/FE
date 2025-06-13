@@ -2,7 +2,6 @@
 
 import Button from "@/components/common/Button";
 import { useEffect, useRef, useState } from "react";
-import usePageStore from "../../stores/usePageStore";
 import Planner from "@/components/plan/Planner";
 import Motion from "@/components/motion/Motion";
 import usePlanStore from "@/stores/usePlanStore";
@@ -10,34 +9,30 @@ import { usePlanInfo } from "@/hooks/plan/usePlanInfo";
 import { useParams } from "next/navigation";
 import { AnimatePresence } from "framer-motion";
 import useUserStore from "@/stores/useUserStore";
-import useInitPage from "@/hooks/common/useInitPage";
 import { PlaneIcon } from "@/assets/svgs";
 import { deletePlanRequest, exitPlanRequest, inviteUserRequest, isCollaboratorRequest } from "@/apis/plan";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import useNoticeModalStore from "@/stores/useAlertModalStore";
 import { AxiosError } from "axios";
 import usePageAnimateRouter from "@/hooks/common/usePageAnimateRouter";
-
-interface ErrorResponse {
-  error: string;
-}
+import usePageStore from "@/stores/usePageStore";
+import { ErrorResponse } from "@/types/error/type";
+import TagButton from "@/components/common/TagButton";
 
 const PlanPage = () => {
 
   const {
-    title,
     authorEmail,
     tags,
     isInfoPending,
   } = usePlanStore();
 
   const {
-    user
+    user,
   } = useUserStore();
 
   const {
     isPagePending,
-    setIsPagePending,
   } = usePageStore()
 
   const {
@@ -50,18 +45,12 @@ const PlanPage = () => {
 
   usePlanInfo(planId);
 
-  useInitPage(title)
-
   const pageAnimateRouter = usePageAnimateRouter();
 
   const [isInviteModalOpen, setIsInviteModalOpen] = useState(false);
   const closeTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   const [email, setEmail] = useState("");
-
-  useEffect(() => {
-    setIsPagePending(false);
-  }, [])
 
   const handleOver = () => {
     if (closeTimeoutRef.current) {
@@ -117,7 +106,7 @@ const PlanPage = () => {
   })
 
   useEffect(() => {
-    if (!isCollabPending) {
+    if (!isCollabPending && isCollaborator) {
       if (!isCollaborator?.isExist) {
         handleNotice("존재하지 않는 플랜입니다.", true)
         pageAnimateRouter.replace('/')
@@ -134,16 +123,18 @@ const PlanPage = () => {
       {!isPagePending && !isInfoPending && !isCollabPending &&
         <Motion.MotionDiv
           className={`
-              lg:p-[60px] lg:pt-[140px]
+              lg:p-[60px] lg:pt-[90px]
               pt-[70px] gap-2.5 flex flex-col h-full transition-all-300-out`}>
-          <div className={`lg:p-0 px-2.5 flex flex-row justify-between flex-wrap gap-2.5`}>
-            <div className={`flex flex-row gap-2.5 transition-all-300-out flex-wrap`}>
-              {tags?.region && <Button text={tags?.region} isActive={false} />}
-              {tags?.people && <Button text={tags?.people} isActive={false} />}
-              {tags?.companions && <Button text={tags?.companions} isActive={false} />}
-              {tags?.theme && <Button text={tags?.theme} isActive={false} />}
+          <div className={`lg:p-0 px-2.5 flex flex-row justify-between gap-2.5`}>
+            <div className={`relative`}>
+              <TagButton 
+                title={""} 
+                tagList={[tags?.region, tags?.people, tags?.companions, tags?.theme].filter((tag) => tag != null)} 
+                currentTag={"태그"}
+                isHome={false}
+                className={`absolute z-[50]`}/>
             </div>
-            <div className={`grow justify-end flex flex-row gap-2.5`}>
+            <div className={`justify-end flex flex-row gap-2.5`}>
               <div
                 className={`relative rounded-[22px]`}
                 onMouseEnter={handleOver}

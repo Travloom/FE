@@ -1,12 +1,11 @@
 'use client'
 
 import PlanInput from "@/components/home/PlanInput";
-import TagButton from "@/components/home/TagButton";
+import TagButton from "@/components/common/TagButton";
 import { TAGLIST } from "@/constants/Tag";
 import usePageStore from "../stores/usePageStore";
 import usePageAnimateRouter from "@/hooks/common/usePageAnimateRouter";
 import Motion from "@/components/motion/Motion";
-import useInitPage from "@/hooks/common/useInitPage";
 import CustomDatePicker from "@/components/date-picker/CustomDatePicker";
 import useHomeStore from "@/stores/useHomeStore";
 import { TagsType } from "@/types/place/type";
@@ -15,6 +14,7 @@ import { createPlanRequest } from "@/apis/plan";
 import { useEffect, useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 import LoadingModal from "@/components/home/LodingModal";
+import { isAxiosError } from "axios";
 
 export default function Home() {
 
@@ -41,10 +41,8 @@ export default function Home() {
 
   const pageAnimateRouter = usePageAnimateRouter();
 
-  useInitPage(null)
-
   const createPlan = async () => {
-    if (isAllTagSelected && title && startDate && endDate && !isPending) {
+    if (isAllTagSelected && title && startDate && endDate) {
       try {
         const plan = await createPlanRequest({
           title: title,
@@ -58,8 +56,11 @@ export default function Home() {
 
         pageAnimateRouter.push(`/${plan.uuid}`)
 
-      } catch (e) {
-        console.log(e)
+      } catch (e: unknown) {
+        if (isAxiosError(e))
+          if (e?.response?.data?.error === "Unauthorized") {
+            pageAnimateRouter.replace(`${process.env.NEXT_PUBLIC_DOMAIN}/oauth2/authorization/kakao`)
+          }
       }
     }
   }
@@ -81,7 +82,7 @@ export default function Home() {
           <Motion.MotionDiv
             className={`
               md:px-[20%] 
-              w-full h-full px-[28px] pb-[60px] pt-[100px] transition-all-300-out`}>
+              w-full h-full px-10 pb-[60px] pt-[100px] transition-all-300-out`}>
             <div className={`flex flex-col gap-[40px] pb-[20px] h-full justify-center`}>
               <div
                 className={`
@@ -90,7 +91,7 @@ export default function Home() {
                 <p
                   className={`
                     lg:text-[40px]
-                    text-point text-[28px] transition-all-300-out`}>
+                    text-point text-[28px] transition-all-300-out select-none`}>
                   어디로 떠나볼까요?
                 </p>
                 <div
@@ -111,6 +112,7 @@ export default function Home() {
                           tagList={tag.tagList}
                           currentTag={tags[key as keyof TagsType] || tag.title}
                           setCurrentTag={(value: string) => setTag(key as keyof TagsType, value)}
+                          isHome={true}
                         />
                       ))}
                     </div>

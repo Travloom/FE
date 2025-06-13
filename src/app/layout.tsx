@@ -2,6 +2,7 @@ import Providers from "./providers";
 import "@/styles/globals.css";
 
 export const metadata = {
+  metadataBase: new URL(`${process.env.NEXT_PUBLIC_WEB_DOMAIN}`),
   title: '떠나,봄',
   description: 'AI와 함께하는 스마트 여행 플래너, 떠나,봄',
   icons: {
@@ -14,7 +15,7 @@ export const metadata = {
     siteName: '떠나,봄',
     images: [
       {
-        url: '/images/seo_image.png',
+        url: './images/seo_image.png',
         width: 1200,
         height: 630,
         alt: '떠나,봄 서비스 소개 이미지',

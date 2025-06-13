@@ -1,5 +1,5 @@
 import PlaceList from "./PlaceList";
-import useBottomSheet from "@/hooks/map/useBottomSheet";
+import useBottomSheet from "@/hooks/bottom-sheet/useBottomSheet";
 import useBottomSheetStore from "@/stores/useBottomSheetStore";
 
 const BottomSheet = () => {

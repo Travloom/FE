@@ -3,41 +3,34 @@
 import { logOutRequest } from "@/apis/user";
 import Motion from "@/components/motion/Motion";
 import PlanList from "@/components/mypage/PlanList";
-import useInitPage from "@/hooks/common/useInitPage";
 import usePageAnimateRouter from "@/hooks/common/usePageAnimateRouter";
 import usePageStore from "@/stores/usePageStore";
 import useUserStore from "@/stores/useUserStore";
 import { AnimatePresence } from "framer-motion";
-import { useRouter } from "next/navigation";
 
 export default function Mypage() {
 
-  const router = useRouter();
-
   const {
     user,
+    isLoggedIn,
     setUser,
   } = useUserStore();
 
   const {
     isPagePending,
-    setIsPagePending,
   } = usePageStore()
-
-  const logOut = async () => {
-    setIsPagePending(true);
-    await logOutRequest();
-    setUser(null)
-    router.push('/')
-  }
 
   const pageAnimateRouter = usePageAnimateRouter();
 
-  useInitPage('마이페이지')
+  const logOut = async () => {
+    await logOutRequest();
+    setUser(null)
+    pageAnimateRouter.replace('/')
+  }
 
   return (
     <AnimatePresence>
-      {!isPagePending &&
+      {!isPagePending && isLoggedIn && 
         <Motion.MotionDiv
           className={`
               lg:p-[60px] lg:pt-[140px]
