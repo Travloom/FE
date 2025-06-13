@@ -22,7 +22,6 @@ import { ErrorResponse } from "@/types/error/type";
 const PlanPage = () => {
 
   const {
-    title,
     authorEmail,
     tags,
     isInfoPending,
@@ -34,7 +33,6 @@ const PlanPage = () => {
 
   const {
     isPagePending,
-    setIsPagePending,
   } = usePageStore()
 
   const {
@@ -47,18 +45,12 @@ const PlanPage = () => {
 
   usePlanInfo(planId);
 
-  useInitPage(title)
-
   const pageAnimateRouter = usePageAnimateRouter();
 
   const [isInviteModalOpen, setIsInviteModalOpen] = useState(false);
   const closeTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   const [email, setEmail] = useState("");
-
-  useEffect(() => {
-    setIsPagePending(false);
-  }, [])
 
   const handleOver = () => {
     if (closeTimeoutRef.current) {

@@ -12,8 +12,6 @@ export default function CalendarPage() {
     isPagePending,
   } = usePageStore()
 
-  useInitPage('캘린더')
-
   return (
     <AnimatePresence>
       {!isPagePending &&

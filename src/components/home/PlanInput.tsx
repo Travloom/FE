@@ -70,7 +70,7 @@ const PlanInput = () => {
       px-5 py-3.5 flex justify-between gap-2.5 rounded-full w-full  bg-white border border-gray-300 overflow-hidden transition-all-300-out`}>
         <input
           className={`
-          lg:text-[20px] 
+          lg:text-[18px] 
           w-full text-[14px] font-light text-gray-700 placeholder:text-gray-300 grow transition-all-300-out`}
           placeholder="여행 플랜 이름을 입력해주세요"
           value={title || ``}

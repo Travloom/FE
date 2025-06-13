@@ -29,8 +29,6 @@ export default function Mypage() {
     pageAnimateRouter.replace('/')
   }
 
-  useInitPage('마이페이지')
-
   return (
     <AnimatePresence>
       {!isPagePending && isLoggedIn && 

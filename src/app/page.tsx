@@ -42,8 +42,6 @@ export default function Home() {
 
   const pageAnimateRouter = usePageAnimateRouter();
 
-  useInitPage(null)
-
   const createPlan = async () => {
     if (isAllTagSelected && title && startDate && endDate) {
       try {
