@@ -136,3 +136,7 @@
 .fc-popover-header, .fc-popover-body  {
   background-color: white !important;
 }
+
+.fc-popover-header {
+  padding: 10px 10px 0 !important;
+}

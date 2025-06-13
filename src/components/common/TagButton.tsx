@@ -92,7 +92,7 @@ const TagButton: React.FC<TagButtonProps> = ({
               animate={{ opacity: 1, width: "auto", height: "auto", marginTop: 10 }}
               exit={{ opacity: 0, width: 0, height: 0, marginTop: 0 }}
               transition={{ duration: 0.5 }}
-              className={`overflow-x-hidden overflow-y-clip hover:text-point`}
+              className={`overflow-x-hidden overflow-y-clip ${isHome ? `hover:text-point` : `text-point`}`}
               onClick={setCurrentTag ? () => handleTagButton(item) : () => {}}>
               <p className={`transition-all-300-out`}>{item}</p>
             </motion.div>
