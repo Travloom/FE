@@ -69,4 +69,4 @@ jobs:
           script: |
             cd /home/ubuntu/travloom-frontend/nextjs-build
             fuser -k 3000/tcp || true
-            nohup npm run start &
+            nohup npm run start > app.log 2>&1 < /dev/null &
