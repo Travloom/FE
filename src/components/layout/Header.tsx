@@ -10,7 +10,7 @@ import Image from "next/image";
 import { getUserRequest } from "@/apis/user";
 import { AnimatePresence } from "framer-motion";
 import useSidebarStore from "@/stores/useSidebarStore";
-import { usePathname, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 const Header = () => {
 
@@ -22,8 +22,6 @@ const Header = () => {
     isPagePending,
     pageTitle
   } = usePageStore();
-
-  const pathName = usePathname();
 
   const {
     user,
@@ -41,11 +39,6 @@ const Header = () => {
     }
     setUserInfo();
   }, [])
-
-  useEffect(() => {
-    console.log(isPagePending)
-    console.log(pathName)
-  }, [pathName])
 
   return (
     <div

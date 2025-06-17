@@ -12,11 +12,8 @@ const useInitPage = (title: string | null) => {
   } = usePageStore();
 
   useEffect(() => {
-    setIsPagePending(false);
-  }, [pathName])
-
-  useEffect(() => {
     setPageTitle(title);
+    setIsPagePending(false);
   }, [pathName, title])
 }
 
