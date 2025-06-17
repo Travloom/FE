@@ -7,8 +7,6 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "storybook": "dotenv -e .env -- storybook dev -p 6006",
-    "build-storybook": "dotenv -e .env -- storybook build",
     "chromatic": "npx chromatic --project-token=chpt_f2897a40bf07024"
   },
   "dependencies": {
@@ -54,16 +52,10 @@
     "dotenv-cli": "^8.0.0",
     "eslint": "^9",
     "eslint-config-next": "15.3.1",
-    "eslint-plugin-storybook": "^0.12.0",
     "playwright": "^1.52.0",
     "tailwindcss": "^4",
     "typescript": "^5",
     "vitest": "^3.1.2"
-  },
-  "eslintConfig": {
-    "extends": [
-      "plugin:storybook/recommended"
-    ]
   },
   "proxy": "http://localhost:8080"
 }
