@@ -99,14 +99,21 @@ const PlanPage = () => {
     }
   })
 
-  const { data: isCollaborator, isPending: isCollabPending } = useQuery({
+  const { data: isCollaborator, isPending: isCollabPending, error: collabError } = useQuery({
     queryKey: ["isCollaborator", planId],
     queryFn: async () => isCollaboratorRequest(planId),
     enabled: !!planId,
+    retry: 1,
   })
 
+  const handleEnter = async (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter' && email.trim() !== "") {
+      invitePlan();
+    }
+  }
+
   useEffect(() => {
-    if (!isCollabPending && isCollaborator) {
+    if (collabError) {
       if (!isCollaborator?.isExist) {
         handleNotice("존재하지 않는 플랜입니다.", true)
         pageAnimateRouter.replace('/')
@@ -116,7 +123,7 @@ const PlanPage = () => {
         pageAnimateRouter.replace('/')
       }
     }
-  }, [isCollaborator])
+  }, [isCollaborator, collabError])
 
   return (
     <AnimatePresence>
@@ -152,7 +159,7 @@ const PlanPage = () => {
                           placeholder="초대할 상대방 이메일을 입력해주세요"
                           value={email}
                           onChange={(e) => setEmail(e.target.value)}
-                          onKeyDown={() => { }} />
+                          onKeyDown={handleEnter} />
                         <PlaneIcon
                           className={`${email.trim() !== "" ? `text-point cursor-pointer` : `text-gray-300`}
                           w-4 transition-all-300-out`}
@@ -161,7 +168,6 @@ const PlanPage = () => {
                     </Motion.MotionDiv>
                   }
                 </AnimatePresence>
-
               </div>
               {user?.email === authorEmail ? (
                 <Button text={"삭제"} isActive={true} isDelete={true} onClick={deletePlan} />

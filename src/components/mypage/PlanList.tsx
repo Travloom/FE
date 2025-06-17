@@ -30,7 +30,8 @@ const PlanList: React.FC<PlanListProps> = ({
     queryFn: () => requestQuery.before
       ? getPlansRequest({ before: requestQuery.before })
       : getPlansRequest({ after: requestQuery.after }),
-  })
+    }, 
+  )
 
   return (
     <div

@@ -37,7 +37,7 @@ const NoticeModal = () => {
             className={`absolute top-0 z-[9999] w-screen h-screen flex items-center justify-center pointer-events-none`}>
               <div 
                 className={`
-                  ${isAlert ? `text-red-400 border-red-400` : `text-gray-400 border-gray-400`}
+                  ${isAlert ? `text-red-400 border-red-400` : `text-point border-point`}
                   lg:text-[16px] text-[14px] z-[9999]  bg-white py-8 px-6 border rounded-[8px] pointer-events-auto select-none`}>
                 {NoticeModalText}
               </div>

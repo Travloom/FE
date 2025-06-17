@@ -1,3 +1,4 @@
+import { useRouter } from "next/navigation";
 import axiosInstance from "./axiosInstance"
 
 interface PlanType {
@@ -12,13 +13,8 @@ interface PlanType {
 
 // 플랜 참여 확인
 export const isCollaboratorRequest = async (planId: string) => {
-  try {
-    const response = await axiosInstance(`/proxy/api/plan/is-collaborator/${planId}`)
-    return response.data
-  } catch (e) {
-    console.log(e)
-    return null
-  }
+  const response = await axiosInstance(`/proxy/api/plan/is-collaborator/${planId}`)
+  return response.data
 }
 
 // 플랜 목록 조회
