@@ -36,7 +36,7 @@ export const usePlanInfo = (planId: string) => {
       const data = docSnapshot.data();
 
       if (data) {
-        setTitle(data?.title)
+        setTitle(data?.title) 
         setAuthorEmail(data?.authorEmail)
         setDays(data?.startDate, data?.endDate)
         setTags(data?.tags)
