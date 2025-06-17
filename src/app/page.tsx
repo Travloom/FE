@@ -41,11 +41,6 @@ export default function Home() {
     setIsAllTagSelected(Object.values(tags).every((tag) => !!tag));
   }, [tags])
 
-
-  useEffect(() => {
-    setIsPagePending(false);
-  }, [])
-
   const pageAnimateRouter = usePageAnimateRouter();
 
   const createPlan = async () => {
