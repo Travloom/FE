@@ -80,7 +80,8 @@ const PlanPage = () => {
       handleNotice(`${data?.userName}님을 초대하였습니다.`, false);
     },
     onError: (e: AxiosError<ErrorResponse>) => {
-      const message = e?.response?.data?.error || "";
+      const message = e?.response?.data?.detail || "";
+      console.log(e)
       handleNotice(message, true);
     },
   })
