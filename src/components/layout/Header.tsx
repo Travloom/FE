@@ -73,7 +73,7 @@ const Header = () => {
 
 
       {isLoggedIn !== null ? (
-        <Motion.MotionDiv className={`lg:w-10 w-8`}>
+        <Motion.MotionDiv className={`lg:w-[127px] w-8 flex justify-end`}>
           {(user ? (
             <Image
               loader={() => user.profileImageUrl as string}

@@ -25,8 +25,6 @@ export default function Providers({ children }: { children: React.ReactNode }) {
   useEffect(() => {
   }, [pathName])
 
-  useInitPage(null);
-
   return (
     <QueryClientProvider client={queryClient}>
       <Header />
