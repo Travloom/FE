@@ -36,7 +36,7 @@ export const getPlansRequest = async ({ before, after, year, month }: { before?:
 
 // 장소 추천받아 플랜 생성
 export const planRecommendRequest = async (Plan: PlanType) => {
-  const response = await axiosInstance.post(`/proxy/api/places`, {
+  const response = await axiosInstance.post(`${process.env.NEXT_PUBLIC_DOMAIN}/api/places`, {
     title: Plan.title,
     startDate: Plan.startDate,
     endDate: Plan.endDate,
