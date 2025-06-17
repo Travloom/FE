@@ -13,7 +13,6 @@ export const useAddScheduleBox = (day: number, layout: CustomLayout[], setLayout
 
     const x = Math.max(Math.floor(offsetX / colWidth), 0);
     const y = Math.min(Math.max(Math.floor((offsetY - 10) / (SCHEDULE_HEIGHT + 20)), 0), day-1);
-    console.log(x, y)
 
     const isOccupied = layout.some(item =>
       (

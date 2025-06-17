@@ -40,8 +40,6 @@ const Header = () => {
     setUserInfo();
   }, [])
 
-  console.log(user?.profileImageUrl)
-
   return (
     <div
       className={`
