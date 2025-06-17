@@ -59,7 +59,7 @@ jobs:
           source: "nextjs-build/*"
           target: "/home/ubuntu/travloom-frontend"
 
-      - name: Restart Next.js with pm2
+      - name: Restart Next.js
         uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ secrets.SSH_HOST }}
@@ -68,4 +68,5 @@ jobs:
           port: ${{ secrets.SSH_PORT }}
           script: |
             cd /home/ubuntu/travloom-frontend/nextjs-build
-            pm2 restart travloom
+            fuser -k 3000/tcp || true
+            nohup npm run start &
