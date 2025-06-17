@@ -10,6 +10,7 @@ import Image from "next/image";
 import { getUserRequest } from "@/apis/user";
 import { AnimatePresence } from "framer-motion";
 import useSidebarStore from "@/stores/useSidebarStore";
+import { useRouter } from "next/navigation";
 
 const Header = () => {
 
@@ -28,6 +29,7 @@ const Header = () => {
     setUser,
   } = useUserStore();
 
+  const router = useRouter();
   const pageAnimateRouter = usePageAnimateRouter();
 
   useEffect(() => {
@@ -81,7 +83,7 @@ const Header = () => {
           ) : (
             <KakaoIcon
               className={`lg:w-10 w-8 cursor-pointer`}
-              onClick={() => pageAnimateRouter.push(`${process.env.NEXT_PUBLIC_DOMAIN}/oauth2/authorization/kakao`)} />
+              onClick={() => router.push(`${process.env.NEXT_PUBLIC_DOMAIN}/oauth2/authorization/kakao`)} />
           ))}
         </Motion.MotionDiv>
       ) : (

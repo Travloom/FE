@@ -8,8 +8,8 @@ import usePlanStore from "@/stores/usePlanStore";
 export const useSchedule = (planId: string) => {
 
   const {
-    isSchedulePending: isPending,
-    setIsSchedulePending: setIsPending,
+    isSchedulePending,
+    setIsSchedulePending,
   } = usePlanStore();
 
   const [layout, setLayout] = useState<CustomLayout[]>([]);
@@ -20,7 +20,7 @@ export const useSchedule = (planId: string) => {
       const docSnap = await getDoc(targetDoc);
 
       if (!docSnap.exists()) {
-        setIsPending(true);
+        setIsSchedulePending(true);
         return;
       }
     }
@@ -33,13 +33,13 @@ export const useSchedule = (planId: string) => {
       const data = docSnapshot.data();
       if (data) {
         setLayout(data.scheduleList);
-        setIsPending(false);
+        setIsSchedulePending(false);
       }
     });
 
     return () => {
       setLayout([]);
-      setIsPending(true);
+      setIsSchedulePending(true);
       unsubscribe()
     };
   }, [planId]);
@@ -52,7 +52,7 @@ export const useSchedule = (planId: string) => {
   }, [planId]);
 
   const updateSchedule = (updatedLayout: CustomLayout[]) => {
-    if (!isPending) {
+    if (!isSchedulePending) {
       throttledUpdateSchedule(updatedLayout);
     }
   };
