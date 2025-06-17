@@ -17,6 +17,10 @@ jobs:
         with:
           node-version: '18'
 
+      - name: Create .env
+        run: |
+          echo "${{ secrets.ENV }}" > .env
+
       - name: Install dependencies
         run: npm install
 
