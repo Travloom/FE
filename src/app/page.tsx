@@ -21,6 +21,7 @@ export default function Home() {
 
   const {
     isPagePending,
+    setIsPagePending,
   } = usePageStore();
 
 
@@ -39,6 +40,11 @@ export default function Home() {
   useEffect(() => {
     setIsAllTagSelected(Object.values(tags).every((tag) => !!tag));
   }, [tags])
+
+
+  useEffect(() => {
+    setIsPagePending(false);
+  }, [])
 
   const pageAnimateRouter = usePageAnimateRouter();
 
