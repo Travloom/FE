@@ -36,6 +36,7 @@ jobs:
             public
             package.json
             .env
+          include-hidden-files: true
     
   deploy:
     needs: build
@@ -66,5 +67,5 @@ jobs:
           password: ${{ secrets.SSH_PASSWORD }}
           port: ${{ secrets.SSH_PORT }}
           script: |
-            cd /home/ubuntu/travloom-frontend
+            cd /home/ubuntu/travloom-frontend/nextjs-build
             pm2 restart travloom
