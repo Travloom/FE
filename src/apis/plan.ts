@@ -1,4 +1,3 @@
-import { useRouter } from "next/navigation";
 import axiosInstance from "./axiosInstance"
 
 interface PlanType {
