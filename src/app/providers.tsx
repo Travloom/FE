@@ -8,21 +8,14 @@ import usePageStore from "@/stores/usePageStore";
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { AnimatePresence } from "framer-motion";
-import { usePathname } from "next/navigation";
-import { useEffect } from "react";
 import { HashLoader } from "react-spinners";
 
 export default function Providers({ children }: { children: React.ReactNode }) {
   const queryClient = new QueryClient();
 
-  const pathName = usePathname();
-
   const {
     isPagePending
   } = usePageStore();
-
-  useEffect(() => {
-  }, [pathName])
 
   return (
     <QueryClientProvider client={queryClient}>

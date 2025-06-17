@@ -4,8 +4,6 @@ import { useEffect } from "react";
 
 const useInitPage = (title: string | null) => {
 
-  const pathName = usePathname();
-
   const {
     setIsPagePending,
     setPageTitle,
@@ -14,7 +12,7 @@ const useInitPage = (title: string | null) => {
   useEffect(() => {
     setPageTitle(title);
     setIsPagePending(false);
-  }, [pathName, title])
+  }, [])
 }
 
 export default useInitPage;
