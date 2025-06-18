@@ -15,8 +15,10 @@ export const CustomDateInput = forwardRef<HTMLDivElement, { value: string; onCli
       
       let diff
 
+      
+
       if (endDate && startDate) {
-        const timeDiff = endDate.getTime() - startDate.getTime() + 1;
+        const timeDiff = new Date(endDate).getTime() - new Date(startDate).getTime() + 1;
         diff = Math.ceil(timeDiff / (1000 * 60 * 60 * 24))
         setDayDiff(diff);
       }

@@ -53,7 +53,7 @@ const CustomDatePicker = () => {
             <button onClick={decreaseMonth} disabled={prevMonthButtonDisabled}>
               {"<"}
             </button>
-            <p className={`mb-1`}>{date.getFullYear()}년 {date.getMonth() + 1}월</p>
+            <p className={`mb-1`}>{new Date(date).getFullYear()}년 {new Date(date).getMonth() + 1}월</p>
             <button onClick={increaseMonth} disabled={nextMonthButtonDisabled}>
               {">"}
             </button>
