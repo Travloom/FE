@@ -49,7 +49,6 @@ const useHomeStore = create(
         const isDateExist = startDate !== null && endDate !== null;
         
         return {
-          title: state.title,
           tags: state.tags,
           startDate: isDateExist ? startDate : null,
           endDate: isDateExist ? endDate : null,
