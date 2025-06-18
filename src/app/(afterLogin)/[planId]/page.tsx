@@ -144,7 +144,7 @@ const PlanPage = () => {
                 tagList={[tags?.region, tags?.people, tags?.companions, tags?.theme].filter((tag) => tag != null)} 
                 currentTag={"태그"}
                 isHome={false}
-                className={`absolute z-[50]`}/>
+                className={`absolute z-[200]`}/>
             </div>
             <div className={`justify-end flex flex-row gap-2.5`}>
               <div
