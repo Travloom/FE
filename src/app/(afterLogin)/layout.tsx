@@ -1,8 +1,10 @@
 'use client'
 
+import Motion from "@/components/motion/Motion";
 import usePageAnimateRouter from "@/hooks/common/usePageAnimateRouter";
 import usePageStore from "@/stores/usePageStore";
 import useUserStore from "@/stores/useUserStore";
+import { AnimatePresence } from "framer-motion";
 import { useEffect } from "react";
 
 export default function AfterLoginLayout({ children }: { children: React.ReactNode }) {
@@ -24,8 +26,12 @@ export default function AfterLoginLayout({ children }: { children: React.ReactNo
   }, [isLoggedIn, isPagePending])
 
   return (
-    <>
-      {children}
-    </>
+    <AnimatePresence>
+      {isLoggedIn &&
+        <Motion.MotionDiv className={`h-full`}>
+          {children}
+        </Motion.MotionDiv>
+      }
+    </AnimatePresence>
   );
 }

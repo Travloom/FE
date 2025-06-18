@@ -3,26 +3,17 @@
 import PlanInput from "@/components/home/PlanInput";
 import TagButton from "@/components/common/TagButton";
 import { TAGLIST } from "@/constants/Tag";
-import usePageStore from "../stores/usePageStore";
 import usePageAnimateRouter from "@/hooks/common/usePageAnimateRouter";
-import Motion from "@/components/motion/Motion";
 import CustomDatePicker from "@/components/date-picker/CustomDatePicker";
 import useHomeStore from "@/stores/useHomeStore";
 import { TagsType } from "@/types/place/type";
-import { AnimatePresence } from "framer-motion";
 import { createPlanRequest } from "@/apis/plan";
 import { useEffect, useState } from "react";
 import { useMutation } from "@tanstack/react-query";
-import LoadingModal from "@/components/home/LodingModal";
 import { isAxiosError } from "axios";
 import useInitPage from "@/hooks/common/useInitPage";
 
 export default function Home() {
-
-  const {
-    isPagePending,
-  } = usePageStore();
-
 
   const {
     setIsCreating,
@@ -79,60 +70,53 @@ export default function Home() {
   useInitPage(null);
 
   return (
-    <AnimatePresence>
-      {!isPagePending &&
-        <>
-          <Motion.MotionDiv
-            className={`
+    <div
+      className={`
               md:px-[20%] 
               w-full h-full px-10 pb-[60px] pt-[100px] transition-all-300-out`}>
-            <div className={`flex flex-col gap-[40px] pb-[20px] h-full justify-center`}>
-              <div
-                className={`
+      <div className={`flex flex-col gap-[40px] pb-[20px] h-full justify-center`}>
+        <div
+          className={`
                   lg:gap-5
                   gap-2.5 flex flex-col w-full justify-center items-center`}>
-                <p
-                  className={`
+          <p
+            className={`
                     lg:text-[40px]
                     text-point text-[28px] transition-all-300-out select-none`}>
-                  어디로 떠나볼까요?
-                </p>
-                <div
-                  className={`
+            어디로 떠나볼까요?
+          </p>
+          <div
+            className={`
                     lg:gap-5 lg:max-w-[750px]
                     gap-2.5 w-full  flex flex-col transition-all-300-out`}>
-                  <PlanInput />
-                  <div
-                    className={`
+            <PlanInput />
+            <div
+              className={`
                       lg:max-h-[119px]
                       max-h-[108px] w-full flex flex-col gap-10`}>
-                    <div className={`flex flex-row gap-2.5 w-full top-0 flex-wrap`}>
-                      <CustomDatePicker />
-                      {Object.entries(TAGLIST).map(([key, tag]) => (
-                        <TagButton
-                          key={key}
-                          title={tag.title}
-                          tagList={tag.tagList}
-                          currentTag={tags[key as keyof TagsType] || tag.title}
-                          setCurrentTag={(value: string) => setTag(key as keyof TagsType, value)}
-                          isHome={true}
-                        />
-                      ))}
-                    </div>
-                    <p
-                      className={`
+              <div className={`flex flex-row gap-2.5 w-full top-0 flex-wrap`}>
+                <CustomDatePicker />
+                {Object.entries(TAGLIST).map(([key, tag]) => (
+                  <TagButton
+                    key={key}
+                    title={tag.title}
+                    tagList={tag.tagList}
+                    currentTag={tags[key as keyof TagsType] || tag.title}
+                    setCurrentTag={(value: string) => setTag(key as keyof TagsType, value)}
+                    isHome={true}
+                  />
+                ))}
+              </div>
+              <p
+                className={`
                       ${(isAllTagSelected && title && startDate && endDate && !isPending) ? `text-point cursor-pointer` : `text-gray-200`}
                         lg:text-[20px] 
                         text-[14px] self-center pb-[20px] transition-all-300-out select-none`}
-                      onClick={() => mutate()}>추천 없이 떠나기</p>
-                  </div>
-                </div>
-              </div>
+                onClick={() => mutate()}>추천 없이 떠나기</p>
             </div>
-          </Motion.MotionDiv>
-          <LoadingModal />
-        </>
-      }
-    </AnimatePresence>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 }

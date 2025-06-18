@@ -22,17 +22,17 @@ export default function Providers({ children }: { children: React.ReactNode }) {
       <Header />
       <Sidebar />
       <AnimatePresence mode="wait">
-      {isPagePending ? (
-        <Motion.MotionDiv key={"loading"} className={`flex justify-center items-center w-full h-full`}>
-          <HashLoader
-            size={30}
-            color={`#6c5ce7`} />
-        </Motion.MotionDiv>
-      ) : (
-        <Motion.MotionDiv key={"page"} className={`h-full`}>
-          {children}
-        </Motion.MotionDiv>
-      )}
+        {isPagePending ? (
+          <Motion.MotionDiv key={"loading"} className={`flex justify-center items-center w-full h-full`}>
+            <HashLoader
+              size={30}
+              color={`#6c5ce7`} />
+          </Motion.MotionDiv>
+        ) : (
+          <Motion.MotionDiv key={"page"} className={`h-full`}>
+            {children}
+          </Motion.MotionDiv>
+        )}
       </AnimatePresence>
       <div className={`bg-[url('/images/background.png')] w-screen h-screen fixed top-0 bg-cover bg-center z-[-9999]`} />
       <div className={`z-9999`} id="portal-root" />
