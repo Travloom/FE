@@ -1,4 +1,4 @@
-import { MIN_HEIGHT } from "@/constants/Map";
+import { MID_HEIGHT } from "@/constants/Map";
 import { create } from "zustand";
 
 interface BottomSheetState {
@@ -8,7 +8,7 @@ interface BottomSheetState {
 }
 
 const useBottomSheetStore = create<BottomSheetState>((set) => ({
-  currentHeight: MIN_HEIGHT,
+  currentHeight: MID_HEIGHT,
 
   setCurrentHeight: (value: number) => set({currentHeight: value})
 }))
