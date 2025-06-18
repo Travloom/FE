@@ -40,9 +40,9 @@ export default function Mypage() {
               pt-[70px] gap-2.5 flex flex-col h-full transition-all-300-out`}>
           <div
             className={`  
-                lg:text-[20px] lg:rounded-[8px]
+                lg:text-[20px] lg:rounded-[8px] lg:border
                 md:text-[18px]
-                text-[16px] w-full h-full p-2.5 flex flex-col gap-2.5 bg-white border border-gray-300 transition-all-300-out select-none`}>
+                text-[16px] w-full h-full p-2.5 flex flex-col gap-2.5 bg-white border-t border-gray-300 transition-all-300-out select-none`}>
             <div
               className={`
                   lg:px-6

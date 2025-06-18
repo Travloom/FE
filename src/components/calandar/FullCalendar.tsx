@@ -53,7 +53,7 @@ const CustomFullCalendar = () => {
     <div
       className={`
         lg:rounded-[8px] lg:border
-        border-t border-gray-200 w-full h-full p-4 bg-white`}>
+        border-t border-gray-300 w-full h-full p-4 bg-white`}>
       <FullCalendar
         locale={koLocale}
         headerToolbar={{
