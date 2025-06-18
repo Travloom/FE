@@ -43,11 +43,16 @@ const useHomeStore = create(
     {
       name: "homeStore",
       partialize: (state) => {
-        const { isCreating, setIsCreating, setTitle, setStartDate, setEndDate, setTag, ...rest } = state;
+
+        const startDate = state.startDate ? new Date(state.startDate) : null;
+        const endDate = state.endDate ? new Date(state.endDate) : null;
+        const isDateExist = startDate !== null && endDate !== null;
+        
         return {
-          ...rest,
-          startDate: rest.startDate ? new Date(rest.startDate) : null,
-          endDate: rest.endDate ? new Date(rest.endDate) : null
+          title: state.title,
+          tags: state.tags,
+          startDate: isDateExist ? startDate : null,
+          endDate: isDateExist ? endDate : null,
         } as TagState;
       },
     }
