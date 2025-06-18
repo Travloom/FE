@@ -2,6 +2,7 @@
 
 import CustomFullCalendar from "@/components/calandar/FullCalendar";
 import Motion from "@/components/motion/Motion";
+import useInitPage from "@/hooks/common/useInitPage";
 import usePageStore from "@/stores/usePageStore";
 import { AnimatePresence } from "framer-motion";
 
@@ -10,6 +11,8 @@ export default function CalendarPage() {
   const {
     isPagePending,
   } = usePageStore()
+
+  useInitPage("캘린더");
 
   return (
     <AnimatePresence>

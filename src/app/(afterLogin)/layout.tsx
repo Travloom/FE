@@ -1,6 +1,5 @@
 'use client'
 
-import useInitPage from "@/hooks/common/useInitPage";
 import usePageAnimateRouter from "@/hooks/common/usePageAnimateRouter";
 import usePageStore from "@/stores/usePageStore";
 import useUserStore from "@/stores/useUserStore";
@@ -23,8 +22,6 @@ export default function AfterLoginLayout({ children }: { children: React.ReactNo
       pageAnimateRouter.replace(`${process.env.NEXT_PUBLIC_DOMAIN}/oauth2/authorization/kakao`)
     }
   }, [isLoggedIn, isPagePending])
-
-  useInitPage("마이페이지");
 
   return (
     <>

@@ -11,7 +11,7 @@ const useInitPage = (title: string | null) => {
   useEffect(() => {
     setPageTitle(title);
     setIsPagePending(false);
-  }, [])
+  }, [title])
 }
 
 export default useInitPage;
