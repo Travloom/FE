@@ -1,18 +1,15 @@
 'use client'
 
 import { logOutRequest } from "@/apis/user";
-import Motion from "@/components/motion/Motion";
 import PlanList from "@/components/mypage/PlanList";
 import useInitPage from "@/hooks/common/useInitPage";
 import usePageAnimateRouter from "@/hooks/common/usePageAnimateRouter";
 import useUserStore from "@/stores/useUserStore";
-import { AnimatePresence } from "framer-motion";
 
 export default function Mypage() {
 
   const {
     user,
-    isLoggedIn,
     setUser,
   } = useUserStore();
 
