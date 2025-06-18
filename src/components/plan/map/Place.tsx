@@ -142,9 +142,7 @@ const Place: React.FC<PlaceProps> = ({
                 )}
               </div>
             )}
-            {!types?.some(type => ['restaurant', 'food'].includes(type)) &&
-              !types?.includes('lodging') &&
-              types?.includes('point_of_interest') && (
+            {!types?.includes('lodging') && (
                 <div onClick={(e) => handlePlace(e, 'attraction')}>
                   {isAttractionOn ? (
                     <Motion.MotionDiv key={'attraction on'}>
