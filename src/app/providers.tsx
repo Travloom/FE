@@ -30,7 +30,7 @@ export default function Providers({ children }: { children: React.ReactNode }) {
     <QueryClientProvider client={queryClient}>
       <Header />
       <Sidebar />
-      <AnimatePresence mode="wait">
+      <AnimatePresence mode="popLayout">
         {isPagePending ? (
           <Motion.MotionDiv key={"loading"} className={`flex justify-center items-center w-full h-full`}>
             <HashLoader
