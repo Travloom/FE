@@ -22,9 +22,9 @@ export const TAGLIST = {
   companions: {
     title: "누구",
     tagList: [
-      "가족",
       "친구",
       "연인",
+      "가족",
     ]
   },
   theme: {
