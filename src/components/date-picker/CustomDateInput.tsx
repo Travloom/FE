@@ -42,7 +42,7 @@ export const CustomDateInput = forwardRef<HTMLDivElement, { value: string; onCli
         <p style={{
           width: width,
           whiteSpace: 'nowrap', // 필요에 따라
-        }} ref={pRef} className={`mt-0.5 transition-all-300-out flex justify-center items-center`}>{isMobile ? (dayDiff ? `${dayDiff}박 ${dayDiff+1}일` : label) : (value || label)}</p>
+        }} ref={pRef} className={`mt-0.5 transition-all-300-out flex justify-center items-center`}>{isMobile ? (dayDiff ? `${dayDiff - 1}박 ${dayDiff}일` : label) : (value || label)}</p>
       </div>
     );
   }

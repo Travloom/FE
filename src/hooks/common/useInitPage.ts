@@ -1,10 +1,7 @@
 import usePageStore from "@/stores/usePageStore";
-import { usePathname } from "next/navigation";
 import { useEffect } from "react";
 
 const useInitPage = (title: string | null) => {
-
-  const pathName = usePathname();
 
   const {
     setIsPagePending,
@@ -12,12 +9,9 @@ const useInitPage = (title: string | null) => {
   } = usePageStore();
 
   useEffect(() => {
-    setIsPagePending(false);
-  }, [pathName])
-
-  useEffect(() => {
     setPageTitle(title);
-  }, [pathName, title])
+    setIsPagePending(false);
+  }, [])
 }
 
 export default useInitPage;

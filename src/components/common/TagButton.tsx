@@ -99,8 +99,6 @@ const TagButton: React.FC<TagButtonProps> = ({
           )
         })}
 
-
-
         {isHover && isHome &&
           (!isEditing ? (
             <motion.div

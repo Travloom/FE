@@ -18,11 +18,13 @@ import usePageAnimateRouter from "@/hooks/common/usePageAnimateRouter";
 import usePageStore from "@/stores/usePageStore";
 import { ErrorResponse } from "@/types/error/type";
 import TagButton from "@/components/common/TagButton";
+import useInitPage from "@/hooks/common/useInitPage";
 
 const PlanPage = () => {
 
   const {
     authorEmail,
+    title,
     tags,
     isInfoPending,
   } = usePlanStore();
@@ -125,6 +127,8 @@ const PlanPage = () => {
       }
     }
   }, [isCollaborator, collabError])
+
+  useInitPage(title);
 
   return (
     <AnimatePresence>

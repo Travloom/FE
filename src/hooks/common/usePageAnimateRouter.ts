@@ -1,5 +1,6 @@
 import usePageStore from "@/stores/usePageStore";
 import { usePathname, useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 const usePageAnimateRouter = () => {
 
@@ -8,10 +9,12 @@ const usePageAnimateRouter = () => {
 
   const {
     setIsPagePending,
+    setPageTitle,
   } = usePageStore();
 
   const push = (url: string) => {
     if (pathName !== url){
+      setPageTitle(null)
       setIsPagePending(true)
       setTimeout(() => {
         router.push(url)
@@ -27,6 +30,10 @@ const usePageAnimateRouter = () => {
       }, 300);
     }
   }
+
+  useEffect(() => {
+    setIsPagePending(false);
+  }, [pathName])
 
   return { push, replace }
 }

@@ -30,10 +30,7 @@ const SearchHeader = () => {
       try {
         const results = await google.maps.places.Place.searchByText(request);
 
-        console.log(results.places)
         const convertedPlaces = results?.places?.map(place => convertToPlaceType(place)).filter(Boolean);
-
-        console.log(convertedPlaces)
 
         setPlaces('searchList', convertedPlaces)
 

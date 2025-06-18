@@ -15,6 +15,7 @@ import { useEffect, useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 import LoadingModal from "@/components/home/LodingModal";
 import { isAxiosError } from "axios";
+import useInitPage from "@/hooks/common/useInitPage";
 
 export default function Home() {
 
@@ -74,6 +75,8 @@ export default function Home() {
       setIsCreating(false)
     }
   })
+
+  useInitPage(null);
 
   return (
     <AnimatePresence>
