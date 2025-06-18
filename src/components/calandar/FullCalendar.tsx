@@ -7,6 +7,7 @@ import { useQuery } from '@tanstack/react-query';
 import { getPlansRequest } from '@/apis/plan';
 import dayjs from 'dayjs';
 import usePageAnimateRouter from '@/hooks/common/usePageAnimateRouter';
+import Motion from '../motion/Motion';
 
 interface EventState {
   uuid: string;
@@ -36,7 +37,7 @@ const CustomFullCalendar = () => {
   function renderEventContent(eventInfo: EventContentArg) {
 
     return (
-      <div
+      <Motion.MotionDiv
         className={`bg-point my-[1px] p-0.5 rounded-[4px] cursor-pointer`}
         onClick={() => pageAnimateRouter.push(`/${eventInfo.event.extendedProps.planId}`)}>
         <p
@@ -44,7 +45,7 @@ const CustomFullCalendar = () => {
           lg:text-[14px] lg:h-[16px]
           md:text-[10px] md:h-[12px]
           text-[8px] h-[10px] flex justify-center items-center`}>{eventInfo.event.title}</p>
-      </div>
+      </Motion.MotionDiv>
     )
   }
 
