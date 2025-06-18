@@ -6,8 +6,7 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
-    "chromatic": "npx chromatic --project-token=chpt_f2897a40bf07024"
+    "lint": "next lint"
   },
   "dependencies": {
     "@fullcalendar/core": "^6.1.17",
