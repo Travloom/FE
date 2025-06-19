@@ -5,6 +5,7 @@ export { default as MenuIcon } from "./menu_icon.svg";
 export { default as SearchIcon } from "./search_icon.svg";
 export { default as GoogleMapIcon } from "./google_map_icon.svg";
 export { default as DeleteIcon } from "./delete_icon.svg";
+export { default as XIcon } from "./x_icon.svg";
 
 export { default as MyRestaurantOnIcon } from "./my_restaurant_on_icon.svg";
 export { default as MyRestaurantOffIcon } from "./my_restaurant_off_icon.svg";
