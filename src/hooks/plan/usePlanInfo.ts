@@ -2,6 +2,8 @@ import { useEffect } from "react";
 import { doc, getDoc, onSnapshot } from "firebase/firestore";
 import { fireStore } from "@/firebase/firebaseClient";
 import usePlanStore from "@/stores/usePlanStore";
+import usePageAnimateRouter from "../common/usePageAnimateRouter";
+import useNoticeModalStore from "@/stores/useAlertModalStore";
 
 export const usePlanInfo = (planId: string) => {
 
@@ -12,6 +14,14 @@ export const usePlanInfo = (planId: string) => {
     setDays,
     setTags,
   } = usePlanStore();
+
+  const {
+    setIsNoticeModalOpen,
+    setNoticeModalText,
+    setIsAlert,
+  } = useNoticeModalStore();
+
+  const pageAnimateRouter = usePageAnimateRouter();
 
   useEffect(() => {
 
@@ -33,10 +43,18 @@ export const usePlanInfo = (planId: string) => {
     checkDocs();
 
     const unsubscribe = onSnapshot(targetDoc, (docSnapshot) => {
+
+      if (!docSnapshot.exists()) {
+        setNoticeModalText("플랜이 삭제되었습니다.")
+        setIsAlert(true)
+        setIsNoticeModalOpen(true)
+        pageAnimateRouter.replace('/')
+      }
+
       const data = docSnapshot.data();
 
       if (data) {
-        setTitle(data?.title) 
+        setTitle(data?.title)
         setAuthorEmail(data?.authorEmail)
         setDays(data?.startDate, data?.endDate)
         setTags(data?.tags)
@@ -45,6 +63,7 @@ export const usePlanInfo = (planId: string) => {
     });
 
     return () => {
+      console.log('리턴')
       setTitle(null)
       setAuthorEmail(null)
       setDays(null, null)
