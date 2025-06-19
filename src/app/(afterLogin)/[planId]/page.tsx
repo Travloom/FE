@@ -18,6 +18,8 @@ import usePageAnimateRouter from "@/hooks/common/usePageAnimateRouter";
 import { ErrorResponse } from "@/types/error/type";
 import TagButton from "@/components/common/TagButton";
 import useInitPage from "@/hooks/common/useInitPage";
+import useCheckModalStore from "@/stores/useCheckModalStore";
+import CheckModal from "@/components/plan/CheckModal";
 
 const PlanPage = () => {
 
@@ -37,6 +39,12 @@ const PlanPage = () => {
     setNoticeModalText,
     setIsAlert,
   } = useNoticeModalStore();
+
+  const {
+    setIsCheckModalOpen,
+    setCheckModalText,
+    setFn,
+  } = useCheckModalStore();
 
   const { planId }: { planId: string } = useParams();
 
@@ -96,6 +104,18 @@ const PlanPage = () => {
       pageAnimateRouter.replace('/');
     }
   })
+
+  const handleDelete = () => {
+    setIsCheckModalOpen(true);
+    setCheckModalText("정말 삭제하실건가요?");
+    setFn(deletePlan);
+  }
+
+  const handleExit = () => {
+    setIsCheckModalOpen(true);
+    setCheckModalText("정말 나가실건가요?");
+    setFn(exitPlan);
+  }
 
   const { data: isCollaborator, isPending: isCollabPending, error: collabError } = useQuery({
     queryKey: ["isCollaborator", planId],
@@ -170,13 +190,14 @@ const PlanPage = () => {
                 </AnimatePresence>
               </div>
               {user?.email === authorEmail ? (
-                <Button text={"삭제"} isActive={true} isDelete={true} onClick={deletePlan} />
+                <Button text={"삭제"} isActive={true} isDelete={true} onClick={handleDelete} />
               ) : (
-                <Button text={"나가기"} isActive={true} isDelete={true} onClick={exitPlan} />
+                <Button text={"나가기"} isActive={true} isDelete={true} onClick={handleExit} />
               )}
             </div>
           </div>
           <Planner />
+          <CheckModal />
         </Motion.MotionDiv>
       }
     </AnimatePresence>

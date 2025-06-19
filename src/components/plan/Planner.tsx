@@ -42,7 +42,6 @@ const Planner = () => {
               <BottomSheet />
               <GoogleMapWrapper />
             </div>
-
           </div>
         </Motion.MotionDiv>
       )}
