@@ -15,10 +15,8 @@ export const useSchedule = (planId: string) => {
   const [layout, setLayout] = useState<CustomLayout[]>([]);
 
   useEffect(() => {
-
     const checkDocs = async () => {
       const docSnap = await getDoc(targetDoc);
-
       if (!docSnap.exists()) {
         setIsSchedulePending(true);
         return;
@@ -51,7 +49,12 @@ export const useSchedule = (planId: string) => {
     }, 1000); // 1000ms = 1초
   }, [planId]);
 
-  const updateSchedule = (updatedLayout: CustomLayout[]) => {
+  const updateSchedule = async (updatedLayout: CustomLayout[]) => {
+    const targetDoc = doc(fireStore, 'travloom', 'plan', `${planId}`, 'schedules');
+
+    const docSnap = await getDoc(targetDoc);
+
+    if (!docSnap.exists()) return;
     if (!isSchedulePending) {
       throttledUpdateSchedule(updatedLayout);
     }
