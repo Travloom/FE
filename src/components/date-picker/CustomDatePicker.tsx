@@ -38,9 +38,7 @@ const CustomDatePicker = () => {
           <CustomDateInput
             value={''}
             onClick={() => { }}
-            label='일정'
-            startDate={startDate}
-            endDate={endDate} />}
+            label='일정'/>}
         popperClassName='datepicker-fade-in'
         renderCustomHeader={({
           date,
