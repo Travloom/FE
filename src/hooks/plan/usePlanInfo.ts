@@ -63,7 +63,6 @@ export const usePlanInfo = (planId: string) => {
     });
 
     return () => {
-      console.log('리턴')
       setTitle(null)
       setAuthorEmail(null)
       setDays(null, null)
