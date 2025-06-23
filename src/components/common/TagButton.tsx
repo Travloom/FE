@@ -61,6 +61,13 @@ const TagButton: React.FC<TagButtonProps> = ({
     }
   }
 
+  const handleX = (e: React.MouseEvent) => {
+    e.stopPropagation()
+    setIsHover(false)
+    if (setCurrentTag)
+      setCurrentTag(title)
+  }
+
   useEffect(() => {
     regionRef.current?.focus();
   }, [isEditing])
@@ -90,10 +97,10 @@ const TagButton: React.FC<TagButtonProps> = ({
               animate={{ opacity: isFadingOut ? 0 : 1, width: 8, marginLeft: 6 }}
               exit={{ opacity: 0, width: 0, marginLeft: 0 }}
               transition={{ duration: 0.3 }}
-              className={`flex justify-center items-center`}>
+              className={`flex justify-center items-center`}
+              onClick={setCurrentTag ? handleX : () => {}} >
               <XIcon
-                className={`text-point hover:text-red-400 pb-1 transition-all-300-out`}
-                onClick={() => setCurrentTag ? setCurrentTag(title) : {}} />
+                className={`text-point hover:text-red-400 pb-1 transition-all-300-out w-full`} />
             </motion.div>
           }
         </AnimatePresence>
