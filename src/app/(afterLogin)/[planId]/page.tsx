@@ -130,8 +130,8 @@ const PlanPage = () => {
 
   useEffect(() => {
     if (collabError) {
-      const axiosError = collabError as AxiosError<any>;
-      handleNotice(axiosError?.response?.data.detail, true)
+      const axiosError = collabError as AxiosError<ErrorResponse>;
+      handleNotice(axiosError?.response?.data.detail || "잘못된 접근입니다.", true)
       pageAnimateRouter.replace('/')
     } else {
       if (isCollaborator && !isCollaborator?.isCollaborator) {
