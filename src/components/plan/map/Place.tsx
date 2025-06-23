@@ -176,8 +176,8 @@ const Place: React.FC<PlaceProps> = ({
           target="_blank"
           rel="noopener noreferrer"
           href={
-            deviceType === 'ios' ? `maps://?q=PLACE_NAME&query_place_id=${placeId}` : (
-              deviceType === 'android' ? `intent://maps.google.com/maps/search/?api=1&query=Place&query_place_id=${placeId}#Intent;package=com.google.android.apps.maps;scheme=https;end` :
+            deviceType === 'ios' ? `comgooglemaps://?q=PLACE_NAME&query_place_id=${placeId}` : (
+              deviceType === 'android' ? `comgooglemaps://?q=PLACE_NAME&query_place_id=${placeId}` :
                 `https://www.google.com/maps/place/?q=place_id:${placeId}`
             )
           }>
