@@ -2,10 +2,12 @@ export const TAGLIST = {
   region: {
     title: "지역",
     tagList: [
-      "속초",
       "부산",
-      "경주",
       "제주도",
+      "오사카",
+      "도쿄",
+      "상하이",
+      "뉴욕",
     ]
   },
   people: {
@@ -20,15 +22,15 @@ export const TAGLIST = {
   companions: {
     title: "누구",
     tagList: [
-      "가족",
       "친구",
       "연인",
+      "가족",
     ]
   },
   theme: {
     title: "테마",
     tagList: [
-      "맛집 탐방",
+      "먹방 투어",
       "힐링 여행",
       "가족 여행",
     ]

@@ -33,7 +33,7 @@ export default function useBottomSheet() {
       touchOffset: 0,
       movingDirection: 'none',
     },
-    prevHeight: MIN_HEIGHT,
+    prevHeight: MID_HEIGHT,
     isContentAreaTouched: false,
   });
 
@@ -192,8 +192,8 @@ export default function useBottomSheet() {
 
   useEffect(() => {
     const initialUpdateSheetHeight = () => {
-      metrics.current.prevHeight = MIN_HEIGHT;
-      sheet.current!.style.height = `${MIN_HEIGHT}px`;
+      metrics.current.prevHeight = MID_HEIGHT;
+      sheet.current!.style.height = `${MID_HEIGHT}px`;
     }
 
     const updateSheetHeight = () => {

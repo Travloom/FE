@@ -1,5 +1,5 @@
 import GridRenderer from "./GridRenderer";
-import { Dispatch, SetStateAction, useCallback } from "react";
+import { Dispatch, SetStateAction, useCallback, useEffect, useRef } from "react";
 import { useAddScheduleBox } from "@/hooks/schedule/useAddScheduleBox";
 import { CONTAINER_PADDING_Y, PLAN_MARGIN_X, PLAN_MARGIN_Y, TIME_TABLE, TIME_WIDTH } from "@/constants/Plan";
 import { Layout } from "react-grid-layout";
@@ -13,7 +13,6 @@ interface SchedulerProps {
   updateSchedule: (updatedLayout: CustomLayout[]) => void;
 }
 
-
 const Scheduler: React.FC<SchedulerProps> = ({
   layout,
   setLayout,
@@ -23,6 +22,8 @@ const Scheduler: React.FC<SchedulerProps> = ({
   const {
     days,
   } = usePlanStore();
+
+  const scheduleRef = useRef<HTMLDivElement>(null);
 
   const handleAddScheduleBox = useAddScheduleBox(days || 1, layout, setLayout);
 
@@ -38,9 +39,18 @@ const Scheduler: React.FC<SchedulerProps> = ({
     updateSchedule(updatedLayout);
   }, [layout]);
 
+  useEffect(() => {
+    if (scheduleRef.current) {
+      scheduleRef.current.scrollTo({
+        left: 875,
+        behavior: 'smooth'
+      });
+    }
+  }, [])
+
   return (
     <div className={`p-2 h-full`}>
-      <div className={`h-full flex flex-col overflow-auto select-none`}>
+      <div ref={scheduleRef} className={`h-full flex flex-col overflow-auto select-none`}>
 
         {/* PlanList */}
         <div className={`w-[3000px] flex`}>

@@ -15,10 +15,11 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import useNoticeModalStore from "@/stores/useAlertModalStore";
 import { AxiosError } from "axios";
 import usePageAnimateRouter from "@/hooks/common/usePageAnimateRouter";
-import usePageStore from "@/stores/usePageStore";
 import { ErrorResponse } from "@/types/error/type";
 import TagButton from "@/components/common/TagButton";
 import useInitPage from "@/hooks/common/useInitPage";
+import useCheckModalStore from "@/stores/useCheckModalStore";
+import CheckModal from "@/components/plan/CheckModal";
 
 const PlanPage = () => {
 
@@ -34,14 +35,16 @@ const PlanPage = () => {
   } = useUserStore();
 
   const {
-    isPagePending,
-  } = usePageStore()
-
-  const {
     setIsNoticeModalOpen,
     setNoticeModalText,
     setIsAlert,
   } = useNoticeModalStore();
+
+  const {
+    setIsCheckModalOpen,
+    setCheckModalText,
+    setFn,
+  } = useCheckModalStore();
 
   const { planId }: { planId: string } = useParams();
 
@@ -102,6 +105,18 @@ const PlanPage = () => {
     }
   })
 
+  const handleDelete = () => {
+    setIsCheckModalOpen(true);
+    setCheckModalText("정말 삭제하실건가요?");
+    setFn(deletePlan);
+  }
+
+  const handleExit = () => {
+    setIsCheckModalOpen(true);
+    setCheckModalText("정말 나가실건가요?");
+    setFn(exitPlan);
+  }
+
   const { data: isCollaborator, isPending: isCollabPending, error: collabError } = useQuery({
     queryKey: ["isCollaborator", planId],
     queryFn: async () => isCollaboratorRequest(planId),
@@ -132,7 +147,7 @@ const PlanPage = () => {
 
   return (
     <AnimatePresence>
-      {!isPagePending && !isInfoPending && !isCollabPending &&
+      {!isInfoPending && !isCollabPending &&
         <Motion.MotionDiv
           className={`
               lg:p-[60px] lg:pt-[90px]
@@ -144,7 +159,7 @@ const PlanPage = () => {
                 tagList={[tags?.region, tags?.people, tags?.companions, tags?.theme].filter((tag) => tag != null)} 
                 currentTag={"태그"}
                 isHome={false}
-                className={`absolute z-[50]`}/>
+                className={`absolute z-[200]`}/>
             </div>
             <div className={`justify-end flex flex-row gap-2.5`}>
               <div
@@ -175,13 +190,14 @@ const PlanPage = () => {
                 </AnimatePresence>
               </div>
               {user?.email === authorEmail ? (
-                <Button text={"삭제"} isActive={true} isDelete={true} onClick={deletePlan} />
+                <Button text={"삭제"} isActive={true} isDelete={true} onClick={handleDelete} />
               ) : (
-                <Button text={"나가기"} isActive={true} isDelete={true} onClick={exitPlan} />
+                <Button text={"나가기"} isActive={true} isDelete={true} onClick={handleExit} />
               )}
             </div>
           </div>
           <Planner />
+          <CheckModal />
         </Motion.MotionDiv>
       }
     </AnimatePresence>

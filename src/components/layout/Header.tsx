@@ -74,7 +74,6 @@ const Header = () => {
         <Motion.MotionDiv className={`lg:w-[127px] w-8 flex justify-end`}>
           {(user ? (
             <Image
-              loader={() => user.profileImageUrl as string}
               className={`lg:w-10 w-8 cursor-pointer rounded-full object-cover aspect-square`}
               src={user.profileImageUrl as string}
               width={1000}

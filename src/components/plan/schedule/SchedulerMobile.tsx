@@ -1,6 +1,6 @@
 import { MOBILE_TIME_HEIGHT, TIME_TABLE } from "@/constants/Plan";
 import GridRendererMobile from "./GridRendererMobile";
-import { Dispatch, SetStateAction, useCallback } from "react";
+import { Dispatch, SetStateAction, useCallback, useEffect, useRef } from "react";
 import { Layout } from "react-grid-layout";
 import { useAddMobileScheduleBox } from "@/hooks/schedule/useAddMobileScheduleBox";
 import { CustomLayout } from "@/types/schedule/types";
@@ -23,6 +23,8 @@ const SchedulerMobile: React.FC<SchedulerProps> = ({
     days,
   } = usePlanStore();
 
+  const scheduleRef = useRef<HTMLDivElement>(null);
+
   const handleAddScheduleBoxMobile = useAddMobileScheduleBox(days || 1, layout, setLayout);
 
   const handleChangeLayoutMobile = useCallback((newLayout: Layout[]) => {
@@ -42,9 +44,18 @@ const SchedulerMobile: React.FC<SchedulerProps> = ({
 
   }, [layout]);
 
+  useEffect(() => {
+    if (scheduleRef.current) {
+      scheduleRef.current.scrollTo({
+        top: 700,
+        behavior: 'smooth'
+      });
+    }
+  }, [])
+
   return (
     <div className={`w-full h-full py-1 pr-1.5 relative`}>
-      <div className={`overflow-auto h-full`}>
+      <div ref={scheduleRef} className={`overflow-auto h-full`}>
         <div className={` flex flex-row select-none`}>
 
           {/* Time */}

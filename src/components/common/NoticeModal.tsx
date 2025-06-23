@@ -11,7 +11,7 @@ const NoticeModal = () => {
   const {
     isNoticeModalOpen,
     setIsNoticeModalOpen,
-    NoticeModalText,
+    noticeModalText,
     setNoticeModalText,
     isAlert,
     setIsAlert,
@@ -38,8 +38,8 @@ const NoticeModal = () => {
               <div 
                 className={`
                   ${isAlert ? `text-red-400 border-red-400` : `text-point border-point`}
-                  lg:text-[16px] text-[14px] z-[9999]  bg-white py-8 px-6 border rounded-[8px] pointer-events-auto select-none`}>
-                {NoticeModalText}
+                  lg:text-[16px] text-[14px] z-[9999]  bg-white p-6 border rounded-[8px] pointer-events-auto select-none`}>
+                {noticeModalText}
               </div>
           </Motion.MotionDiv>
         }

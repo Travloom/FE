@@ -2,6 +2,7 @@
 
 import { KeyboardEvent, useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
+import { XIcon } from "@/assets/svgs";
 
 interface TagButtonProps {
   title: string;
@@ -60,6 +61,13 @@ const TagButton: React.FC<TagButtonProps> = ({
     }
   }
 
+  const handleX = (e: React.MouseEvent) => {
+    e.stopPropagation()
+    setIsHover(false)
+    if (setCurrentTag)
+      setCurrentTag(title)
+  }
+
   useEffect(() => {
     regionRef.current?.focus();
   }, [isEditing])
@@ -74,15 +82,30 @@ const TagButton: React.FC<TagButtonProps> = ({
         text-[14px] px-3 py-1.5 rounded-[16px] flex flex-col w-fit h-fit cursor-pointer transition-all-300-out items-center select-none`}
       onMouseOver={() => setIsHover(true)}
       onMouseLeave={handleMouseLeave}>
-      <motion.p
-        className={`${currentTag !== title ? `text-point` : ``} mt-0.5 transition-all-300-out`}
+      <motion.div
+        className={`${currentTag !== title ? `text-point` : ``} mt-0.5 transition-all-300-out flex flex-row`}
         initial={{ opacity: 1 }}
         animate={{ opacity: isFadingOut ? 0 : 1 }}
         transition={{ duration: 0.3 }}
         onAnimationComplete={handleAnimationComplete}
       >
         {currentTag}
-      </motion.p>
+        <AnimatePresence>
+          {currentTag !== title && isHome &&
+            <motion.div
+              initial={{ opacity: 1, width: 0, marginLeft: 0 }}
+              animate={{ opacity: isFadingOut ? 0 : 1, width: 8, marginLeft: 6 }}
+              exit={{ opacity: 0, width: 0, marginLeft: 0 }}
+              transition={{ duration: 0.3 }}
+              className={`flex justify-center items-center`}
+              onClick={setCurrentTag ? handleX : () => {}} >
+              <XIcon
+                className={`text-point hover:text-red-400 pb-1 transition-all-300-out w-full`} />
+            </motion.div>
+          }
+        </AnimatePresence>
+
+      </motion.div>
       <AnimatePresence>
         {isHover && tagList && tagList.map((item, index) => {
           return (
@@ -93,7 +116,7 @@ const TagButton: React.FC<TagButtonProps> = ({
               exit={{ opacity: 0, width: 0, height: 0, marginTop: 0 }}
               transition={{ duration: 0.5 }}
               className={`overflow-x-hidden overflow-y-clip ${isHome ? `hover:text-point` : `text-point`}`}
-              onClick={setCurrentTag ? () => handleTagButton(item) : () => {}}>
+              onClick={setCurrentTag ? () => handleTagButton(item) : () => { }}>
               <p className={`transition-all-300-out`}>{item}</p>
             </motion.div>
           )

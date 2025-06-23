@@ -82,6 +82,7 @@
   padding: 2px !important;
   background-clip: content-box;
   background-color: rgba(108, 92, 231, 0.1);
+  border-radius: 4px;
 }
 
 .fc-daygrid-day-frame {

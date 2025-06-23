@@ -3,7 +3,7 @@ import { create } from 'zustand';
 type NoticeModalState = {
   isNoticeModalOpen: boolean;
   setIsNoticeModalOpen: (value: boolean) => void;
-  NoticeModalText: string;
+  noticeModalText: string;
   setNoticeModalText: (value: string) => void;
 
   isAlert: boolean;
@@ -12,7 +12,7 @@ type NoticeModalState = {
 
 const useNoticeModalStore = create<NoticeModalState>((set) => ({
   isNoticeModalOpen: false,
-  NoticeModalText: "",
+  noticeModalText: "",
   isAlert: false,
 
   setIsNoticeModalOpen(value) {
@@ -22,7 +22,7 @@ const useNoticeModalStore = create<NoticeModalState>((set) => ({
   },
   setNoticeModalText(value) {
     set({
-      NoticeModalText: value
+      noticeModalText: value
     })
   },
 

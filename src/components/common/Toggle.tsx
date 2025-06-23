@@ -20,7 +20,7 @@ const Toggle:React.FC<ToggleProps> = ({
   return (
     <div
       className={`
-        ${isSearch ? `aspect-square h-full` : `w-full`}
+        ${isSearch ? `lg:max-w-[45px] max-w-9 aspect-square` : `w-full`}
         ${isActive ? activeStyle : inactiveStyle} 
         lg:text-[18px] lg:py-2.5
         text-[14px] py-2 grow rounded-[8px] flex items-center justify-center cursor-pointer transition-all-300-out select-none`}

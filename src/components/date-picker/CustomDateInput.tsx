@@ -1,8 +1,14 @@
 import useMobile from "@/hooks/common/useMobile";
+import useHomeStore from "@/stores/useHomeStore";
 import { forwardRef, useEffect, useRef, useState } from "react";
 
-export const CustomDateInput = forwardRef<HTMLDivElement, { value: string; onClick: () => void, label: string, startDate: Date | null, endDate: Date | null }>(
-  ({ value, onClick, label, startDate, endDate }, ref) => {
+export const CustomDateInput = forwardRef<HTMLDivElement, { value: string; onClick: () => void, label: string }>(
+  ({ value, onClick, label }, ref) => {
+
+    const {
+      startDate,
+      endDate,
+    } = useHomeStore();
 
     const [width, setWidth] = useState(35);
     const pRef = useRef<HTMLParagraphElement>(null);
@@ -11,12 +17,11 @@ export const CustomDateInput = forwardRef<HTMLDivElement, { value: string; onCli
 
     const [ dayDiff, setDayDiff ] = useState<number | null>(null);
 
-    useEffect(() => {
-      
+    useEffect(() => {      
       let diff
 
       if (endDate && startDate) {
-        const timeDiff = endDate.getTime() - startDate.getTime() + 1;
+        const timeDiff = new Date(endDate).getTime() - new Date(startDate).getTime() + 1;
         diff = Math.ceil(timeDiff / (1000 * 60 * 60 * 24))
         setDayDiff(diff);
       }

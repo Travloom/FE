@@ -4,14 +4,12 @@ import { useEffect } from "react";
 const useInitPage = (title: string | null) => {
 
   const {
-    setIsPagePending,
     setPageTitle,
   } = usePageStore();
 
   useEffect(() => {
     setPageTitle(title);
-    setIsPagePending(false);
-  }, [])
+  }, [title])
 }
 
 export default useInitPage;
