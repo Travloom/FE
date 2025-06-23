@@ -48,8 +48,6 @@ const PlanPage = () => {
 
   const { planId }: { planId: string } = useParams();
 
-  usePlanInfo(planId);
-
   const pageAnimateRouter = usePageAnimateRouter();
 
   const [isInviteModalOpen, setIsInviteModalOpen] = useState(false);
@@ -93,14 +91,14 @@ const PlanPage = () => {
 
   const { mutate: deletePlan } = useMutation({
     mutationFn: async () => {
-      await deletePlanRequest(planId)
+      await deletePlanRequest(planId);
       pageAnimateRouter.replace('/');
     }
   })
 
   const { mutate: exitPlan } = useMutation({
     mutationFn: async () => {
-      await exitPlanRequest(planId)
+      await exitPlanRequest(planId);
       pageAnimateRouter.replace('/');
     }
   })
@@ -121,7 +119,7 @@ const PlanPage = () => {
     queryKey: ["isCollaborator", planId],
     queryFn: async () => isCollaboratorRequest(planId),
     enabled: !!planId,
-    retry: 1,
+    retry: 0,
   })
 
   const handleEnter = async (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -132,16 +130,18 @@ const PlanPage = () => {
 
   useEffect(() => {
     if (collabError) {
-      if (!isCollaborator?.isExist) {
-        handleNotice("존재하지 않는 플랜입니다.", true)
-        pageAnimateRouter.replace('/')
-      }
-      else if (!isCollaborator?.isCollaborator) {
-        handleNotice("참여중인 플랜이 아닙니다.", true)
+      const axiosError = collabError as AxiosError<any>;
+      handleNotice(axiosError?.response?.data.detail, true)
+      pageAnimateRouter.replace('/')
+    } else {
+      if (isCollaborator && !isCollaborator?.isCollaborator) {
+        handleNotice("참여 중인 플랜이 아닙니다.", true)
         pageAnimateRouter.replace('/')
       }
     }
   }, [isCollaborator, collabError])
+
+  usePlanInfo(planId, !collabError);
 
   useInitPage(title);
 
@@ -154,12 +154,12 @@ const PlanPage = () => {
               pt-[70px] gap-2.5 flex flex-col h-full transition-all-300-out`}>
           <div className={`lg:p-0 px-2.5 flex flex-row justify-between gap-2.5`}>
             <div className={`relative`}>
-              <TagButton 
-                title={""} 
-                tagList={[tags?.region, tags?.people, tags?.companions, tags?.theme].filter((tag) => tag != null)} 
+              <TagButton
+                title={""}
+                tagList={[tags?.region, tags?.people, tags?.companions, tags?.theme].filter((tag) => tag != null)}
                 currentTag={"태그"}
                 isHome={false}
-                className={`absolute z-[200]`}/>
+                className={`absolute z-[200]`} />
             </div>
             <div className={`justify-end flex flex-row gap-2.5`}>
               <div

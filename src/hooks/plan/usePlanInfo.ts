@@ -5,7 +5,7 @@ import usePlanStore from "@/stores/usePlanStore";
 import usePageAnimateRouter from "../common/usePageAnimateRouter";
 import useNoticeModalStore from "@/stores/useAlertModalStore";
 
-export const usePlanInfo = (planId: string) => {
+export const usePlanInfo = (planId: string, errorFlag: boolean) => {
 
   const {
     setIsInfoPending,
@@ -24,51 +24,52 @@ export const usePlanInfo = (planId: string) => {
   const pageAnimateRouter = usePageAnimateRouter();
 
   useEffect(() => {
+    if (errorFlag) {
+      const checkDocs = async () => {
+        const docSnap = await getDoc(targetDoc);
 
-    const checkDocs = async () => {
-      const docSnap = await getDoc(targetDoc);
+        if (!docSnap.exists()) {
+          setTitle(null)
+          setAuthorEmail(null)
+          setDays(null, null)
+          setTags(null)
+          setIsInfoPending(true)
+          return;
+        }
+      }
 
-      if (!docSnap.exists()) {
+      const targetDoc = doc(fireStore, 'travloom', 'plan', `${planId}`, 'info');
+
+      checkDocs();
+
+      const unsubscribe = onSnapshot(targetDoc, (docSnapshot) => {
+
+        if (!docSnapshot.exists()) {
+          setNoticeModalText("플랜이 삭제되었습니다.")
+          setIsAlert(true)
+          setIsNoticeModalOpen(true)
+          pageAnimateRouter.replace('/')
+        }
+
+        const data = docSnapshot.data();
+
+        if (data) {
+          setTitle(data?.title)
+          setAuthorEmail(data?.authorEmail)
+          setDays(data?.startDate, data?.endDate)
+          setTags(data?.tags)
+          setIsInfoPending(false)
+        }
+      });
+
+      return () => {
         setTitle(null)
         setAuthorEmail(null)
         setDays(null, null)
         setTags(null)
         setIsInfoPending(true)
-        return;
-      }
+        unsubscribe()
+      };
     }
-
-    const targetDoc = doc(fireStore, 'travloom', 'plan', `${planId}`, 'info');
-
-    checkDocs();
-
-    const unsubscribe = onSnapshot(targetDoc, (docSnapshot) => {
-
-      if (!docSnapshot.exists()) {
-        setNoticeModalText("플랜이 삭제되었습니다.")
-        setIsAlert(true)
-        setIsNoticeModalOpen(true)
-        pageAnimateRouter.replace('/')
-      }
-
-      const data = docSnapshot.data();
-
-      if (data) {
-        setTitle(data?.title)
-        setAuthorEmail(data?.authorEmail)
-        setDays(data?.startDate, data?.endDate)
-        setTags(data?.tags)
-        setIsInfoPending(false)
-      }
-    });
-
-    return () => {
-      setTitle(null)
-      setAuthorEmail(null)
-      setDays(null, null)
-      setTags(null)
-      setIsInfoPending(true)
-      unsubscribe()
-    };
-  }, [planId]);
+  }, [planId, errorFlag]);
 };
