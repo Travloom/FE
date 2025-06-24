@@ -92,7 +92,7 @@ const Place: React.FC<PlaceProps> = ({
       className={`
         lg:gap-2.5 lg:h-[140px]
         ${selectedPlaceId === placeId ? `border-point shadow-point` : `border-gray-200`}
-        shrink-0 flex flex-row w-full h-[120px] min-h-[120px] rounded-[8px] p-2.5 border bg-white lg:hover:bg-[rgba(108,92,231,0.05)] cursor-pointer transition-all-300-out`}
+        shrink-0 flex flex-row w-full h-[120px] min-h-[120px] rounded-[8px] p-2.5 border bg-white lg:hover:bg-[rgba(108,92,231,0.05)] cursor-pointer select-none transition-all-300-out`}
       onClick={handleClick}>
       <div className={`overflow-hidden rounded-[4px] border border-gray-200 h-full aspect-square shrink-0 relative`}>
         <Image
