@@ -7,6 +7,7 @@ import useHomeStore from "@/stores/useHomeStore";
 import { useMutation } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import { isAxiosError } from "axios";
+import useNoticeModalStore from "@/stores/useAlertModalStore";
 
 const PlanInput = () => {
 
@@ -19,6 +20,12 @@ const PlanInput = () => {
     endDate,
     setTitle,
   } = useHomeStore();
+
+  const {
+    setIsNoticeModalOpen,
+    setIsAlert,
+    setNoticeModalText,
+  } = useNoticeModalStore();
 
   const pageAnimateRouter = usePageAnimateRouter();
 
@@ -41,8 +48,13 @@ const PlanInput = () => {
           theme: tags.theme as string,
         });
 
-        pageAnimateRouter.push(`/${plan.uuid}`)
-
+        if (plan.uuid === null) {
+          setIsNoticeModalOpen(true)
+          setIsAlert(true)
+          setNoticeModalText(`등록되지 않은 지역입니다.`)
+        } else {
+          pageAnimateRouter.push(`/${plan.uuid}`)
+        }
       } catch (e: unknown) {
         if (isAxiosError(e))
           if (e?.response?.data?.error === "Unauthorized") {

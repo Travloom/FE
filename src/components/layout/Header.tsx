@@ -11,12 +11,17 @@ import { getUserRequest } from "@/apis/user";
 import { AnimatePresence } from "framer-motion";
 import useSidebarStore from "@/stores/useSidebarStore";
 import { useRouter } from "next/navigation";
+import useDeviceStore from "@/stores/useDeviceStore";
 
 const Header = () => {
 
   const {
     setIsSidebarOpen,
   } = useSidebarStore();
+
+  const {
+    setDeviceType,
+  } = useDeviceStore();
 
   const {
     isPagePending,
@@ -39,6 +44,18 @@ const Header = () => {
     }
     setUserInfo();
   }, [])
+
+  useEffect(() => {
+    function getDeviceType() {
+      const userAgent = navigator.userAgent || "";
+
+      if (/android/i.test(userAgent)) return "android";
+      if (/iPad|iPhone|iPod/.test(userAgent)) return "ios";
+      return "desktop";
+    }
+
+    setDeviceType(getDeviceType());
+  }, []);
 
   return (
     <div

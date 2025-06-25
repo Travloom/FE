@@ -2,6 +2,7 @@
 
 import { GoogleMapIcon, MyAttractionOffIcon, MyAttractionOnIcon, MyCafeOffIcon, MyCafeOnIcon, MyHotelOffIcon, MyHotelOnIcon, MyRestaurantOffIcon, MyRestaurantOnIcon } from "@/assets/svgs";
 import Motion from "@/components/motion/Motion";
+import useDeviceStore from "@/stores/useDeviceStore";
 import useMapStore from "@/stores/useMapStore";
 import usePlaceStore from "@/stores/usePlaceStore";
 import { PlaceType } from "@/types/place/type";
@@ -52,6 +53,10 @@ const Place: React.FC<PlaceProps> = ({
     setSelectedPlaceId,
   } = usePlaceStore();
 
+  const {
+    deviceType,
+  } = useDeviceStore();
+
   const altImage = '/images/alt_image.png'
 
   const handleImage = (e: React.SyntheticEvent<HTMLImageElement>) => {
@@ -87,7 +92,7 @@ const Place: React.FC<PlaceProps> = ({
       className={`
         lg:gap-2.5 lg:h-[140px]
         ${selectedPlaceId === placeId ? `border-point shadow-point` : `border-gray-200`}
-        shrink-0 flex flex-row w-full h-[120px] min-h-[120px] rounded-[8px] p-2.5 border bg-white lg:hover:bg-[rgba(108,92,231,0.05)] cursor-pointer transition-all-300-out`}
+        shrink-0 flex flex-row w-full h-[120px] min-h-[120px] rounded-[8px] p-2.5 border bg-white lg:hover:bg-[rgba(108,92,231,0.05)] cursor-pointer select-none transition-all-300-out`}
       onClick={handleClick}>
       <div className={`overflow-hidden rounded-[4px] border border-gray-200 h-full aspect-square shrink-0 relative`}>
         <Image
@@ -100,7 +105,7 @@ const Place: React.FC<PlaceProps> = ({
           placeholder={"blur"}
           blurDataURL={altImage}
           onError={handleImage}
-          unoptimized/>
+          unoptimized />
         <div className={`lg:w-6 w-5`}>
           <div className={`absolute right-[6px] bottom-[6px] flex gap-1.5`}>
             {types?.some(type => ['restaurant', 'food'].includes(type)) && (
@@ -143,18 +148,18 @@ const Place: React.FC<PlaceProps> = ({
               </div>
             )}
             {!types?.includes('lodging') && (
-                <div onClick={(e) => handlePlace(e, 'attraction')}>
-                  {isAttractionOn ? (
-                    <Motion.MotionDiv key={'attraction on'}>
-                      <MyAttractionOnIcon className={`lg:w-6 w-5 cursor-pointer`} />
-                    </Motion.MotionDiv>
-                  ) : (
-                    <Motion.MotionDiv key={'attraction off'}>
-                      <MyAttractionOffIcon className={`lg:w-6 w-5 cursor-pointer`} />
-                    </Motion.MotionDiv>
-                  )}
-                </div>
-              )}
+              <div onClick={(e) => handlePlace(e, 'attraction')}>
+                {isAttractionOn ? (
+                  <Motion.MotionDiv key={'attraction on'}>
+                    <MyAttractionOnIcon className={`lg:w-6 w-5 cursor-pointer`} />
+                  </Motion.MotionDiv>
+                ) : (
+                  <Motion.MotionDiv key={'attraction off'}>
+                    <MyAttractionOffIcon className={`lg:w-6 w-5 cursor-pointer`} />
+                  </Motion.MotionDiv>
+                )}
+              </div>
+            )}
           </div>
         </div>
       </div>
@@ -170,7 +175,12 @@ const Place: React.FC<PlaceProps> = ({
         <a
           target="_blank"
           rel="noopener noreferrer"
-          href={`https://www.google.com/maps/place/?q=place_id:${placeId}`}>
+          href={
+            deviceType === 'ios' ? `https://www.google.com/maps/place/?q=place_id:${placeId}` : (
+              deviceType === 'android' ? `intent://maps.google.com/maps/search/?api=1&query=Place&query_place_id=${placeId}#Intent;package=com.google.android.apps.maps;scheme=https;end` :
+                `https://www.google.com/maps/place/?q=place_id:${placeId}`
+            )
+          }>
           <GoogleMapIcon className={`lg:w-6 w-5 flex`} />
         </a>
       </div>
