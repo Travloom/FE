@@ -59,7 +59,7 @@ const PlanList: React.FC<PlanListProps> = ({
               className={`
               lg:text-[18px]
               md:text-[16px] 
-              text-[14px] text-gray-200 w-full h-full flex justify-center items-center text-center transition-all-300-out py-5`}>여행 기록이 없어요. 여행을 떠나보세요!</p>
+              text-[14px] text-gray-200 w-full h-full flex justify-center items-center text-center transition-all-300-out py-5`}>{requestQuery.before ? "여행 기록이 없어요. 여행을 떠나보세요!" : "여행 계획을 세워보세요!"}</p>
           )
         )}
       </div>
