@@ -1,0 +1,25 @@
+@keyframes pulsePlaceholder {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 0.2;
+    }
+}
+
+
+.react-resizable-handle {
+    opacity: 0;
+}
+
+.react-grid-placeholder {
+    border-radius: 8px;
+    background: var(--color-point) !important;
+    animation: pulsePlaceholder 0.3s;
+}
+
+.react-grid-placeholder.fade-out {
+    opacity: 0;
+    transition: all 0.3s ease-out
+}

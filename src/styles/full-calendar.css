@@ -1,0 +1,143 @@
+.fc {
+  font-family: GmarketSansLight;
+  height: 100%;
+}
+
+.fc-media-screen {
+  background-color: white !important;
+}
+
+.fc-view-harness {
+  border-radius: 8px;
+  border: 1px solid var(--color-point);
+}
+
+.fc-header-toolbar {
+  border: 1px solid var(--color-point);
+  border-radius: 8px;
+
+  margin-bottom: 16px !important;
+}
+
+.fc-toolbar-title {
+  margin-top: 4px !important;
+  font-size: 16px !important;
+}
+
+.fc-scrollgrid {
+  border: none !important;
+}
+
+.fc-col-header {
+  
+  border: 1px solid var(--color-point);
+}
+
+.fc, .fc-button {
+  outline: none !important;
+  user-select: none !important;
+  color: var(--color-gray-500) !important;
+  border: none !important;
+  
+  font-weight: 600 !important;
+  transition: all 0.3s ease !important;
+  box-shadow: none !important;
+}
+
+.fc-button {
+  padding: 8px 14px !important;
+  background-color: rgba(0, 0, 0, 0) !important;
+}
+
+.fc-button:hover {
+  background-color: rgba(0, 0, 0, 0) !important;
+  color: var(--color-gray-500) !important;
+  
+  outline: none !important;
+}
+
+.fc-daygrid-body, .fc-scrollgrid-sync-table {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.fc-col-header {
+  width: 100% !important;
+}
+
+.fc-col-header-cell-cushion {
+  padding: 10px 0 !important;
+}
+
+.fc-day-today {
+  background-color: rgba(108, 92, 231, 0.2) !important;
+}
+
+.fc-theme-standard td,
+.fc-theme-standard th {
+  border: none;
+}
+
+.fc-daygrid-day {
+  padding: 2px !important;
+  background-clip: content-box;
+  background-color: rgba(108, 92, 231, 0.1);
+  border-radius: 4px;
+}
+
+.fc-daygrid-day-frame {
+  padding: 2px !important;
+}
+
+.fc-event {
+  background-color: rgba(0, 0, 0, 0) !important;
+  border: none !important;
+}
+
+.fc-daygrid-day-number, .fc-popover-title {
+  font-size: 10px;
+} 
+
+.fc-col-header-cell-cushion {
+  font-size: 12px;
+}
+
+.fc-daygrid-more-link {
+  font-size: 8px;
+}
+
+@media (min-width: 768px) {
+  .fc-daygrid-day-number, .fc-popover-title {
+    font-size: 12px;
+  } 
+
+  .fc-col-header-cell-cushion {
+    font-size: 14px;
+  }
+  
+  .fc-daygrid-more-link {
+    font-size: 10px;
+  }
+}
+
+@media (min-width: 1080px) {
+  .fc-daygrid-day-number, .fc-popover-title {
+    font-size: 16px;
+  } 
+
+  .fc-col-header-cell-cushion {
+    font-size: 16px;
+  }
+
+  .fc-daygrid-more-link {
+    font-size: 12px;
+  }
+}
+
+.fc-popover-header, .fc-popover-body  {
+  background-color: white !important;
+}
+
+.fc-popover-header {
+  padding: 10px 10px 0 !important;
+}
