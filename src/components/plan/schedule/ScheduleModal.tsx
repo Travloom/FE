@@ -91,7 +91,7 @@ const ScheduleModal: React.FC<ScheduleModalProps> = ({
       <AnimatePresence>
         {isScheduleModalOpen && (
           <Motion.MotionDiv
-            className="absolute top-0 left-0 w-full h-full bg-[rgba(1,1,1,0.2)] z-100 flex items-center justify-center"
+            className="absolute top-0 left-0 w-full h-full bg-[rgba(1,1,1,0.2)] z-[9999] flex items-center justify-center"
             onClick={() => setIsScheduleModalOpen(false)}
           >
             <div
