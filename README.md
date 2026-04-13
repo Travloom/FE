@@ -44,7 +44,7 @@
 ## 👥 Developers
 <div align="center">
 
-| FE/BE | BE |
+| PM / DESIGN / FE / BE | BE |
 | :-----: | :-----: |
 |  <img style="width: 150px;" src="https://github.com/jjjuni.png" />  | <img style="width: 150px;" src="https://github.com/wjdgh123.png" /> |
 |[이준희](https://github.com/jjjuni)|[김정호](https://github.com/wjdgh123)|
