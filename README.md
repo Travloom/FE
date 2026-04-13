@@ -31,7 +31,7 @@
 ![8페이지](https://github.com/user-attachments/assets/fcf8ce2c-c95f-4a6e-8eb4-12a220173453)
 ![9페이지](https://github.com/user-attachments/assets/129b3145-94c7-4bd0-a414-173b556d046f)
 ![10페이지](https://github.com/user-attachments/assets/9c88d18d-8ef2-4325-931b-8fe4bceab90b)
-![11페이지](https://github.com/user-attachments/assets/d6c762f6-3b17-400b-8480-9f8ce4b07dd9)
+![11페이지](https://github.com/user-attachments/assets/efa24096-37cc-42e5-ae95-767dfaa0bf02)
 ![12페이지](https://github.com/user-attachments/assets/dc2cd795-46f5-4671-b768-32f75025791c)
 ![13페이지](https://github.com/user-attachments/assets/53488971-4a24-448b-9e54-f65215e5fe7b)
 ![14페이지](https://github.com/user-attachments/assets/f6ac0850-b220-4a62-90e7-b2303ba6e16d)
